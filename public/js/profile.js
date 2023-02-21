@@ -1,5 +1,5 @@
 const tabLinks = document.querySelectorAll(
-  '.tab-links li a:not([href="#signout"])',
+  '.tab-links li a:not([href="/signout"])',
 );
 const tabContent = document.querySelectorAll('.tab-content');
 
@@ -13,11 +13,4 @@ tabLinks.forEach((link) => {
     const tabId = link.getAttribute('href');
     document.querySelector(tabId).classList.add('active');
   });
-});
-
-const signOutButton = document.querySelector('a[href="#signout"]');
-signOutButton.addEventListener('click', (e) => {
-  e.preventDefault();
-
-  alert('You have been signed out.');
 });

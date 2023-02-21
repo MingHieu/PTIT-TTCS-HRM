@@ -89,6 +89,11 @@ export class AppController {
     });
   }
 
+  @Get('signout')
+  signOut(@Res() res) {
+    return this.appService.signOut(res);
+  }
+
   @Public()
   @Post('login')
   loginPost(@Body() body: LoginDto, @Res() res) {

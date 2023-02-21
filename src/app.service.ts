@@ -33,4 +33,9 @@ export class AppService {
       return res.redirect(`/login?error=${e}`);
     }
   }
+
+  signOut(res: Response) {
+    res.clearCookie('jwt_token');
+    return res.redirect('/login');
+  }
 }

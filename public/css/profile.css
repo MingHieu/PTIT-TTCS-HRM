@@ -36,13 +36,13 @@ body {
   border: 1px solid #ddd;
 }
 
-.tab-links li a[href='#signout'] {
+.tab-links li a[href='/signout'] {
   border: 1px solid #ff0000;
   background-color: #ff0000e6;
   color: #fff;
 }
 
-.tab-links li a.active:not([href='#signout']) {
+.tab-links li a.active:not([href='/signout']) {
   background-color: #333;
   color: #fff;
   border-color: #333;
