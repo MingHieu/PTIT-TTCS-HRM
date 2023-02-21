@@ -1,9 +1,21 @@
-import { Get, Controller, Render, Param, Res } from '@nestjs/common';
+import {
+  Get,
+  Controller,
+  Render,
+  Param,
+  Res,
+  Post,
+  Body,
+} from '@nestjs/common';
 import { Response } from 'express';
+import { AppService } from './app.service';
 import { Public } from './auth/decorator';
+import { LoginDto } from './auth/dto';
 
 @Controller()
 export class AppController {
+  constructor(private appService: AppService) {}
+
   @Get()
   @Render('home')
   root() {
@@ -66,12 +78,18 @@ export class AppController {
   @Public()
   @Get('login')
   @Render('login')
-  login() {
+  loginGet() {
     return {
       title: 'Đăng nhập',
       css: 'login.css',
       header: false,
     };
+  }
+
+  @Public()
+  @Post('login')
+  loginPost(@Body() body: LoginDto, @Res() res) {
+    return this.appService.login(body, res);
   }
 
   @Get('employee/:userId/information')

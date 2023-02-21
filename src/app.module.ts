@@ -1,6 +1,8 @@
 import { AppController } from './app.controller';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AppService } from './app.service';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -8,6 +10,6 @@ import { ConfigModule } from '@nestjs/config';
     }),
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [AppService],
 })
 export class AppModule {}

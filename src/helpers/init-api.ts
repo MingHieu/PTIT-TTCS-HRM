@@ -17,4 +17,5 @@ export const initApi = async () => {
   api.setGlobalPrefix('api');
 
   await api.listen(8080);
+  return api;
 };
