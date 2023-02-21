@@ -15,6 +15,7 @@ model User {
     username String @unique
     password String
 
+    avatar      String?
     name        String
     sex         Int
     phoneNumber String
@@ -37,6 +38,7 @@ model Attendance {
     id       Int       @id @default(autoincrement())
     checkIn  DateTime?
     checkOut DateTime?
+    status   Int
 
     User   User? @relation(fields: [userId], references: [id])
     userId Int?
@@ -44,8 +46,9 @@ model Attendance {
 
 model Salary {
     id       Int      @id @default(autoincrement())
-    updateAt DateTime @updatedAt
+    createAt DateTime
     value    BigInt
+    note     String?
 
     User   User? @relation(fields: [userId], references: [id])
     userId Int?
@@ -98,9 +101,9 @@ model News {
     id       Int      @id @default(autoincrement())
     createAt DateTime @default(now())
 
-    preview String?
-    name    String
-    content Json
+    thumbnail String?
+    name      String
+    content   Json
 }
 
 model Event {
@@ -109,7 +112,9 @@ model Event {
     expiredAt DateTime
 
     name    String
-    content Json
+    from    DateTime
+    to      DateTime
+    address String
 
     participants User[]
 }
@@ -131,6 +136,11 @@ model Notification {
 
     name    String
     content String
+}
+
+model Role {
+    id   Int    @id @default(autoincrement())
+    name String
 }
 
 model Permission {
