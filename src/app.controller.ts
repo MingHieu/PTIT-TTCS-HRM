@@ -1,5 +1,6 @@
 import { Get, Controller, Render, Param, Res } from '@nestjs/common';
 import { Response } from 'express';
+import { Public } from './auth/decorator';
 
 @Controller()
 export class AppController {
@@ -62,6 +63,7 @@ export class AppController {
     };
   }
 
+  @Public()
   @Get('login')
   @Render('login')
   login() {
