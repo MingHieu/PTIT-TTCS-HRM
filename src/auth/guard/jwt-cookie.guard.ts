@@ -1,7 +1,10 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { Response } from 'express';
 import { IS_PUBLIC_KEY } from '../constants';
 @Injectable()
 export class JwtCookieGuard extends AuthGuard('jwt-cookie') {
@@ -20,8 +23,7 @@ export class JwtCookieGuard extends AuthGuard('jwt-cookie') {
     }
 
     if (err || !user) {
-      const res: Response = context.switchToHttp().getResponse();
-      return res.redirect(`/login`);
+      throw err || new UnauthorizedException('Invalid token');
     }
     return user;
   }

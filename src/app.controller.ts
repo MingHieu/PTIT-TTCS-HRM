@@ -1,3 +1,4 @@
+import { JwtCookiePublishGuard } from './auth/guard';
 import {
   Get,
   Controller,
@@ -6,10 +7,11 @@ import {
   Res,
   Post,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
-import { Public } from './auth/decorator';
+import { GetUser, Public } from './auth/decorator';
 import { LoginDto } from './auth/dto';
 
 @Controller()
@@ -76,14 +78,15 @@ export class AppController {
   }
 
   @Public()
+  @UseGuards(JwtCookiePublishGuard)
   @Get('login')
-  @Render('login')
-  loginGet() {
-    return {
+  loginGet(@GetUser() user, @Res() res) {
+    return this.appService.checkLogin(user, res, 'login', {
       title: 'Đăng nhập',
       css: 'login.css',
       header: false,
-    };
+      layout: 'other',
+    });
   }
 
   @Public()
