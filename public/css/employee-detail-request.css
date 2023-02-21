@@ -1,0 +1,42 @@
+#request-tab table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#request-tab tr:not(thead tr):hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+#request-tab th,
+#request-tab td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+#request-tab th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+#request-tab td:nth-child(2),
+#request-tab td:nth-child(3) {
+  width: 20%;
+  text-align: center;
+}
+
+#request-tab td:last-child {
+  font-weight: bold;
+}
+
+#request-tab td:last-child[data-status='0'] {
+  color: green;
+}
+
+#request-tab td:last-child[data-status='1'] {
+  color: orange;
+}
+
+#request-tab td:last-child[data-status='2'] {
+  color: red;
+}

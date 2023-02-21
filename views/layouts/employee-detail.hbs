@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/employee-detail.css">
+    <link rel="stylesheet" href="/css/{{css}}">
+</head>
+
+<body>
+    {{> header}}
+
+    <main>
+        <div class="container">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li><a class="{{#if information}}active{{/if}}" href="information">Thông tin cá nhân</a></li>
+                    <li><a class="{{#if salary}}active{{/if}}" href="salary">Lịch sử lương</a></li>
+                    <li><a class="{{#if attendance}}active{{/if}}" href="attendance">Lịch sử chấm công</a></li>
+                    <li><a class="{{#if request}}active{{/if}}" href="request">Lịch sử yêu cầu</a></li>
+                    <li><a class="{{#if event}}active{{/if}}" href="event">Sự kiện đã tham gia</a></li>
+                </ul>
+            </div>
+
+            <div class="tab-contents">
+                {{{body}}}
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/js/header.js"></script>
+
+</body>
+
+</html>

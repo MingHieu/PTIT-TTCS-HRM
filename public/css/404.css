@@ -1,0 +1,76 @@
+* {
+  font-family: Google sans, Arial;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.flex-container .text-center {
+  text-align: center;
+}
+
+.flex-container .text-center h1,
+.flex-container .text-center h3 {
+  margin: 10px;
+  cursor: default;
+}
+
+.flex-container .text-center h1 .fade-in,
+.flex-container .text-center h3 .fade-in {
+  animation: fadeIn 2s ease infinite;
+}
+
+.flex-container .text-center h1 {
+  transition: font-size 200ms ease-in-out;
+  border-bottom: 1px dashed #333;
+}
+
+.flex-container .text-center h1 span {
+  font-size: 8em;
+}
+
+.flex-container .text-center h1 span#digit1 {
+  animation-delay: 200ms;
+}
+
+.flex-container .text-center h1 span#digit2 {
+  animation-delay: 300ms;
+}
+
+.flex-container .text-center h1 span#digit3 {
+  animation-delay: 400ms;
+}
+
+.flex-container .text-center a {
+  display: block;
+  border: 1px solid #333;
+  background: transparent;
+  outline: none;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 200ms ease-in;
+  margin: 20px 0;
+  text-decoration: none;
+  color: #333;
+}
+
+.flex-container .text-center a:hover {
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

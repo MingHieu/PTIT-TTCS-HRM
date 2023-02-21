@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  dev-db:
+    image: postgres
+    ports:
+      - '5434:5432'
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=database
+    networks:
+      - my_network
+networks:
+  my_network:

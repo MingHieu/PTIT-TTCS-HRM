@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
+        type="text/css" />
+    {{#if header}}
+    <link rel="stylesheet" href="/css/header.css">
+    {{/if}}
+
+    {{#if css}}
+    <link rel="stylesheet" href="/css/{{css}}">
+    {{/if}}
+</head>
+
+<body>
+    {{#if header}}
+    {{> header}}
+    {{/if}}
+
+    <main>
+        {{{body}}}
+    </main>
+
+    {{#if header}}
+    <script src="/js/header.js"></script>
+    {{/if}}
+
+    {{#if js}}
+    <script src="/js/{{js}}"></script>
+    {{/if}}
+</body>
+
+</html>

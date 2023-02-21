@@ -1,0 +1,16 @@
+#salary-tab table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#salary-tab th,
+#salary-tab td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+#salary-tab th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}

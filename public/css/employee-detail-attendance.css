@@ -1,0 +1,36 @@
+#attendance-tab table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#attendance-tab tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#attendance-tab th,
+#attendance-tab td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+#attendance-tab th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+#attendance-tab td:last-child {
+  font-weight: bold;
+}
+
+#attendance-tab td:last-child[data-status='0'] {
+  color: green;
+}
+
+#attendance-tab td:last-child[data-status='1'] {
+  color: orange;
+}
+
+#attendance-tab td:last-child[data-status='2'] {
+  color: red;
+}
