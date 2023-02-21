@@ -1,4 +1,4 @@
-import { Get, Controller, Render, Redirect, Param, Res } from '@nestjs/common';
+import { Get, Controller, Render, Param, Res } from '@nestjs/common';
 import { Response } from 'express';
 
 @Controller()
@@ -11,6 +11,7 @@ export class AppController {
       css: 'home.css',
       js: 'home.js',
       header: true,
+      pagination: true,
     };
   }
 
@@ -22,6 +23,7 @@ export class AppController {
       css: 'event.css',
       js: 'event.js',
       header: true,
+      pagination: true,
     };
   }
 
@@ -33,6 +35,7 @@ export class AppController {
       css: 'employee.css',
       js: 'employee.js',
       header: true,
+      pagination: true,
     };
   }
 
@@ -44,6 +47,7 @@ export class AppController {
       css: 'request.css',
       js: 'request.js',
       header: true,
+      pagination: true,
     };
   }
 

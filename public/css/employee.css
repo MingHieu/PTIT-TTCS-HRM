@@ -84,6 +84,11 @@
   background-color: #f9f9f9;
 }
 
+.employee-list td:nth-child(1) {
+  width: 5%;
+  text-align: center;
+}
+
 .employee-list td a {
   display: block;
   padding: 10px;
@@ -91,36 +96,21 @@
   color: #333;
 }
 
-/* Pagination  */
+@media (max-width: 768px) {
+  .employee-list-header {
+    flex-direction: column;
+  }
 
-.pagination {
-  width: 100%;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .create-new {
+    width: 100%;
+    margin-top: 20px;
+  }
 
-.pagination div {
-  display: flex;
-  justify-content: center;
-}
+  .search-container {
+    width: 100%;
+  }
 
-.pagination__button {
-  border: none;
-  outline: none;
-  stroke: none;
-  box-shadow: none;
-  cursor: pointer;
-  border-radius: 5px;
-  background: #f2f2f2;
-  padding: 10px;
-}
-
-.pagination__button:hover {
-  background: #ddd;
-}
-
-.pagination__button {
-  margin: 10px;
+  .search-input {
+    width: 100%;
+  }
 }

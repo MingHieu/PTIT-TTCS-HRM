@@ -15,11 +15,3 @@ tabLinks.forEach((link) => {
     document.querySelector(tabId).classList.add('active');
   });
 });
-
-// // add click event listener to sign out button
-// const signOutButton = document.getElementById('sign-out-button');
-// signOutButton.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   // perform sign out logic here
-//   alert('You have been signed out.');
-// });

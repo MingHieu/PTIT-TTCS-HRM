@@ -25,6 +25,22 @@
 
     <main>
         {{{body}}}
+        {{#if pagination}}
+        <div class="pagination">
+            <p>0-20/1000</p>
+            <input type="text" name="pagination" hidden>
+            <input type="number" name="lastPage" value="20" hidden>
+            <div>
+                <button id="pg-button-prev" type="button" class="pagination__button">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+
+                <button id="pg-button-next" type="button" class="pagination__button">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        {{/if}}
     </main>
 
     {{#if header}}
@@ -34,6 +50,8 @@
     {{#if js}}
     <script src="/js/{{js}}"></script>
     {{/if}}
+
+    <script src="/js/main.js"></script>
 </body>
 
 </html>
