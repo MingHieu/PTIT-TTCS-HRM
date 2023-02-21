@@ -1,62 +1,66 @@
 body {
-  background: #f2f2f2;
+  background-color: #f2f2f2;
   font-family: Arial, sans-serif;
 }
 
-form {
-  margin: 50px auto;
-  padding: 20px;
-  max-width: 400px;
-  background: white;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
 }
 
-h1 {
-  text-align: center;
-  margin: 0 0 20px;
+.form-title {
   font-size: 24px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 16px;
   font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-input[type='text'],
-input[type='password'] {
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
   display: block;
-  margin: 10px 0 20px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 10px;
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 16px;
-  color: #333;
 }
 
-button {
-  display: block;
-  margin: 20px auto 0;
-  padding: 10px 20px;
-  background: #333;
-  color: white;
+.form-group input:focus {
+  outline: none;
+  border-color: #5b9aff;
+}
+
+.btn {
+  background-color: #333;
   border: none;
-  border-radius: 3px;
-  font-size: 16px;
+  border-radius: 5px;
+  color: white;
   cursor: pointer;
-  transition: background 0.3s;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  width: 100%;
 }
 
-button:hover {
-  background: #555;
-}
-
-.error-message {
-  color: #ff4136;
-  font-size: 14px;
-  margin: 10px 0 0;
-  text-align: center;
+.btn:hover {
+  background-color: #666;
 }

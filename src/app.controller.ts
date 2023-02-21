@@ -68,7 +68,6 @@ export class AppController {
     return {
       title: 'Đăng nhập',
       css: 'login.css',
-      js: 'login.js',
       header: false,
     };
   }
