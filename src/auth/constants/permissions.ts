@@ -1,3 +1,6 @@
 export const PERMISSIONS = {
-  CREATE_USER: 'create_user',
-};
+  CREATE_USER: {
+    name: 'create_user',
+    role: ['HR'],
+  },
+} as const;

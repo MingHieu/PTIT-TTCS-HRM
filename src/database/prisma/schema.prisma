@@ -139,12 +139,12 @@ model Notification {
 }
 
 model Role {
-    id   Int    @id @default(autoincrement())
-    name String
+    name String @id
 }
 
 model Permission {
-    id   Int    @id @default(autoincrement())
     name String
     role String
+
+    @@id([name, role])
 }

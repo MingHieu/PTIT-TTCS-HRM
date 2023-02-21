@@ -1,1 +1,4 @@
-export const ROLES = ['HR', 'NV'];
+export const ROLES = {
+  HR: 'hr',
+  NV: 'nv',
+};
