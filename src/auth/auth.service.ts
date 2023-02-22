@@ -3,8 +3,9 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import * as argon from 'argon2';
+import { SUCCESS_RESPONSE } from 'src/common/constants';
 import { PrismaService } from 'src/database/prisma/prisma.service';
-import { SignupDto, IJwtPayload, LoginDto } from './dto';
+import { SignupDto, IJwtPayload, LoginDto, ChangePasswordDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -41,7 +42,7 @@ export class AuthService {
     } catch (e) {
       if (e instanceof PrismaClientKnownRequestError) {
         if (e.code == 'P2002') {
-          throw new ForbiddenException('username already exists');
+          throw new ForbiddenException('Tài khoản đã tồn tại');
         }
       }
       throw e;
@@ -97,5 +98,23 @@ export class AuthService {
       // expiresIn: '1d',
       secret: this.config.get('JWT_SECRET'),
     });
+  }
+
+  async changePassword(jwtPayload: IJwtPayload, body: ChangePasswordDto) {
+    const user = await this.prisma.user.findFirst({
+      where: { id: jwtPayload.userId },
+    });
+    const pwMatches = await argon.verify(user.password, body.currentPassword);
+    if (!pwMatches) {
+      throw new ForbiddenException('Mật khẩu hiện tại sai');
+    }
+    if (body.newPassword != body.newConfirmPassword) {
+      throw new ForbiddenException('Mật khẩu mới không khớp');
+    }
+    await this.prisma.user.update({
+      where: { id: jwtPayload.userId },
+      data: { password: await argon.hash(body.newPassword) },
+    });
+    return SUCCESS_RESPONSE;
   }
 }

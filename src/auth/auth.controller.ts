@@ -1,8 +1,8 @@
 import { AuthService } from './auth.service';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { SignupDto, LoginDto } from './dto';
+import { SignupDto, LoginDto, ChangePasswordDto } from './dto';
 import { Public } from './decorator/public.decorator';
-import { Permission } from './decorator';
+import { GetUser, Permission } from './decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,5 +19,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   login(@Body() body: LoginDto) {
     return this.authService.login(body);
+  }
+
+  @Permission('change_password')
+  @Post('changePassword')
+  changePassword(@GetUser() user, @Body() body: ChangePasswordDto) {
+    return this.authService.changePassword(user, body);
   }
 }

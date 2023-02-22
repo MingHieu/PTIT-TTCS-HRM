@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="/css/main.css">
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
         type="text/css" />
+    {{#if cssLibrary}}
+        {{#each cssLibrary}}
+            {{{this}}}
+        {{/each}}
+    {{/if}}
     {{#if header}}
     <link rel="stylesheet" href="/css/header.css">
     {{/if}}

@@ -8,6 +8,7 @@ import {
   Post,
   Body,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
@@ -222,12 +223,13 @@ export class AppController {
 
   @Get('profile')
   @Render('profile')
-  profile() {
-    return {
-      title: 'Thông tin cá nhân',
-      css: 'profile.css',
-      js: 'profile.js',
-      header: true,
-    };
+  profile(@GetUser() user) {
+    return this.appService.profile(user);
+  }
+
+  @Post('profile')
+  @Render('profile')
+  changePassword(@GetUser() user, @Body() body, @Query('action') action) {
+    return this.appService.changePassword(user, body, action);
   }
 }

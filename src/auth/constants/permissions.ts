@@ -9,4 +9,8 @@ export const PERMISSIONS = {
     name: 'login_admin',
     role: [ROLES.HR],
   },
+  CHANGE_PASSWORD: {
+    name: 'change_password',
+    role: [ROLES.HR, ROLES.NV],
+  },
 } as const;

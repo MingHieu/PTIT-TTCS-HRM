@@ -77,6 +77,8 @@ body {
   border-radius: 5px;
   border: 1px solid #ddd;
   margin-bottom: 10px;
+  background: #fff;
+  color: #333;
 }
 
 .tab-content button[type='submit'] {
