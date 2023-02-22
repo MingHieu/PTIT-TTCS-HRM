@@ -120,7 +120,7 @@
 }
 
 @media (max-width: 768px) {
-  .event-list__header {
+  .event-list-header {
     flex-direction: column;
   }
 
