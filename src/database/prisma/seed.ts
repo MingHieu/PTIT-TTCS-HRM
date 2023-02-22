@@ -32,6 +32,34 @@ async function main() {
     },
   });
 
+  await prisma.user.upsert({
+    where: { username: 'nvwebapp01' },
+    update: {
+      username: 'nvwebapp01',
+      password: await argon.hash('12345678'),
+      name: 'Lê Minh Hiếu',
+      sex: 0,
+      dob: new Date('06-12-2002'),
+      phoneNumber: '0999999999',
+      email: 'test@gmail.com',
+      address: 'Thanh Trì, Hà Nội',
+      joinAt: new Date(),
+      role: ROLES.NV,
+    },
+    create: {
+      username: 'nvwebapp01',
+      password: await argon.hash('12345678'),
+      name: 'Lê Minh Hiếu',
+      sex: 0,
+      dob: new Date('06-12-2002'),
+      phoneNumber: '0999999999',
+      email: 'test@gmail.com',
+      address: 'Thanh Trì, Hà Nội',
+      joinAt: new Date(),
+      role: ROLES.NV,
+    },
+  });
+
   for (const key in ROLES) {
     await prisma.role.upsert({
       where: { name: ROLES[key] },

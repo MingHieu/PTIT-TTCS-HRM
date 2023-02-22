@@ -1,4 +1,4 @@
 export const ROLES = {
-  HR: 'hr',
-  NV: 'nv',
+  HR: 'HR',
+  NV: 'NV',
 };

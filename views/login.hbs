@@ -10,5 +10,8 @@
             <input type="password" id="password" name="password" required>
         </div>
         <button type="submit" class="btn">Đăng nhập</button>
+        {{#if errorMsg}}
+        <p class="error-message">{{errorMsg}}</p>
+        {{/if}}
     </form>
 </div>

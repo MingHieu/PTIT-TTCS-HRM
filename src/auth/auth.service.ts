@@ -56,10 +56,10 @@ export class AuthService {
         username: username,
       },
     });
-    if (!user) throw new ForbiddenException('username is incorrect');
+    if (!user) throw new ForbiddenException('Tài khoản không tồn tại');
 
     const pwMatches = await argon.verify(user.password, password);
-    if (!pwMatches) throw new ForbiddenException('password is incorrect');
+    if (!pwMatches) throw new ForbiddenException('Sai mật khẩu');
 
     const permissions = await this.prisma.permission.findMany({
       where: { role: user.role },

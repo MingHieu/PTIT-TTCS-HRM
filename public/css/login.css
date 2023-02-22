@@ -64,3 +64,9 @@ body {
 .btn:hover {
   background-color: #666;
 }
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}

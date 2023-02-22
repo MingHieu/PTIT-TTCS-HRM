@@ -84,20 +84,19 @@ export class AppController {
     return this.appService.checkLogin(user, res, 'login', {
       title: 'Đăng nhập',
       css: 'login.css',
-      header: false,
       layout: 'other',
     });
-  }
-
-  @Get('signout')
-  signOut(@Res() res) {
-    return this.appService.signOut(res);
   }
 
   @Public()
   @Post('login')
   loginPost(@Body() body: LoginDto, @Res() res) {
     return this.appService.login(body, res);
+  }
+
+  @Get('signout')
+  signOut(@Res() res) {
+    return this.appService.signOut(res);
   }
 
   @Get('employee/:userId/information')
