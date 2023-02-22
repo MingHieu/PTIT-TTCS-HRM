@@ -5,32 +5,33 @@
   text-transform: uppercase;
 }
 
-.container .form-group {
+.container label {
+  display: block;
   margin-bottom: 10px;
-}
-
-.container .form-group label {
-  display: inline-block;
-  margin-right: 5px;
-  max-width: 300px;
   font-weight: bold;
 }
 
-.container .form-group p {
-  display: inline-block;
+.container input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  background: #fff;
+  color: #333;
 }
 
-.container .form-group p[data-status='0'] {
+.container input[data-status='0'] {
   color: green;
   font-weight: bold;
 }
 
-.container .form-group p[data-status='1'] {
+.container input[data-status='1'] {
   color: orange;
   font-weight: bold;
 }
 
-.container .form-group p[data-status='2'] {
+.container input[data-status='2'] {
   color: red;
   font-weight: bold;
 }
