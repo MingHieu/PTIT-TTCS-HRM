@@ -1,0 +1,55 @@
+.container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.container .form-group {
+  margin-bottom: 10px;
+}
+
+.container .form-group label {
+  display: inline-block;
+  margin-right: 5px;
+  max-width: 300px;
+  font-weight: bold;
+}
+
+.container .form-group p {
+  display: inline-block;
+}
+
+.container .form-group p[data-status='0'] {
+  color: green;
+  font-weight: bold;
+}
+
+.container .form-group p[data-status='1'] {
+  color: orange;
+  font-weight: bold;
+}
+
+.container .form-group p[data-status='2'] {
+  color: red;
+  font-weight: bold;
+}
+
+.container .btn {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.container .reject-btn {
+  background-color: red;
+  color: #fff;
+}
+
+.container .accept-btn {
+  background-color: green;
+  color: #fff;
+  margin-left: 10px;
+}

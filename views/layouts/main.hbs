@@ -43,6 +43,12 @@
         {{/if}}
     </main>
 
+    {{#if jsLibrary}}
+        {{#each jsLibrary}}
+            {{{this}}}
+        {{/each}}
+    {{/if}}
+
     {{#if header}}
     <script src="/js/header.js"></script>
     {{/if}}

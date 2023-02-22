@@ -1,6 +1,5 @@
 .title {
   font-size: 24px;
-  font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
   text-transform: uppercase;
@@ -74,29 +73,32 @@
   color: #333;
 }
 
-.request-list td:nth-child(1) {
-  width: 5%;
+.request-list td {
   text-align: center;
 }
 
-.request-list td:not(:nth-child(1)):not(:nth-child(3)) {
-  width: 20%;
-  text-align: center;
+.request-list td:nth-child(1) {
+  width: 5%;
+}
+
+.request-list td:nth-child(4) {
+  width: 40%;
+  text-align: left;
 }
 
 .request-list td:last-child {
   font-weight: bold;
 }
 
-.request-list td:last-child[data-status='0'] {
+.request-list td:last-child[data-status='0'] a {
   color: green;
 }
 
-.request-list td:last-child[data-status='1'] {
+.request-list td:last-child[data-status='1'] a {
   color: orange;
 }
 
-.request-list td:last-child[data-status='2'] {
+.request-list td:last-child[data-status='2'] a {
   color: red;
 }
 

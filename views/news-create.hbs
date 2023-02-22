@@ -1,0 +1,16 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    <form>
+        <label for="thumbnail">Ảnh bìa:</label>
+        <input type="file" id="thumbnail">
+        <img id="thumbnail-preview" src="" alt="Image Preview" style="display:none;">
+
+        <label for="name">Tên bản tin:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="content">Nội dung:</label>
+        <div id="content" name="content"></div>
+
+        <button type="submit">{{#if edit}}Chỉnh sửa{{else}}Tạo mới{{/if}}</button>
+    </form>
+</div>

@@ -1,0 +1,59 @@
+.container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.container img {
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 5px;
+  display: block;
+  margin-inline: auto;
+  margin-bottom: 10px;
+}
+
+.container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.container input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.container button[type='submit'] {
+  display: block;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-inline: auto;
+}
+
+.container button[type='submit']:hover {
+  background-color: #555;
+}
+
+.container button[type='submit']:active {
+  background-color: #222;
+}
+
+#content {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.ce-block__content {
+  max-width: 9999px;
+}

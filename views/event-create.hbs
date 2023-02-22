@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    <form>
+        <label for="name">Tên sự kiện</label>
+        <input type="text" id="name" name="name">
+
+        <label for="from">Thời gian bắt đầu:</label>
+        <input type="date" id="from" name="from">
+
+        <label for="to">Thời gian kết thúc:</label>
+        <input type="date" id="to" name="to">
+
+        <label for="address">Địa điểm:</label>
+        <input type="text" id="address" name="address">
+
+        <label for="expiredAt">Thời gian hết hạn đăng ký:</label>
+        <input type="date" id="expiredAt" name="expiredAt">
+
+        <button type="submit">{{#if edit}}Chỉnh sửa{{else}} Tạo mới{{/if}}</button>
+    </form>
+</div>
