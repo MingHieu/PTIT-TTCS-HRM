@@ -17,7 +17,7 @@ export const initApp = async () => {
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalFilters(new NotFoundExceptionFilter());
   app.useGlobalFilters(new UnauthorizedExceptionFilter());
-  // app.useGlobalGuards(new JwtCookieGuard(reflector));
+  app.useGlobalGuards(new JwtCookieGuard(reflector));
   app.use(cookieParser());
 
   app.useStaticAssets(join(__dirname, '..', '..', 'public'));
