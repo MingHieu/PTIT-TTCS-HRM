@@ -9,32 +9,20 @@
 </div>
 
 <div class="news-list">
+    {{#each data.data}}
     <div class="news-item">
         <div class="news-item__thumbnail">
             <img src="https://via.placeholder.com/100x60" alt="News Image">
         </div>
         <div class="news-item__details">
             <div>
-                <h2 class="news-item__name">Bản tin Công Nghệ và Chuyển Đổi Số - Số 3 (2/2022)</h2>
-                <p class="news-item__create-at">2023-02-22, 14:30:00</p>
+                <h2 class="news-item__name">{{this.name}}</h2>
+                <p class="news-item__create-at">{{formatDateTime this.createAt}}</p>
             </div>
             <div class="news-item__footer">
-                <a href="/news/edit/1" class="news-item__edit-btn">Chỉnh sửa</a>
+                <a href="/news/edit/{{this.id}}" class="news-item__edit-btn">Chỉnh sửa</a>
             </div>
         </div>
     </div>
-    <div class="news-item">
-        <div class="news-item__thumbnail">
-            <img src="https://via.placeholder.com/100x60" alt="News Image">
-        </div>
-        <div class="news-item__details">
-            <div>
-                <h2 class="news-item__name">Bản tin Công Nghệ và Chuyển Đổi Số - Số 4 (2/2022)</h2>
-                <p class="news-item__create-at">2023-02-22, 14:30:00</p>
-            </div>
-            <div class="news-item__footer">
-                <a href="/news/edit/2" class="news-item__edit-btn">Chỉnh sửa</a>
-            </div>
-        </div>
-    </div>
+    {{/each}}
 </div>

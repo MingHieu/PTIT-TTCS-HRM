@@ -7,11 +7,15 @@ import { initApi } from 'src/helpers';
 import { PERMISSIONS, ROLES } from 'src/auth/constants';
 import { PrismaService } from 'src/database/prisma/prisma.service';
 import { UserService } from 'src/model/user/user.service';
+import { NewsService } from 'src/model/news/news.service';
+import { EventService } from 'src/model/event/event.service';
 @Injectable()
 export class AppService {
   #api: INestApplication;
   #auth: AuthService;
   #prisma: PrismaClient;
+  #news: NewsService;
+  #event: EventService;
   #user: UserService;
   constructor() {
     this.init();
@@ -21,6 +25,8 @@ export class AppService {
     this.#api = await initApi();
     this.#prisma = this.#api.get(PrismaService);
     this.#auth = this.#api.get(AuthService);
+    this.#news = this.#api.get(NewsService);
+    this.#event = this.#api.get(EventService);
     this.#user = this.#api.get(UserService);
   }
 
@@ -57,6 +63,34 @@ export class AppService {
   signOut(res: Response) {
     res.clearCookie('jwt_token');
     return res.redirect('/login');
+  }
+
+  async news(page, quantity, keySearch) {
+    if (!page) page = 1;
+    if (!quantity) quantity = 10;
+    if (!keySearch) keySearch = '';
+    const data = await this.#news.getMany(+page - 1, +quantity, keySearch);
+    return {
+      title: 'Trang chủ',
+      css: 'home.css',
+      header: true,
+      pagination: true,
+      data,
+    };
+  }
+
+  async event(page, quantity, keySearch) {
+    if (!page) page = 1;
+    if (!quantity) quantity = 10;
+    if (!keySearch) keySearch = '';
+    const data = await this.#event.getMany(+page - 1, +quantity, keySearch);
+    return {
+      title: 'Danh sách sự kiện',
+      css: 'event.css',
+      header: true,
+      pagination: true,
+      data,
+    };
   }
 
   async employee(page, quantity, keySearch) {

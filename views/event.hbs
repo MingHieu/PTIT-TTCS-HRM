@@ -9,34 +9,21 @@
 </div>
 
 <div class="event-list">
+    {{#each data.data}}
     <div class="event-item">
         <div class="event-item__header">
-            <h2 class="event-item__title">Đi du lịch</h2>
-            <p class="event-item__expiration">Thời gian hết hạn đăng ký: 2 ngày</p>
+            <h2 class="event-item__title">{{this.name}}</h2>
+            <p class="event-item__expiration">Thời gian hết hạn đăng ký: {{formatDateDistanceLeftFromNow this.expiredAt}} ngày</p>
         </div>
         <div class="event-item__details">
-            <p class="event-item__createAt">Thời gian tạo: 21/02/2022, 10:00pm</p>
-            <p class="event-item__holdtime">Thời gian diễn ra sự kiện: 21/03/2022, 3:00pm - 5:00pm</p>
-            <p class="event-item__participants">Số người tham gia: 20 người</p>
-            <p class="event-item__address">Địa điểm: 123 Main St, Anytown, USA</p>
+            <p class="event-item__createAt">Thời gian tạo: {{formatDateTime this.createAt}}</p>
+            <p class="event-item__holdtime">Thời gian diễn ra sự kiện: {{formatDateDistance this.from this.to}}</p>
+            <p class="event-item__participants">Số người tham gia: {{this.participants.length}} người</p>
+            <p class="event-item__address">Địa điểm: {{this.address}}</p>
         </div>
         <div class="event-item__footer">
-            <a href="/event/edit/1" class="event-item__edit-button">Chỉnh sửa</a>
+            <a href="/event/edit/{{this.id}}" class="event-item__edit-button">Chỉnh sửa</a>
         </div>
     </div>
-    <div class="event-item">
-        <div class="event-item__header">
-            <h2 class="event-item__title">Đi du lịch</h2>
-            <p class="event-item__expiration">Thời gian hết hạn đăng ký: 2 ngày</p>
-        </div>
-        <div class="event-item__details">
-            <p class="event-item__createAt">Thời gian tạo: 21/02/2022, 10:00pm</p>
-            <p class="event-item__holdtime">Thời gian diễn ra sự kiện: 21/03/2022, 3:00pm - 5:00pm</p>
-            <p class="event-item__participants">Số người tham gia: 20 người</p>
-            <p class="event-item__address">Địa điểm: 123 Main St, Anytown, USA</p>
-        </div>
-        <div class="event-item__footer">
-            <a href="/event/edit/2" class="event-item__edit-button">Chỉnh sửa</a>
-        </div>
-    </div>
+    {{/each}}
 </div>

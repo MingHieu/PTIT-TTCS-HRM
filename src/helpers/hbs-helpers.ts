@@ -1,19 +1,40 @@
+import * as moment from 'moment';
 import { ROLES } from 'src/auth/constants';
-import { IPagination } from 'src/common/types';
+import { EGender, IPagination } from 'src/common/types';
 
 export const hbsHelpers = {
-  formatGender: function (sex) {
+  formatGender: function (sex: EGender) {
     switch (sex) {
-      case 0:
+      case EGender.BOY:
         return 'Nam';
-      case 1:
+      case EGender.GIRL:
         return 'Nữ';
-      case 2:
+      case EGender.OTHER:
         return 'Khác';
     }
   },
-  formatDate: function (date) {
-    return new Date(date).toISOString().split('T')[0];
+  formatDate: function (date: Date) {
+    return moment(date).format('DD/MM/yyyy');
+  },
+  formatDateTime: function (date: Date) {
+    return moment(date).format('DD/MM/yyyy, hh:mm A');
+  },
+  formatDateDistance: function (from: Date, to: Date) {
+    if (from.getDate() == to.getDate()) {
+      return (
+        moment(from).format('DD/MM/yyyy, HH:mm:ss') +
+        ' - ' +
+        moment(to).format('HH:mm:ss')
+      );
+    }
+    return (
+      moment(from).format('DD/MM/yyyy, HH:mm:ss') +
+      ' - ' +
+      moment(to).format('DD/MM/yyyy, HH:mm:ss')
+    );
+  },
+  formatDateDistanceLeftFromNow: function (to: Date) {
+    return moment.duration(moment(to).diff(moment(new Date()))).get('days');
   },
   formatPagination: function (data: IPagination) {
     const { page, page_size, per_page, total } = data;

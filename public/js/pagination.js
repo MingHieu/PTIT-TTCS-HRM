@@ -1,7 +1,7 @@
 // Pagination
-const prevBtn = document.querySelector(`#pg-button-prev`);
-const nextBtn = document.querySelector(`#pg-button-next`);
-const lastPage = document.querySelector('input[name="lastPage"]');
+const prevBtn = useQuery(`#pg-button-prev`);
+const nextBtn = useQuery(`#pg-button-next`);
+const lastPage = useQuery('input[name="lastPage"]');
 const searchParams = new URLSearchParams(location.search.split('?')[1]);
 let currentPage = searchParams.has('page') ? +searchParams.get('page') : 1;
 
@@ -30,9 +30,9 @@ nextBtn.onclick = () => {
 };
 
 // Search
-const searchBtn = document.querySelector(`.search-btn`);
+const searchBtn = useQuery(`.search-btn`);
 searchBtn.onclick = () => {
-  const searchInput = document.querySelector('.search-input');
+  const searchInput = useQuery('.search-input');
   location.replace(
     `${location.origin}${location.pathname}?keySearch=${searchInput.value}`,
   );

@@ -3,7 +3,8 @@ import { PERMISSIONS, ROLES } from '../../auth/constants';
 import * as argon from 'argon2';
 
 const prisma = new PrismaClient();
-async function main() {
+
+async function seedAccount() {
   await prisma.user.upsert({
     where: { username: 'hrwebapp01' },
     update: {
@@ -59,7 +60,9 @@ async function main() {
       role: ROLES.NV,
     },
   });
+}
 
+async function seedRoles() {
   for (const key in ROLES) {
     await prisma.role.upsert({
       where: { name: ROLES[key] },
@@ -67,7 +70,9 @@ async function main() {
       create: { name: ROLES[key] },
     });
   }
+}
 
+async function seedPermissions() {
   for (const key in PERMISSIONS) {
     for (const role of PERMISSIONS[key]['role']) {
       await prisma.permission.upsert({
@@ -88,6 +93,48 @@ async function main() {
       });
     }
   }
+}
+
+async function seedNews() {
+  await prisma.news.upsert({
+    where: { id: 0 },
+    update: {
+      name: 'Bản tin Công Nghệ và Chuyển Đổi Số - Số 3 (2/2022)',
+      content: `{"time":1677139341912,"blocks":[{"id":"i9Bz3t9ziV","type":"header","data":{"text":"Bản tin Công Nghệ và Chuyển Đổi Số - Số 3 (2/2022)","level":1}}],"version":"2.26.5"}`,
+    },
+    create: {
+      name: 'Bản tin Công Nghệ và Chuyển Đổi Số - Số 3 (2/2022)',
+      content: `{"time":1677139341912,"blocks":[{"id":"i9Bz3t9ziV","type":"header","data":{"text":"Bản tin Công Nghệ và Chuyển Đổi Số - Số 3 (2/2022)","level":1}}],"version":"2.26.5"}`,
+    },
+  });
+}
+
+async function seedEvent() {
+  await prisma.event.upsert({
+    where: { id: 0 },
+    update: {
+      name: 'Đi du lịch',
+      from: new Date(Date.now() + 8 * 24 * 3600 * 1000),
+      to: new Date(Date.now() + 11 * 24 * 3600 * 1000),
+      expiredAt: new Date(Date.now() + 5 * 24 * 3600 * 1000),
+      address: '123 Main St, Anytown, USA',
+    },
+    create: {
+      name: 'Đi du lịch',
+      from: new Date(Date.now() + 8 * 24 * 3600 * 1000),
+      to: new Date(Date.now() + 11 * 24 * 3600 * 1000),
+      expiredAt: new Date(Date.now() + 5 * 24 * 3600 * 1000),
+      address: '123 Main St, Anytown, USA',
+    },
+  });
+}
+
+async function main() {
+  await seedRoles();
+  await seedPermissions();
+  await seedNews();
+  await seedEvent();
+  await seedAccount();
 }
 
 main()

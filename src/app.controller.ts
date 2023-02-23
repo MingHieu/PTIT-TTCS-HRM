@@ -43,13 +43,12 @@ export class AppController {
 
   @Get()
   @Render('home')
-  root() {
-    return {
-      title: 'Trang chủ',
-      css: 'home.css',
-      header: true,
-      pagination: true,
-    };
+  root(
+    @Query('page') page,
+    @Query('quantity') quantity,
+    @Query('keySearch') keySearch,
+  ) {
+    return this.appService.news(page, quantity, keySearch);
   }
 
   @Get('news/create')
@@ -89,13 +88,12 @@ export class AppController {
 
   @Get('event')
   @Render('event')
-  event() {
-    return {
-      title: 'Danh sách sự kiện',
-      css: 'event.css',
-      header: true,
-      pagination: true,
-    };
+  event(
+    @Query('page') page,
+    @Query('quantity') quantity,
+    @Query('keySearch') keySearch,
+  ) {
+    return this.appService.event(page, quantity, keySearch);
   }
 
   @Get('event/create')
@@ -201,7 +199,7 @@ export class AppController {
       title: 'Danh sách yêu cầu',
       css: 'request.css',
       header: true,
-      pagination: true,
+      // pagination: true,
     };
   }
 

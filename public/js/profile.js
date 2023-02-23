@@ -1,7 +1,5 @@
-const tabLinks = document.querySelectorAll(
-  '.tab-links li a:not([href="/signout"])',
-);
-const tabContent = document.querySelectorAll('.tab-content');
+const tabLinks = useQueryAll('.tab-links li a:not([href="/signout"])');
+const tabContent = useQueryAll('.tab-content');
 
 tabLinks.forEach((link) => {
   link.addEventListener('click', (e) => {
@@ -15,7 +13,7 @@ tabLinks.forEach((link) => {
   });
 });
 
-const successMsg = document.querySelector('#successMsg');
+const successMsg = useQuery('#successMsg');
 if (successMsg) {
   Toastify({
     text: successMsg.value,
@@ -31,7 +29,7 @@ if (successMsg) {
   }).showToast();
 }
 
-const errorMsg = document.querySelector('#errorMsg');
+const errorMsg = useQuery('#errorMsg');
 if (errorMsg) {
   Toastify({
     text: errorMsg.value,

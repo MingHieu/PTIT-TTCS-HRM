@@ -1,6 +1,6 @@
 // Upload thumbnail
-const thumbnailUpload = document.getElementById('thumbnail');
-const thumbnailPreview = document.getElementById('thumbnail-preview');
+const thumbnailUpload = useQuery('#thumbnail');
+const thumbnailPreview = useQuery('#thumbnail-preview');
 
 thumbnailUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
@@ -43,3 +43,16 @@ const editorJS = new EditorJS({
     list: NestedList,
   },
 });
+
+const form = useQuery('form');
+form.onsubmit = (e) => {
+  e.preventDefault();
+  editorJS
+    .save()
+    .then((outputData) => {
+      console.log('Article data: ', JSON.stringify(outputData));
+    })
+    .catch((error) => {
+      console.log('Saving failed: ', error);
+    });
+};

@@ -1,5 +1,5 @@
-const avatar = document.querySelector('#information-tab img');
-const avatarUpload = document.querySelector('#avatar-upload');
+const avatar = useQuery('#information-tab img');
+const avatarUpload = useQuery('#avatar-upload');
 
 avatarUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
