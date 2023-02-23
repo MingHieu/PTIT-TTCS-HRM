@@ -28,12 +28,3 @@ nextBtn.onclick = () => {
   paramStr = paramStr.substring(0, paramStr.length - 1);
   location.replace(`${location.origin}${location.pathname}?${paramStr}`);
 };
-
-// Search
-const searchBtn = useQuery(`.search-btn`);
-searchBtn.onclick = () => {
-  const searchInput = useQuery('.search-input');
-  location.replace(
-    `${location.origin}${location.pathname}?keySearch=${searchInput.value}`,
-  );
-};

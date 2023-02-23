@@ -59,4 +59,7 @@ export const hbsHelpers = {
   checkSelected: function (a, b) {
     return a == b ? 'selected' : '';
   },
+  formatIndex: function (i) {
+    return +i + 1;
+  },
 };

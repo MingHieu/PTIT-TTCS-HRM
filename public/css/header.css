@@ -46,8 +46,6 @@ nav ul li a {
   color: #333;
   text-decoration: none;
   font-weight: bold;
-  display: flex;
-  align-items: center;
 }
 
 nav ul li a:last-child span {
@@ -85,14 +83,24 @@ nav ul li a:last-child span {
     width: min(300px, 100%);
     z-index: 1;
     border: 1px solid #ddd;
-    padding-inline: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   nav ul li {
     width: 100%;
-    padding-block: 10px;
+  }
+
+  nav ul li a {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  nav ul li:hover {
+    background-color: #ddd;
   }
 
   .user-avatar {

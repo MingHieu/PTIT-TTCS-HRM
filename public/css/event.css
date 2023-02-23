@@ -13,51 +13,6 @@
   margin-bottom: 20px;
 }
 
-.create-new {
-  background-color: var(--button-background);
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.create-new:hover {
-  background-color: #666;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-}
-
-.search-input {
-  padding: 10px;
-  border: 1px solid #555;
-  border-radius: 20px 0 0 20px;
-  width: 300px;
-  font-size: 18px;
-  outline: none;
-}
-
-.search-btn {
-  background-color: #555;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
-  font-size: 18px;
-  border: 1px solid #555;
-}
-
-.search-btn i {
-  margin-right: 10px;
-}
-
 .event-item {
   background-color: #fff;
   border: 1px solid #e6e6e6;

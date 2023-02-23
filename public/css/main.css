@@ -3,6 +3,12 @@
 :root {
   --button-background: #333;
   --button-background-hover: #555;
+  --success-color: #008a05;
+  --success-background: #bfedc1;
+  --warning-color: #ffae00;
+  --warning-background: #ffecbc;
+  --error-color: #ff6161;
+  --error-background: #ffc7c7;
 }
 
 * {
@@ -16,16 +22,38 @@ body {
   color: #333;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
     Noto Sans, sans-serif, BlinkMacSystemFont, Oxygen, Open Sans, Helvetica Neue;
+  background: rgb(247, 249, 251);
 }
 
 main {
   max-width: 1200px;
   margin: 0 auto;
+  margin-top: 50px;
   padding: 20px;
+  border-radius: 20px;
+  background-color: #fff;
 }
 
 button {
   font-size: 16px;
+}
+
+.btn {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.accept-btn {
+  background-color: #08a60d;
+  color: #fff;
+}
+
+.reject-btn {
+  background-color: #ea1010;
+  color: #fff;
 }
 
 /* Search & Create New  */
@@ -55,29 +83,22 @@ button {
 .search-container {
   display: flex;
   align-items: center;
+  border: 1px solid #555;
+  border-radius: 5px;
 }
 
 .search-input {
   padding: 10px;
-  border: 1px solid #555;
-  border-radius: 20px 0 0 20px;
+  border: none;
+  border-radius: 5px;
   width: 300px;
   font-size: 18px;
   outline: none;
 }
 
 .search-btn {
-  background-color: #555;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
+  color: #333;
   font-size: 18px;
-  border: 1px solid #555;
-}
-
-.search-btn i {
   margin-right: 10px;
 }
 

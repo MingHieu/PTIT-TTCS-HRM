@@ -1,10 +1,10 @@
 <h1 class="title">Danh sách nhân viên</h1>
 
 <div class="employee-list-header">
-    <div class="search-container">
+    <form class="search-container">
         <input type="text" class="search-input" name="search" placeholder="Tìm kiếm...">
-        <button class="search-btn"><i class="fa fa-search"></i></button>
-    </div>
+        <i class="fa fa-search search-btn"></i>
+    </form>
     <a href="/employee/create" class="create-new">Tạo nhân viên mới</a>
 </div>
 
@@ -22,7 +22,7 @@
         <tbody>
             {{#each data.data}}
             <tr>
-                <td><a href="/employee/{{this.username}}">{{@index}}</a></td>
+                <td><a href="/employee/{{this.username}}">{{formatIndex @index}}</a></td>
                 <td><a href="/employee/{{this.username}}">{{this.name}}</a></td>
                 <td><a href="/employee/{{this.username}}">{{this.username}}</a></td>
                 <td><a href="/employee/{{this.username}}">{{formatDate this.joinAt}}</a></td>
