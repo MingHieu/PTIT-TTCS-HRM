@@ -16,6 +16,6 @@ export const initApi = async () => {
   api.useGlobalInterceptors(new LoggingInterceptor());
   api.setGlobalPrefix('api');
 
-  await api.listen(8080);
+  // await api.listen(8080);
   return api;
 };
