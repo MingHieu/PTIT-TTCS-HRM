@@ -1,12 +1,8 @@
-body {
-  font-family: Arial, sans-serif;
-}
-
 .container {
   width: 100%;
   display: flex;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -43,7 +39,7 @@ body {
 }
 
 .tab-links li a.active:not([href='/signout']) {
-  background-color: #333;
+  background-color: var(--button-background);
   color: #fff;
   border-color: #333;
 }
@@ -82,7 +78,7 @@ body {
 }
 
 .tab-content button[type='submit'] {
-  background-color: #333;
+  background-color: var(--button-background);
   color: #fff;
   padding: 10px;
   border: none;

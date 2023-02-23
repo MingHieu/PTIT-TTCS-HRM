@@ -14,7 +14,7 @@
 }
 
 .create-new {
-  background-color: #333;
+  background-color: var(--button-background);
   border: none;
   color: white;
   padding: 10px 20px;
@@ -104,7 +104,7 @@
 }
 
 .event-item__edit-button {
-  background-color: #333;
+  background-color: var(--button-background);
   border-radius: 5px;
   color: #fff;
   display: inline-block;

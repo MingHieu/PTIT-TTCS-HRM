@@ -61,7 +61,7 @@
 }
 
 .flex-container .text-center a:hover {
-  background-color: #333;
+  background-color: var(--button-background);
   color: #fff;
   cursor: pointer;
 }

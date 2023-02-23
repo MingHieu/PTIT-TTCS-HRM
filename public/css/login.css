@@ -1,6 +1,5 @@
 body {
   background-color: #f2f2f2;
-  font-family: Arial, sans-serif;
 }
 
 .container {
@@ -50,7 +49,7 @@ body {
 }
 
 .btn {
-  background-color: #333;
+  background-color: var(--button-background);
   border: none;
   border-radius: 5px;
   color: white;

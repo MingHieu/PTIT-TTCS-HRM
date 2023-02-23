@@ -22,7 +22,7 @@
 }
 
 #information-tab button[type='submit'] {
-  background-color: #333;
+  background-color: var(--button-background);
   color: #fff;
   padding: 10px;
   border: none;
