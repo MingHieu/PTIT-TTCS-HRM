@@ -1,30 +1,40 @@
 <div id="information-tab" class="tab-content">
     <h1>Thông tin cá nhân</h1>
-    <img src="https://via.placeholder.com/200" alt="Avatar">
+    <div>
+        <img src="{{#if data.avatar}}{{data.avatar}}{{else}}https://via.placeholder.com/200{{/if}}" alt="Avatar">
+        <input type="file" id="avatar-upload">
+    </div>
     <form>
         <label for="name">Họ và tên:</label>
-        <input type="text" id="name" name="name" value="John Doe">
+        <input type="text" id="name" name="name" value="{{data.name}}">
 
         <label for="joinDate">Ngày vào công ty:</label>
-        <input type="date" id="joinDate" name="joinDate" value="2023-02-20">
+        <input type="date" id="joinDate" name="joinDate" value="{{formatDate data.joinAt}}">
 
         <label for="position">Chức vụ:</label>
-        <input type="text" id="position" name="position" value="Nhân viên">
+        <select name="position" id="position">
+            {{#each data.roles}}
+            <option value="{{this}}" {{checkSelected this ../data.role}}>{{formatPosition this}}</option>
+            {{/each}}
+        </select>
 
         <label for="username">Tên đăng nhập:</label>
-        <input type="text" id="username" name="username" value="NVWEBAPP01">
+        <input type="text" id="username" name="username" value="{{data.username}}" disabled>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="johndoe@example.com">
+        <input type="email" id="email" name="email" value="{{data.email}}">
 
         <label for="dob">Ngày sinh:</label>
-        <input type="date" id="dob" name="dob" value="1990-01-01">
+        <input type="date" id="dob" name="dob" value="{{formatDate data.dob}}">
+
+        <label for="sex">Giới tính:</label>
+        <input type="text" id="sex" name="sex" value="{{formatGender data.sex}}">
 
         <label for="phone">Số điện thoại:</label>
-        <input type="tel" id="phone" name="phone" value="555-555-5555">
+        <input type="tel" id="phone" name="phone" value="{{data.phoneNumber}}">
 
         <label for="address">Địa chỉ:</label>
-        <input type="text" id="address" name="address" value="123 Main St.">
+        <input type="text" id="address" name="address" value="{{data.address}}">
 
         <button type="submit">Lưu thay đổi</button>
     </form>

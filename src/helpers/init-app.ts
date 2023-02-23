@@ -10,6 +10,7 @@ import {
   UnauthorizedExceptionFilter,
 } from 'src/common/filters';
 import * as cookieParser from 'cookie-parser';
+import { hbsHelpers } from './hbs-helpers';
 
 export const initApp = async () => {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -30,6 +31,7 @@ export const initApp = async () => {
       defaultLayout: 'main',
       layoutsDir: join(__dirname, '..', '..', 'views', 'layouts'),
       partialsDir: join(__dirname, '..', '..', 'views', 'partials'),
+      helpers: hbsHelpers,
     }),
   );
   app.setViewEngine('hbs');

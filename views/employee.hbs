@@ -20,27 +20,15 @@
             </tr>
         </thead>
         <tbody>
+            {{#each data.data}}
             <tr>
-                <td><a href="/employee/1">1</a></td>
-                <td><a href="/employee/1">John Doe</a></td>
-                <td><a href="/employee/1">NVWEBAPP01</a></td>
-                <td><a href="/employee/1">2020-01-01</a></td>
-                <td><a href="/employee/1">Manager</a></td>
+                <td><a href="/employee/{{this.username}}">{{@index}}</a></td>
+                <td><a href="/employee/{{this.username}}">{{this.name}}</a></td>
+                <td><a href="/employee/{{this.username}}">{{this.username}}</a></td>
+                <td><a href="/employee/{{this.username}}">{{formatDate this.joinAt}}</a></td>
+                <td><a href="/employee/{{this.username}}">{{formatPosition this.role}}</a></td>
             </tr>
-            <tr>
-                <td><a href="/employee/1">2</td>
-                <td><a href="/employee/1">Jane Smith</a></td>
-                <td><a href="/employee/1">NVWEBAPP02</a></td>
-                <td><a href="/employee/1">2020-02-01</a></td>
-                <td><a href="/employee/1">Supervisor</a></td>
-            </tr>
-            <tr>
-                <td><a href="/employee/1">3</a></td>
-                <td><a href="/employee/1">Bob Johnson</a></td>
-                <td><a href="/employee/1">NVWEBAPP03</a></td>
-                <td><a href="/employee/1">2020-03-01</a></td>
-                <td><a href="/employee/1">Team Lead</a></td>
-            </tr>
+            {{/each}}
         </tbody>
     </table>
 </div>

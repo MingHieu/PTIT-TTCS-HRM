@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import { INestApplication, Injectable } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthService } from './auth/auth.service';
-import { IJwtPayload, LoginDto } from './auth/dto';
-import { initApi } from './helpers';
-import { PERMISSIONS } from './auth/constants';
-import { PrismaService } from './database/prisma/prisma.service';
-import { UserService } from './model/user/user.service';
+import { AuthService } from 'src/auth/auth.service';
+import { IJwtPayload, LoginDto } from 'src/auth/dto';
+import { initApi } from 'src/helpers';
+import { PERMISSIONS, ROLES } from 'src/auth/constants';
+import { PrismaService } from 'src/database/prisma/prisma.service';
+import { UserService } from 'src/model/user/user.service';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -59,14 +59,43 @@ export class AppService {
     return res.redirect('/login');
   }
 
+  async employee(page, quantity, keySearch) {
+    if (!page) page = 1;
+    if (!quantity) quantity = 10;
+    if (!keySearch) keySearch = '';
+    const data = await this.#user.getMany(+page - 1, +quantity, keySearch);
+    return {
+      title: 'Danh sách nhân viên',
+      css: 'employee.css',
+      header: true,
+      pagination: true,
+      data,
+    };
+  }
+
+  async employeeInformationDetail(username) {
+    const data = await this.#user.getOne(username);
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-information.css',
+      js: 'employee-detail-information.js',
+      information: true,
+      layout: 'employee-detail',
+      data: {
+        ...data,
+        roles: ROLES,
+      },
+    };
+  }
+
   async profile(jwtPayload: IJwtPayload) {
-    const user = await this.#user.getOne(jwtPayload.userId);
+    const user = await this.#user.getOne(jwtPayload.username);
     return {
       title: 'Thông tin cá nhân',
       css: 'profile.css',
       js: 'profile.js',
       header: true,
-      user,
+      data: { user },
     };
   }
 

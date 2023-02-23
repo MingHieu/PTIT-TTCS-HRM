@@ -121,13 +121,12 @@ export class AppController {
 
   @Get('employee')
   @Render('employee')
-  employee() {
-    return {
-      title: 'Danh sách nhân viên',
-      css: 'employee.css',
-      header: true,
-      pagination: true,
-    };
+  employee(
+    @Query('page') page,
+    @Query('quantity') quantity,
+    @Query('keySearch') keySearch,
+  ) {
+    return this.appService.employee(page, quantity, keySearch);
   }
 
   @Get('employee/create')
@@ -140,18 +139,13 @@ export class AppController {
     };
   }
 
-  @Get('employee/:userId/information')
+  @Get('employee/:username/information')
   @Render('employee-detail-information')
-  employeeInformationDetail() {
-    return {
-      title: 'Thông tin nhân viên',
-      css: 'employee-detail-information.css',
-      information: true,
-      layout: 'employee-detail',
-    };
+  employeeInformationDetail(@Param('username') username) {
+    return this.appService.employeeInformationDetail(username);
   }
 
-  @Get('employee/:userId/salary')
+  @Get('employee/:username/salary')
   @Render('employee-detail-salary')
   employeeSalaryDetail() {
     return {
@@ -162,7 +156,7 @@ export class AppController {
     };
   }
 
-  @Get('employee/:userId/attendance')
+  @Get('employee/:username/attendance')
   @Render('employee-detail-attendance')
   employeeAttendanceDetail() {
     return {
@@ -173,7 +167,7 @@ export class AppController {
     };
   }
 
-  @Get('employee/:userId/request')
+  @Get('employee/:username/request')
   @Render('employee-detail-request')
   employeeRequestDetail() {
     return {
@@ -184,7 +178,7 @@ export class AppController {
     };
   }
 
-  @Get('employee/:userId/event')
+  @Get('employee/:username/event')
   @Render('employee-detail-event')
   employeeEventDetail() {
     return {
@@ -195,9 +189,9 @@ export class AppController {
     };
   }
 
-  @Get('employee/:userId')
-  employeeDetail(@Param('userId') userId, @Res() res: Response) {
-    return res.redirect(`${userId}/information`);
+  @Get('employee/:username')
+  employeeDetail(@Param('username') username, @Res() res: Response) {
+    return res.redirect(`${username}/information`);
   }
 
   @Get('request')

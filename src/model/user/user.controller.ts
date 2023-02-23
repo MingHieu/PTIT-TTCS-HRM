@@ -8,12 +8,12 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('update')
-  update(@Body() body: UserDto, @GetUser('userId') userId) {
-    return this.userService.update(body, userId);
+  update(@Body() body: UserDto, @GetUser('username') username) {
+    return this.userService.update(body, username);
   }
 
   @Get()
-  get(@GetUser('userId') userId: number) {
-    return this.userService.getOne(userId);
+  get(@GetUser('username') username: string) {
+    return this.userService.getOne(username);
   }
 }

@@ -10,9 +10,9 @@
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
         type="text/css" />
     {{#if cssLibrary}}
-        {{#each cssLibrary}}
-            {{{this}}}
-        {{/each}}
+    {{#each cssLibrary}}
+    {{{this}}}
+    {{/each}}
     {{/if}}
     {{#if header}}
     <link rel="stylesheet" href="/css/header.css">
@@ -32,9 +32,9 @@
         {{{body}}}
         {{#if pagination}}
         <div class="pagination">
-            <p>0-20/1000</p>
+            <p>{{formatPagination data}}</p>
             <input type="text" name="pagination" hidden>
-            <input type="number" name="lastPage" value="20" hidden>
+            <input type="checkbox" name="lastPage" checked="{{isLastPage data}}" hidden>
             <div>
                 <button id="pg-button-prev" type="button" class="pagination__button">
                     <i class="fa fa-chevron-left"></i>
@@ -49,20 +49,25 @@
     </main>
 
     {{#if jsLibrary}}
-        {{#each jsLibrary}}
-            {{{this}}}
-        {{/each}}
+    {{#each jsLibrary}}
+    {{{this}}}
+    {{/each}}
     {{/if}}
 
     {{#if header}}
     <script src="/js/header.js"></script>
     {{/if}}
 
+    {{#if pagination}}
+    <script src="/js/pagination.js"></script>
+    {{/if}}
+
+    <script src="/js/main.js"></script>
+
     {{#if js}}
     <script src="/js/{{js}}"></script>
     {{/if}}
 
-    <script src="/js/main.js"></script>
 </body>
 
 </html>

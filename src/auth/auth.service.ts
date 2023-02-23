@@ -33,6 +33,7 @@ export class AuthService {
         data: {
           token: this.signToken(
             user.id,
+            user.username,
             permissions.map((p) => p.name),
           ),
         },
@@ -82,6 +83,7 @@ export class AuthService {
         data: {
           token: this.signToken(
             user.id,
+            user.username,
             permissions.map((p) => p.name),
           ),
         },
@@ -91,8 +93,8 @@ export class AuthService {
     }
   }
 
-  signToken(userId: number, permissions: string[]) {
-    const payload: IJwtPayload = { sub: userId, userId, permissions };
+  signToken(userId: number, username: string, permissions: string[]) {
+    const payload: IJwtPayload = { sub: userId, username, permissions };
 
     return this.jwtService.sign(payload, {
       // expiresIn: '1d',
@@ -102,7 +104,7 @@ export class AuthService {
 
   async changePassword(jwtPayload: IJwtPayload, body: ChangePasswordDto) {
     const user = await this.prisma.user.findFirst({
-      where: { id: jwtPayload.userId },
+      where: { username: jwtPayload.username },
     });
     const pwMatches = await argon.verify(user.password, body.currentPassword);
     if (!pwMatches) {
@@ -112,7 +114,7 @@ export class AuthService {
       throw new ForbiddenException('Mật khẩu mới không khớp');
     }
     await this.prisma.user.update({
-      where: { id: jwtPayload.userId },
+      where: { username: jwtPayload.username },
       data: { password: await argon.hash(body.newPassword) },
     });
     return SUCCESS_RESPONSE;

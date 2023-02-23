@@ -1,6 +1,7 @@
 #information-tab img {
   max-width: 200px;
   max-height: 200px;
+  aspect-ratio: 1;
   margin-bottom: 20px;
   border-radius: 5px;
 }
@@ -11,7 +12,8 @@
   font-weight: bold;
 }
 
-#information-tab input {
+#information-tab input,
+#information-tab select {
   width: 100%;
   padding: 10px;
   border-radius: 5px;

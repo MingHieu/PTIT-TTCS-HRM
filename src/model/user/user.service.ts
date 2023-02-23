@@ -6,11 +6,9 @@ import { UserDto } from './dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async update(body: UserDto, userId: number) {
+  async update(body: UserDto, username: string) {
     await this.prisma.user.update({
-      where: {
-        id: userId,
-      },
+      where: { username },
       data: body,
     });
     return {
@@ -19,13 +17,46 @@ export class UserService {
     };
   }
 
-  async getOne(userId: number) {
+  async getOne(username: string) {
     const user = await this.prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
+      where: { username },
     });
     delete user.password;
     return user;
+  }
+
+  async getMany(page: number, take: number, keySearch: string) {
+    console.log(keySearch);
+    const users = await this.prisma.user.findMany({
+      where: {
+        OR: {
+          name: { contains: keySearch },
+          username: { contains: keySearch },
+        },
+      },
+      skip: page * take,
+      take,
+      select: {
+        id: true,
+        avatar: true,
+        name: true,
+        joinAt: true,
+        role: true,
+        username: true,
+        email: true,
+        dob: true,
+        sex: true,
+        phoneNumber: true,
+        address: true,
+      },
+    });
+    const totalUsers = await this.prisma.user.count();
+    return {
+      data: users,
+      page,
+      per_page: take,
+      page_size: users.length,
+      total: totalUsers,
+    };
   }
 }
