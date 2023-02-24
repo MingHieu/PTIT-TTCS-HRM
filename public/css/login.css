@@ -43,9 +43,51 @@ body {
   width: 100%;
 }
 
-.form-group input:focus {
+.password-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative;
+}
+
+.password-group input {
+  border: none;
+  padding-right: 35px;
+  border-radius: 5px;
+}
+
+.password-group input:focus {
   outline: none;
-  border-color: #5b9aff;
+  border: none !important;
+}
+
+.password-group:has(#password:focus) {
+  border: 1px solid var(--infor-color);
+  outline: 1px solid var(--infor-color);
+}
+
+#password-toggle:checked ~ #password {
+  text-security: disc;
+  -webkit-text-security: disc;
+  -moz-text-security: disc;
+}
+
+.control-label__show-password i {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+#password-toggle:checked ~ .control-label__show-password .hide-icon {
+  display: block;
+}
+
+#password-toggle:not(:checked) ~ .control-label__show-password .show-icon {
+  display: block;
 }
 
 .btn {

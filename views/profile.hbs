@@ -34,14 +34,35 @@
                 {{#if errorMsg}}
                 <input type="text" id="errorMsg" value="{{errorMsg}}" hidden>
                 {{/if}}
-                <label for="currentPassword">Mật khẩu hiện tại:</label>
-                <input type="password" id="currentPassword" name="currentPassword">
+                <label for="currentPassword-group">Mật khẩu hiện tại:</label>
+                <div class="password-group currentPassword-group">
+                    <input type="checkbox" id="currentPassword-toggle" checked hidden>
+                    <label for="currentPassword-toggle" class="control-label__show-password">
+                        <i class="fa-sharp fa-solid fa-eye show-icon"></i>
+                        <i class="fa-solid fa-eye-slash hide-icon"></i>
+                    </label>
+                    <input type="text" id="currentPassword" name="currentPassword" required>
+                </div>
 
-                <label for="newPassword">Mật khẩu mới:</label>
-                <input type="password" id="newPassword" name="newPassword">
+                <label for="newPassword-group">Mật khẩu mới:</label>
+                <div class="password-group newPassword-group">
+                    <input type="checkbox" id="newPassword-toggle" checked hidden>
+                    <label for="newPassword-toggle" class="control-label__show-password">
+                        <i class="fa-sharp fa-solid fa-eye show-icon"></i>
+                        <i class="fa-solid fa-eye-slash hide-icon"></i>
+                    </label>
+                    <input type="text" id="newPassword" name="newPassword" required>
+                </div>
 
-                <label for="newConfirmPassword">Nhập lại mật khẩu mới:</label>
-                <input type="password" id="newConfirmPassword" name="newConfirmPassword">
+                <label for="newConfirmPassword-group">Nhập lại mật khẩu mới:</label>
+                <div class="password-group newConfirmPassword-group">
+                    <input type="checkbox" id="newConfirmPassword-toggle" checked hidden>
+                    <label for="newConfirmPassword-toggle" class="control-label__show-password">
+                        <i class="fa-sharp fa-solid fa-eye show-icon"></i>
+                        <i class="fa-solid fa-eye-slash hide-icon"></i>
+                    </label>
+                    <input type="text" id="newConfirmPassword" name="newConfirmPassword" required>
+                </div>
 
                 <button type="submit">Lưu thay đổi</button>
             </form>

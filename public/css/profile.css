@@ -74,6 +74,67 @@
   color: #333;
 }
 
+.password-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.password-group input {
+  border: none;
+  padding-right: 35px;
+  border-radius: 5px;
+  margin-bottom: 0;
+}
+
+.password-group input:focus {
+  outline: none;
+  border: none !important;
+}
+
+.currentPassword-group:has(#currentPassword:focus),
+.newPassword-group:has(#newPassword:focus),
+.newConfirmPassword-group:has(#newConfirmPassword:focus) {
+  border: 1px solid var(--infor-color);
+  outline: 1px solid var(--infor-color);
+}
+
+#currentPassword-toggle:checked ~ #currentPassword,
+#newPassword-toggle:checked ~ #newPassword,
+#newConfirmPassword-toggle:checked ~ #newConfirmPassword {
+  text-security: disc;
+  -webkit-text-security: disc;
+  -moz-text-security: disc;
+}
+
+.control-label__show-password i {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+#currentPassword-toggle:checked ~ .control-label__show-password .hide-icon,
+#newPassword-toggle:checked ~ .control-label__show-password .hide-icon,
+#newConfirmPassword-toggle:checked ~ .control-label__show-password .hide-icon {
+  display: block;
+}
+
+#currentPassword-toggle:not(:checked)
+  ~ .control-label__show-password
+  .show-icon,
+#newPassword-toggle:not(:checked) ~ .control-label__show-password .show-icon,
+#newConfirmPassword-toggle:not(:checked)
+  ~ .control-label__show-password
+  .show-icon {
+  display: block;
+}
+
 .tab-content button[type='submit'] {
   background-color: var(--button-background);
   color: #fff;
