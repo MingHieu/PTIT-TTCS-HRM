@@ -9,6 +9,7 @@
   --warning-background: #ffecbc;
   --error-color: #ff6161;
   --error-background: #ffc7c7;
+  --infor-color: #1cadff;
 }
 
 * {
@@ -27,15 +28,19 @@ body {
 
 main {
   max-width: 1200px;
-  margin: 0 auto;
-  margin-top: 50px;
+  margin: 50px auto;
   padding: 20px;
   border-radius: 20px;
   background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 button {
   font-size: 16px;
+}
+
+input:focus {
+  outline: 1px solid var(--infor-color);
 }
 
 .btn {
@@ -83,7 +88,7 @@ button {
 .search-container {
   display: flex;
   align-items: center;
-  border: 1px solid #555;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
 
@@ -94,6 +99,14 @@ button {
   width: 300px;
   font-size: 18px;
   outline: none;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-container:has(.search-input:focus) {
+  outline: 1px solid var(--infor-color);
 }
 
 .search-btn {

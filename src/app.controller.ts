@@ -1,4 +1,4 @@
-import { JwtCookiePublishGuard } from './auth/guard';
+import { JwtCookiePublishGuard } from 'src/auth/guard';
 import {
   Get,
   Controller,
@@ -11,9 +11,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AppService } from './app.service';
-import { GetUser, Public } from './auth/decorator';
-import { LoginDto } from './auth/dto';
+import { AppService } from 'src/app.service';
+import { GetUser, Public } from 'src/auth/decorator';
+import { LoginDto } from 'src/auth/dto';
+import { ROLES } from 'src/auth/constants';
 
 @Controller()
 export class AppController {
@@ -134,6 +135,9 @@ export class AppController {
       title: 'Tạo nhân viên mới',
       css: 'employee-create.css',
       header: true,
+      data: {
+        roles: ROLES,
+      },
     };
   }
 

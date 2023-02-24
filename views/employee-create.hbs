@@ -9,7 +9,11 @@
         <input type="date" id="joinDate" name="joinDate">
 
         <label for="position">Chức vụ:</label>
-        <input type="text" id="position" name="position">
+        <select name="position" id="position">
+            {{#each data.roles}}
+            <option value="{{this}}">{{formatPosition this}}</option>
+            {{/each}}
+        </select>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email">
