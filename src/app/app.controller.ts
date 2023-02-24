@@ -9,12 +9,16 @@ import {
   Body,
   UseGuards,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AppService } from 'src/app.service';
+import { AppService } from 'src/app/app.service';
 import { GetUser, Public } from 'src/auth/decorator';
 import { LoginDto } from 'src/auth/dto';
 import { ROLES } from 'src/auth/constants';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CreateNewsDto } from './dto';
 
 @Controller()
 export class AppController {
@@ -54,7 +58,7 @@ export class AppController {
 
   @Get('news/create')
   @Render('news-create')
-  newsCreate() {
+  newsCreateGet() {
     return {
       title: 'Tạo bản tin mới',
       css: 'news-create.css',
@@ -69,22 +73,26 @@ export class AppController {
     };
   }
 
+  @Post('news/create')
+  @UseInterceptors(FileInterceptor('thumbnail'))
+  newsCreatePost(@UploadedFile() thumbnail, @Body() body: CreateNewsDto) {
+    return this.appService.createNews(thumbnail, body);
+  }
+
   @Get('news/edit/:newsId')
   @Render('news-create')
-  newsEdit() {
-    return {
-      title: 'Chỉnh sửa bản tin',
-      css: 'news-create.css',
-      js: 'news-create.js',
-      header: true,
-      jsLibrary: [
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/nested-list@latest"></script>',
-      ],
-      edit: true,
-    };
+  newsEditGet(@Param('newsId') newsId) {
+    return this.appService.getNews(newsId);
+  }
+
+  @Post('news/edit/:newsId')
+  @UseInterceptors(FileInterceptor('thumbnail'))
+  newsEditPost(
+    @Param('newsId') newsId,
+    @UploadedFile() thumbnail,
+    @Body() body: CreateNewsDto,
+  ) {
+    return this.appService.updateNews(newsId, thumbnail, body);
   }
 
   @Get('event')
@@ -223,9 +231,14 @@ export class AppController {
     return this.appService.profile(user);
   }
 
-  @Post('profile')
-  @Render('profile')
-  changePassword(@GetUser() user, @Body() body, @Query('action') action) {
-    return this.appService.changePassword(user, body, action);
+  @Post('file')
+  @UseInterceptors(FileInterceptor('image'))
+  uploadFile(@UploadedFile() image) {
+    return this.appService.uploadFile(image);
+  }
+
+  @Get('file/:fileId')
+  getFile(@Param('fileId') fileId, @Res({ passthrough: true }) res) {
+    return this.appService.getFile(fileId, res);
   }
 }

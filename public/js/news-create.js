@@ -2,11 +2,15 @@
 const thumbnailUpload = useQuery('#thumbnail');
 const thumbnailPreview = useQuery('#thumbnail-preview');
 
+if (thumbnailPreview.src) {
+  thumbnailPreview.style.display = 'block';
+}
 thumbnailUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
 
   reader.onload = (e) => {
+    console.log(e);
     thumbnailPreview.src = e.target.result;
     thumbnailPreview.style.display = 'block';
   };
@@ -36,23 +40,52 @@ const editorJS = new EditorJS({
       class: ImageTool,
       config: {
         endpoints: {
-          byFile: '/api/upload',
+          byFile: '/file', // Your backend file uploader endpoint
         },
       },
     },
     list: NestedList,
   },
+  data:
+    useQuery('input[class="content"]').value &&
+    JSON.parse(useQuery('input[class="content"]').value),
 });
 
 const form = useQuery('form');
 form.onsubmit = (e) => {
   e.preventDefault();
+  showLoading();
   editorJS
     .save()
     .then((outputData) => {
-      console.log('Article data: ', JSON.stringify(outputData));
+      const formData = new FormData(form);
+      formData.append('content', JSON.stringify(outputData));
+      return fetch(location.pathname, {
+        method: 'POST',
+        body: formData,
+      });
     })
-    .catch((error) => {
-      console.log('Saving failed: ', error);
+    .then((res) => {
+      if (!res.ok) throw new Error();
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      showToast(
+        location.pathname.includes('edit')
+          ? 'Chỉnh sửa thành công'
+          : 'Tạo mới thành công',
+      );
+    })
+    .catch((e) => {
+      console.log(e);
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      showToast(
+        location.pathname.includes('edit')
+          ? 'Chỉnh sửa thất bại'
+          : 'Tạo mới thất bại',
+        false,
+      );
     });
 };

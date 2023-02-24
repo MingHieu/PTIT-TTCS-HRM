@@ -27,13 +27,7 @@
 
         <div id="change-password-tab" class="tab-content">
             <h1>Đổi mật khẩu</h1>
-            <form action="?action=changePassword" method="POST">
-                {{#if successMsg}}
-                <input type="text" id="successMsg" value="{{successMsg}}" hidden>
-                {{/if}}
-                {{#if errorMsg}}
-                <input type="text" id="errorMsg" value="{{errorMsg}}" hidden>
-                {{/if}}
+            <form action="?action=changePassword" method="post">
                 <label for="currentPassword-group">Mật khẩu hiện tại:</label>
                 <div class="password-group currentPassword-group">
                     <input type="checkbox" id="currentPassword-toggle" checked hidden>

@@ -8,7 +8,9 @@
     <title>{{title}}</title>
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
         type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/loader.css">
     {{#if cssLibrary}}
     {{#each cssLibrary}}
     {{{this}}}
@@ -46,6 +48,16 @@
             </div>
         </div>
         {{/if}}
+
+        {{#if successMsg}}
+        <input type="text" id="successMsg" value="{{successMsg}}" hidden>
+        {{/if}}
+
+        {{#if errorMsg}}
+        <input type="text" id="errorMsg" value="{{errorMsg}}" hidden>
+        {{/if}}
+
+        {{>loader}}
     </main>
 
     {{#if jsLibrary}}
@@ -53,7 +65,7 @@
     {{{this}}}
     {{/each}}
     {{/if}}
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/js/main.js"></script>
 
     {{#if header}}

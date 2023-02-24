@@ -1,5 +1,6 @@
+import { SUCCESS_RESPONSE } from 'src/common/constants';
 import { PrismaClient } from '@prisma/client';
-import { INestApplication, Injectable } from '@nestjs/common';
+import { INestApplication, Injectable, StreamableFile } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { IJwtPayload, LoginDto } from 'src/auth/dto';
@@ -9,6 +10,8 @@ import { PrismaService } from 'src/database/prisma/prisma.service';
 import { UserService } from 'src/model/user/user.service';
 import { NewsService } from 'src/model/news/news.service';
 import { EventService } from 'src/model/event/event.service';
+import { FileService } from 'src/model/file/file.service';
+import { CreateNewsDto } from './dto';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -17,6 +20,7 @@ export class AppService {
   #news: NewsService;
   #event: EventService;
   #user: UserService;
+  #file: FileService;
   constructor() {
     this.init();
   }
@@ -28,6 +32,7 @@ export class AppService {
     this.#news = this.#api.get(NewsService);
     this.#event = this.#api.get(EventService);
     this.#user = this.#api.get(UserService);
+    this.#file = this.#api.get(FileService);
   }
 
   checkLogin(jwtPayload: IJwtPayload, res: Response, view, renderOptions) {
@@ -77,6 +82,32 @@ export class AppService {
       pagination: true,
       data,
     };
+  }
+
+  async createNews(thumbnail, body: CreateNewsDto) {
+    return this.#news.create(thumbnail, body.name, body.content);
+  }
+
+  async getNews(newsId) {
+    const renderOptions = {
+      title: 'Chỉnh sửa bản tin',
+      css: 'news-create.css',
+      js: 'news-create.js',
+      header: true,
+      jsLibrary: [
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/nested-list@latest"></script>',
+      ],
+      edit: true,
+    };
+    const news = await this.#news.getOne(+newsId);
+    return { ...renderOptions, data: { news } };
+  }
+
+  async updateNews(newsId: number, thumbnail, body: CreateNewsDto) {
+    return this.#news.update(+newsId, thumbnail, body.name, body.content);
   }
 
   async event(page, quantity, keySearch) {
@@ -139,12 +170,6 @@ export class AppService {
       css: 'profile.css',
       js: 'profile.js',
       header: true,
-      jsLibrary: [
-        '<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>',
-      ],
-      cssLibrary: [
-        '<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">',
-      ],
     };
     if (action === 'changePassword') {
       try {
@@ -164,5 +189,18 @@ export class AppService {
       ...renderOptions,
       errorMsg: 'Thao tác không tìm thấy',
     };
+  }
+
+  async uploadFile(image) {
+    const file = await this.#file.create(image);
+    return {
+      success: 1,
+      file,
+    };
+  }
+
+  async getFile(fileId, res: Response) {
+    const file = await this.#file.getOne(+fileId, res);
+    return file;
   }
 }

@@ -148,3 +148,8 @@ model Permission {
 
     @@id([name, role])
 }
+
+model File {
+    id      Int    @id @default(autoincrement())
+    content String
+}

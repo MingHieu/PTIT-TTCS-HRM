@@ -12,7 +12,8 @@
     {{#each data.data}}
     <div class="news-item">
         <div class="news-item__thumbnail">
-            <img src="https://via.placeholder.com/100x60" alt="News Image">
+            <img src="{{#if this.thumbnail}}{{this.thumbnail}}{{else}}https://via.placeholder.com/100x60{{/if}}"
+                alt="News Image">
         </div>
         <div class="news-item__details">
             <div>

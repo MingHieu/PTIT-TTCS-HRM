@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import { ROLES } from 'src/auth/constants';
 import { EGender, IPagination } from 'src/common/types';
+import { convertFileToBase64 } from './base64';
 
 export const hbsHelpers = {
   formatGender: function (sex: EGender) {

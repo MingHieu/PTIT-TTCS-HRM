@@ -9,6 +9,7 @@ import { SalaryModule } from './model/salary/salary.module';
 import { RequestModule } from './model/request/request.module';
 import { EventModule } from './model/event/event.module';
 import { NotificationModule } from './model/notification/notification.module';
+import { FileModule } from './model/file/file.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { NotificationModule } from './model/notification/notification.module';
     RequestModule,
     EventModule,
     NotificationModule,
+    FileModule,
   ],
   controllers: [],
   providers: [],
