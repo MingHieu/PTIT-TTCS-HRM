@@ -2,7 +2,7 @@
 
 <div class="event-list-header">
     <form class="search-container">
-        <input type="text" class="search-input" name="keySearch" placeholder="Tìm kiếm...">
+        <input type="text" class="search-input" name="key_search" placeholder="Tìm kiếm...">
         <i class="fa fa-search search-btn"></i>
     </form>
     <a href="/event/create" class="create-new">Tạo sự kiện mới</a>
@@ -22,7 +22,7 @@
             <p class="event-item__address">Địa điểm: {{this.address}}</p>
         </div>
         <div class="event-item__footer">
-            <a href="/event/edit/{{this.id}}" class="event-item__edit-button">Chỉnh sửa</a>
+            <a href="/event/{{this.id}}/edit" class="event-item__edit-button">Chỉnh sửa</a>
         </div>
     </div>
     {{/each}}

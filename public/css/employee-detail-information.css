@@ -1,11 +1,3 @@
-#information-tab img {
-  max-width: 200px;
-  max-height: 200px;
-  aspect-ratio: 1;
-  margin-bottom: 20px;
-  border-radius: 5px;
-}
-
 #information-tab label {
   display: block;
   margin-bottom: 10px;
@@ -37,4 +29,46 @@
 
 #information-tab button[type='submit']:active {
   background-color: #222;
+}
+
+.avatar-wrapper {
+  max-width: 200px;
+  max-height: 200px;
+  margin-inline: auto;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-wrapper img {
+  object-fit: cover;
+}
+
+.avatar-wrapper label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.avatar-wrapper label:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.avatar-wrapper label p {
+  display: none;
+}
+
+.avatar-wrapper label:hover > p {
+  display: block;
+  padding: 10px;
+  border: 1px solid #fff;
 }

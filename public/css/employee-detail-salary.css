@@ -10,11 +10,6 @@
   border-style: hidden;
 }
 
-#salary-tab tr:not(thead tr):hover {
-  background-color: #ddd;
-  cursor: pointer;
-}
-
 #salary-tab th,
 #salary-tab td {
   padding: 15px 10px;

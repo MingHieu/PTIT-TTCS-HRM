@@ -1,20 +1,54 @@
+import { FileService } from 'src/model/file/file.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
-import { UserDto } from './dto';
+import { UserCreateDto } from './dto';
+import * as argon from 'argon2';
+import { SUCCESS_RESPONSE } from 'src/common/constants';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private fileService: FileService,
+  ) {}
 
-  async update(body: UserDto, username: string) {
-    await this.prisma.user.update({
+  async create(body: UserCreateDto, avatar?: File) {
+    const username = this.getUsername(body.name);
+    const usernameExistNumber = await this.prisma.user.count({
+      where: { username },
+    });
+    const hashPassword = await argon.hash('12345678');
+
+    if (avatar) {
+      const uploadedFile = await this.fileService.create(avatar);
+      Object.assign(body, { avatar: uploadedFile.url });
+    }
+
+    const user = await this.prisma.user.create({
+      data: {
+        ...body,
+        username:
+          usernameExistNumber > 0
+            ? username + (usernameExistNumber + 1)
+            : username,
+        password: hashPassword,
+      },
+    });
+    delete user.password;
+    return user;
+  }
+
+  async update(username: string, body: UserCreateDto, avatar?: File) {
+    if (avatar) {
+      const uploadedFile = await this.fileService.create(avatar);
+      Object.assign(body, { avatar: uploadedFile.url });
+    }
+    const user = await this.prisma.user.update({
       where: { username },
       data: body,
     });
-    return {
-      statusCode: HttpStatus.CREATED,
-      message: 'Success',
-    };
+    delete user.password;
+    return user;
   }
 
   async getOne(username: string) {
@@ -49,6 +83,7 @@ export class UserService {
         phoneNumber: true,
         address: true,
       },
+      orderBy: { createAt: 'desc' },
     });
     const totalUsers = await this.prisma.user.count();
     return {
@@ -58,5 +93,20 @@ export class UserService {
       page_size: users.length,
       total: totalUsers,
     };
+  }
+
+  async delete(username: string) {
+    await this.prisma.user.delete({ where: { username } });
+    return SUCCESS_RESPONSE;
+  }
+
+  getUsername(name: string) {
+    name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const nameStrings = name.split(' ');
+    let username = nameStrings[nameStrings.length - 1];
+    for (let i = 0; i < nameStrings.length - 1; ++i) {
+      username += nameStrings[i][0];
+    }
+    return username.toLowerCase();
   }
 }

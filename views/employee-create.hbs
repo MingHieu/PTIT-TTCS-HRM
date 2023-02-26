@@ -1,31 +1,44 @@
 <div class="container">
     <h1>{{title}}</h1>
-    <img src="https://via.placeholder.com/200" alt="Avatar">
+    <div class="avatar-wrapper">
+        <img src="https://via.placeholder.com/200" alt="Avatar">
+        <label for="avatar">
+            <p>Chọn ảnh đại diện</p>
+        </label>
+    </div>
     <form>
+        <input type="file" id="avatar" name="avatar" style="display: none" >
         <label for="name">Họ và tên:</label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" required>
 
-        <label for="joinDate">Ngày vào công ty:</label>
-        <input type="date" id="joinDate" name="joinDate">
+        <label for="joinAt">Ngày vào công ty:</label>
+        <input type="date" id="joinAt" name="joinAt" required>
 
-        <label for="position">Chức vụ:</label>
-        <select name="position" id="position">
+        <label for="role">Chức vụ:</label>
+        <select name="role" id="role">
             {{#each data.roles}}
             <option value="{{this}}">{{formatPosition this}}</option>
             {{/each}}
         </select>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
+        <input type="email" id="email" name="email" required>
+
+        <label for="sex">Giới tính:</label>
+        <select name="sex" id="sex">
+            {{#each data.sex}}
+            <option value="{{this}}">{{formatGender this}}</option>
+            {{/each}}
+        </select>
 
         <label for="dob">Ngày sinh:</label>
-        <input type="date" id="dob" name="dob">
+        <input type="date" id="dob" name="dob" required>
 
-        <label for="phone">Số điện thoại:</label>
-        <input type="tel" id="phone" name="phone">
+        <label for="phoneNumber">Số điện thoại:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
 
         <label for="address">Địa chỉ:</label>
-        <input type="text" id="address" name="address">
+        <input type="text" id="address" name="address" required>
 
         <button type="submit">Tạo mới</button>
     </form>

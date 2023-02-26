@@ -1,9 +1,8 @@
-import { SUCCESS_RESPONSE } from 'src/common/constants';
 import { PrismaClient } from '@prisma/client';
-import { INestApplication, Injectable, StreamableFile } from '@nestjs/common';
+import { INestApplication, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
-import { IJwtPayload, LoginDto } from 'src/auth/dto';
+import { ChangePasswordDto, IJwtPayload, LoginDto } from 'src/auth/dto';
 import { initApi } from 'src/helpers';
 import { PERMISSIONS, ROLES } from 'src/auth/constants';
 import { PrismaService } from 'src/database/prisma/prisma.service';
@@ -11,7 +10,10 @@ import { UserService } from 'src/model/user/user.service';
 import { NewsService } from 'src/model/news/news.service';
 import { EventService } from 'src/model/event/event.service';
 import { FileService } from 'src/model/file/file.service';
-import { CreateNewsDto } from './dto';
+import { NewsCreateDto } from 'src/model/news/dto';
+import { EventCreateDto } from 'src/model/event/dto';
+import { UserCreateDto } from 'src/model/user/dto';
+import { GENDERS } from 'src/common/constants';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -70,11 +72,11 @@ export class AppService {
     return res.redirect('/login');
   }
 
-  async news(page, quantity, keySearch) {
+  async news(page: number, perPage: number, keySearch: string) {
     if (!page) page = 1;
-    if (!quantity) quantity = 10;
+    if (!perPage) perPage = 10;
     if (!keySearch) keySearch = '';
-    const data = await this.#news.getMany(+page - 1, +quantity, keySearch);
+    const data = await this.#news.getMany(page - 1, perPage, keySearch);
     return {
       title: 'Trang chủ',
       css: 'home.css',
@@ -84,11 +86,15 @@ export class AppService {
     };
   }
 
-  async createNews(thumbnail, body: CreateNewsDto) {
-    return this.#news.create(thumbnail, body.name, body.content);
+  async createNews(body: NewsCreateDto, thumbnail?: File) {
+    return this.#news.create(body, thumbnail);
   }
 
-  async getNews(newsId) {
+  async updateNews(id: number, body: NewsCreateDto, thumbnail?: File) {
+    return this.#news.update({ ...body, id }, thumbnail);
+  }
+
+  async getNews(id: number) {
     const renderOptions = {
       title: 'Chỉnh sửa bản tin',
       css: 'news-create.css',
@@ -102,19 +108,20 @@ export class AppService {
       ],
       edit: true,
     };
-    const news = await this.#news.getOne(+newsId);
+    const news = await this.#news.getOne(id);
     return { ...renderOptions, data: { news } };
   }
 
-  async updateNews(newsId: number, thumbnail, body: CreateNewsDto) {
-    return this.#news.update(+newsId, thumbnail, body.name, body.content);
+  async deleteNews(id: number, res: Response) {
+    await this.#news.delete(id);
+    return res.redirect('/');
   }
 
-  async event(page, quantity, keySearch) {
+  async event(page: number, perPage: number, keySearch: string) {
     if (!page) page = 1;
-    if (!quantity) quantity = 10;
+    if (!perPage) perPage = 10;
     if (!keySearch) keySearch = '';
-    const data = await this.#event.getMany(+page - 1, +quantity, keySearch);
+    const data = await this.#event.getMany(page - 1, perPage, keySearch);
     return {
       title: 'Danh sách sự kiện',
       css: 'event.css',
@@ -124,11 +131,36 @@ export class AppService {
     };
   }
 
-  async employee(page, quantity, keySearch) {
+  async createEvent(body: EventCreateDto) {
+    return this.#event.create(body);
+  }
+
+  async updateEvent(id: number, body: EventCreateDto) {
+    return this.#event.update({ ...body, id });
+  }
+
+  async getEvent(id: number) {
+    const renderOptions = {
+      title: 'Chỉnh sửa sự kiện',
+      css: 'event-create.css',
+      js: 'event-create.js',
+      header: true,
+      edit: true,
+    };
+    const news = await this.#event.getOne(id);
+    return { ...renderOptions, data: { news } };
+  }
+
+  async deleteEvent(id: number, res: Response) {
+    await this.#event.delete(id);
+    return res.redirect('/event');
+  }
+
+  async employee(page: number, perPage: number, keySearch: string) {
     if (!page) page = 1;
-    if (!quantity) quantity = 10;
+    if (!perPage) perPage = 10;
     if (!keySearch) keySearch = '';
-    const data = await this.#user.getMany(+page - 1, +quantity, keySearch);
+    const data = await this.#user.getMany(page - 1, perPage, keySearch);
     return {
       title: 'Danh sách nhân viên',
       css: 'employee.css',
@@ -138,8 +170,12 @@ export class AppService {
     };
   }
 
-  async employeeInformationDetail(username) {
-    const data = await this.#user.getOne(username);
+  async createEmployee(body: UserCreateDto, avatar?: File) {
+    return this.#user.create(body, avatar);
+  }
+
+  async updateEmployee(username: string, body: UserCreateDto, avatar?: File) {
+    const user = await this.#user.update(username, body, avatar);
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-information.css',
@@ -147,10 +183,40 @@ export class AppService {
       information: true,
       layout: 'employee-detail',
       data: {
-        ...data,
+        user,
         roles: ROLES,
+        sex: GENDERS,
+      },
+      successMsg: 'Cập nhật thành công',
+    };
+  }
+
+  async employeeInformationDetail(username: string) {
+    const user = await this.#user.getOne(username);
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-information.css',
+      js: 'employee-detail-information.js',
+      information: true,
+      layout: 'employee-detail',
+      data: {
+        user,
+        roles: ROLES,
+        sex: GENDERS,
       },
     };
+  }
+
+  async deleteAccount(
+    jwtPayload: IJwtPayload,
+    username: string,
+    res: Response,
+  ) {
+    await this.#user.delete(username);
+    if (jwtPayload.username === username) {
+      return this.signOut(res);
+    }
+    return res.redirect('/employee');
   }
 
   async profile(jwtPayload: IJwtPayload) {
@@ -164,7 +230,11 @@ export class AppService {
     };
   }
 
-  async changePassword(jwtPayload: IJwtPayload, body, action) {
+  async changePassword(
+    jwtPayload: IJwtPayload,
+    body: ChangePasswordDto,
+    action,
+  ) {
     const renderOptions = {
       title: 'Thông tin cá nhân',
       css: 'profile.css',
@@ -191,16 +261,16 @@ export class AppService {
     };
   }
 
-  async uploadFile(image) {
-    const file = await this.#file.create(image);
+  async uploadFile(file: File) {
+    const uploadedFile = await this.#file.create(file);
     return {
       success: 1,
-      file,
+      file: uploadedFile,
     };
   }
 
-  async getFile(fileId, res: Response) {
-    const file = await this.#file.getOne(+fileId, res);
+  async getFile(id: number, res: Response) {
+    const file = await this.#file.getOne(id, res);
     return file;
   }
 }

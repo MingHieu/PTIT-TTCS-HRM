@@ -1,6 +1,6 @@
 import { IsJSON, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateNewsDto {
+export class NewsCreateDto {
   @IsString()
   @IsNotEmpty()
   name: string;

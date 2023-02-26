@@ -8,6 +8,7 @@
     <title>{{title}}</title>
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
         type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/employee-detail.css">
@@ -26,6 +27,7 @@
                     <li><a class="{{#if attendance}}active{{/if}}" href="attendance">Lịch sử chấm công</a></li>
                     <li><a class="{{#if request}}active{{/if}}" href="request">Lịch sử yêu cầu</a></li>
                     <li><a class="{{#if event}}active{{/if}}" href="event">Sự kiện đã tham gia</a></li>
+                    <li><a href="delete">Xoá tài khoản</a></li>
                 </ul>
             </div>
 
@@ -33,11 +35,20 @@
                 {{{body}}}
             </div>
         </div>
+        {{#if successMsg}}
+        <input type="text" id="successMsg" value="{{successMsg}}" hidden>
+        {{/if}}
 
+        {{#if errorMsg}}
+        <input type="text" id="errorMsg" value="{{errorMsg}}" hidden>
+        {{/if}}
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/header.js"></script>
+    <script src="/js/employee-detail.js"></script>
     {{#if js}}
     <script src="/js/{{js}}"></script>
     {{/if}}

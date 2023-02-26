@@ -1,21 +1,24 @@
 import * as moment from 'moment';
 import { ROLES } from 'src/auth/constants';
-import { EGender, IPagination } from 'src/common/types';
-import { convertFileToBase64 } from './base64';
+import { GENDERS } from 'src/common/constants';
+import { IPagination } from 'src/common/types';
 
 export const hbsHelpers = {
-  formatGender: function (sex: EGender) {
+  formatGender: function (sex: typeof GENDERS[keyof typeof GENDERS]) {
     switch (sex) {
-      case EGender.BOY:
+      case GENDERS.male:
         return 'Nam';
-      case EGender.GIRL:
+      case GENDERS.female:
         return 'Nữ';
-      case EGender.OTHER:
+      case GENDERS.other:
         return 'Khác';
     }
   },
   formatDate: function (date: Date) {
     return moment(date).format('DD/MM/yyyy');
+  },
+  formatDateInput: function (date: Date) {
+    return moment(date).format('yyyy-MM-DD');
   },
   formatDateTime: function (date: Date) {
     return moment(date).format('DD/MM/yyyy, hh:mm A');

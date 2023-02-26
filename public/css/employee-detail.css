@@ -35,6 +35,12 @@
   border-color: #333;
 }
 
+.tab-links li a[href='delete'] {
+  border: 1px solid #ff0000;
+  background-color: #ff0000e6;
+  color: #fff;
+}
+
 .tab-contents {
   flex: 1;
   padding-left: 20px;
@@ -57,12 +63,8 @@
     padding-right: 0;
     white-space: nowrap;
     position: static;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-
-  .tabs:hover {
     overflow-x: scroll;
+    margin-bottom: 1rem;
   }
 
   .tab-links {

@@ -15,10 +15,15 @@ import {
 import { Response } from 'express';
 import { AppService } from 'src/app/app.service';
 import { GetUser, Public } from 'src/auth/decorator';
-import { LoginDto } from 'src/auth/dto';
+import { ChangePasswordDto, IJwtPayload, LoginDto } from 'src/auth/dto';
 import { ROLES } from 'src/auth/constants';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateNewsDto } from './dto';
+import { NewsCreateDto } from 'src/model/news/dto';
+import { EventCreateDto } from 'src/model/event/dto';
+import { PaginationDto } from 'src/common/dto';
+import { ParseIntPipe } from 'src/common/pipe';
+import { UserCreateDto } from 'src/model/user/dto';
+import { GENDERS } from 'src/common/constants';
 
 @Controller()
 export class AppController {
@@ -27,7 +32,7 @@ export class AppController {
   @Public()
   @UseGuards(JwtCookiePublishGuard)
   @Get('login')
-  loginGet(@GetUser() user, @Res() res) {
+  loginGet(@GetUser() user: IJwtPayload, @Res() res: Response) {
     return this.appService.checkLogin(user, res, 'login', {
       title: 'Đăng nhập',
       css: 'login.css',
@@ -37,23 +42,19 @@ export class AppController {
 
   @Public()
   @Post('login')
-  loginPost(@Body() body: LoginDto, @Res() res) {
+  loginPost(@Body() body: LoginDto, @Res() res: Response) {
     return this.appService.login(body, res);
   }
 
   @Get('signout')
-  signOut(@Res() res) {
+  signOut(@Res() res: Response) {
     return this.appService.signOut(res);
   }
 
   @Get()
   @Render('home')
-  root(
-    @Query('page') page,
-    @Query('quantity') quantity,
-    @Query('keySearch') keySearch,
-  ) {
-    return this.appService.news(page, quantity, keySearch);
+  root(@Query() query: PaginationDto) {
+    return this.appService.news(query.page, query.per_page, query.key_search);
   }
 
   @Get('news/create')
@@ -75,84 +76,124 @@ export class AppController {
 
   @Post('news/create')
   @UseInterceptors(FileInterceptor('thumbnail'))
-  newsCreatePost(@UploadedFile() thumbnail, @Body() body: CreateNewsDto) {
-    return this.appService.createNews(thumbnail, body);
+  newsCreatePost(@Body() body: NewsCreateDto, @UploadedFile() thumbnail) {
+    return this.appService.createNews(body, thumbnail);
   }
 
-  @Get('news/edit/:newsId')
+  @Get('news/:newsId/edit')
   @Render('news-create')
-  newsEditGet(@Param('newsId') newsId) {
+  newsEditGet(@Param('newsId', new ParseIntPipe()) newsId) {
     return this.appService.getNews(newsId);
   }
 
-  @Post('news/edit/:newsId')
+  @Post('news/:newsId/edit')
   @UseInterceptors(FileInterceptor('thumbnail'))
   newsEditPost(
-    @Param('newsId') newsId,
+    @Param('newsId', new ParseIntPipe()) newsId,
+    @Body() body: NewsCreateDto,
     @UploadedFile() thumbnail,
-    @Body() body: CreateNewsDto,
   ) {
-    return this.appService.updateNews(newsId, thumbnail, body);
+    return this.appService.updateNews(newsId, body, thumbnail);
+  }
+
+  @Get('news/:newsId/delete')
+  newsDelete(
+    @Param('newsId', new ParseIntPipe()) newsId,
+    @Res() res: Response,
+  ) {
+    return this.appService.deleteNews(newsId, res);
   }
 
   @Get('event')
   @Render('event')
-  event(
-    @Query('page') page,
-    @Query('quantity') quantity,
-    @Query('keySearch') keySearch,
-  ) {
-    return this.appService.event(page, quantity, keySearch);
+  event(@Query() query: PaginationDto) {
+    return this.appService.event(query.page, query.per_page, query.key_search);
   }
 
   @Get('event/create')
   @Render('event-create')
-  eventCreate() {
+  eventCreateGet() {
     return {
       title: 'Tạo sự kiện mới',
       css: 'event-create.css',
+      js: 'event-create.js',
       header: true,
     };
   }
 
-  @Get('event/edit/:eventId')
+  @Post('event/create')
+  eventCreatePost(@Body() body: EventCreateDto) {
+    return this.appService.createEvent(body);
+  }
+
+  @Get('event/:eventId/edit')
   @Render('event-create')
-  eventEdit() {
-    return {
-      title: 'Chỉnh sửa sự kiện',
-      css: 'event-create.css',
-      header: true,
-      edit: true,
-    };
+  eventEditGet(@Param('eventId', new ParseIntPipe()) eventId) {
+    return this.appService.getEvent(eventId);
+  }
+
+  @Post('event/:eventId/edit')
+  eventEditPost(
+    @Param('eventId', new ParseIntPipe()) eventId,
+    @Body() body: EventCreateDto,
+  ) {
+    return this.appService.updateEvent(eventId, body);
+  }
+
+  @Get('event/:eventId/delete')
+  eventDelete(
+    @Param('eventId', new ParseIntPipe()) eventId,
+    @Res() res: Response,
+  ) {
+    return this.appService.deleteEvent(eventId, res);
   }
 
   @Get('employee')
   @Render('employee')
-  employee(
-    @Query('page') page,
-    @Query('quantity') quantity,
-    @Query('keySearch') keySearch,
-  ) {
-    return this.appService.employee(page, quantity, keySearch);
+  employee(@Query() query: PaginationDto) {
+    return this.appService.employee(
+      query.page,
+      query.per_page,
+      query.key_search,
+    );
   }
 
   @Get('employee/create')
   @Render('employee-create')
-  employeeCreate() {
+  employeeCreateGet() {
     return {
       title: 'Tạo nhân viên mới',
       css: 'employee-create.css',
+      js: 'employee-create.js',
       header: true,
       data: {
+        sex: GENDERS,
         roles: ROLES,
       },
     };
   }
 
+  @Post('employee/create')
+  @UseInterceptors(FileInterceptor('avatar'))
+  employeeCreatePost(@Body() body: UserCreateDto, @UploadedFile() avatar) {
+    return this.appService.createEmployee(body, avatar);
+  }
+
   @Get('employee/:username/information')
   @Render('employee-detail-information')
-  employeeInformationDetail(@Param('username') username) {
+  employeeInformationDetailGet(@Param('username') username) {
     return this.appService.employeeInformationDetail(username);
+  }
+
+  @Post('employee/:username/information')
+  @UseInterceptors(FileInterceptor('avatar'))
+  @Render('employee-detail-information')
+  employeeInformationDetailPost(
+    @Param('username') username,
+    @Body() body: UserCreateDto,
+    @UploadedFile() avatar,
+  ) {
+    return this.appService.updateEmployee(username, body, avatar);
   }
 
   @Get('employee/:username/salary')
@@ -199,6 +240,15 @@ export class AppController {
     };
   }
 
+  @Get('employee/:username/delete')
+  employeeDelete(
+    @GetUser() jwtPayload: IJwtPayload,
+    @Param('username') username,
+    @Res() res: Response,
+  ) {
+    return this.appService.deleteAccount(jwtPayload, username, res);
+  }
+
   @Get('employee/:username')
   employeeDetail(@Param('username') username, @Res() res: Response) {
     return res.redirect(`${username}/information`);
@@ -227,8 +277,18 @@ export class AppController {
 
   @Get('profile')
   @Render('profile')
-  profile(@GetUser() user) {
+  profileGet(@GetUser() user) {
     return this.appService.profile(user);
+  }
+
+  @Post('profile')
+  @Render('profile')
+  profilePost(
+    @GetUser() user,
+    @Body() body: ChangePasswordDto,
+    @Query('action') action,
+  ) {
+    return this.appService.changePassword(user, body, action);
   }
 
   @Post('file')
@@ -238,7 +298,10 @@ export class AppController {
   }
 
   @Get('file/:fileId')
-  getFile(@Param('fileId') fileId, @Res({ passthrough: true }) res) {
+  getFile(
+    @Param('fileId', new ParseIntPipe()) fileId,
+    @Res({ passthrough: true }) res,
+  ) {
     return this.appService.getFile(fileId, res);
   }
 }

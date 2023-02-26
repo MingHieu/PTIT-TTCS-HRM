@@ -10,11 +10,6 @@
   border-style: hidden;
 }
 
-#attendance-tab tr:not(thead tr):hover {
-  background-color: #ddd;
-  cursor: pointer;
-}
-
 #attendance-tab th,
 #attendance-tab td {
   padding: 15px 10px;

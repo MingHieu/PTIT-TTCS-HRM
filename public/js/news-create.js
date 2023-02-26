@@ -10,7 +10,6 @@ thumbnailUpload.addEventListener('change', (e) => {
   const reader = new FileReader();
 
   reader.onload = (e) => {
-    console.log(e);
     thumbnailPreview.src = e.target.result;
     thumbnailPreview.style.display = 'block';
   };
@@ -24,7 +23,7 @@ thumbnailUpload.addEventListener('change', (e) => {
 });
 
 // Content
-const editorJS = new EditorJS({
+let editorJS = new EditorJS({
   /**
    * Id of Element that should contain the Editor
    */
@@ -52,6 +51,11 @@ const editorJS = new EditorJS({
 });
 
 const form = useQuery('form');
+form.onreset = () => {
+  thumbnailPreview.src = '';
+  thumbnailPreview.style.display = 'none';
+};
+
 form.onsubmit = (e) => {
   e.preventDefault();
   showLoading();
@@ -75,6 +79,10 @@ form.onsubmit = (e) => {
           ? 'Chỉnh sửa thành công'
           : 'Tạo mới thành công',
       );
+      if (!location.pathname.includes('edit')) {
+        form.reset();
+        editorJS.blocks.clear();
+      }
     })
     .catch((e) => {
       console.log(e);
@@ -88,4 +96,22 @@ form.onsubmit = (e) => {
         false,
       );
     });
+};
+
+useQuery('a[href="delete"').onclick = (e) => {
+  e.preventDefault();
+  Swal.fire({
+    title: 'Bạn có chắc muốn xoá bản tin này?',
+    icon: 'warning',
+    showCancelButton: true,
+    cancelButtonText: 'Huỷ',
+    confirmButtonText: 'Đồng ý',
+    confirmButtonColor: 'red',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      location.replace(
+        `${location.origin}/news/${location.pathname.split('/')[2]}/delete`,
+      );
+    }
+  });
 };

@@ -2,6 +2,7 @@ import { FileService } from 'src/model/file/file.service';
 import { Injectable } from '@nestjs/common';
 import { SUCCESS_RESPONSE } from 'src/common/constants';
 import { PrismaService } from 'src/database/prisma/prisma.service';
+import { NewsCreateDto, NewsUpdateDto } from './dto';
 
 @Injectable()
 export class NewsService {
@@ -10,23 +11,22 @@ export class NewsService {
     private fileService: FileService,
   ) {}
 
-  async create(thumbnail, name, content) {
-    const thumbnailUploadedFile = await this.fileService.create(thumbnail);
+  async create(body: NewsCreateDto, thumbnail?: File) {
+    if (thumbnail) {
+      const thumbnailUploadedFile = await this.fileService.create(thumbnail);
+      Object.assign(body, { thumbnail: thumbnailUploadedFile.url });
+    }
+
     await this.prisma.news.create({
       data: {
-        thumbnail: thumbnailUploadedFile.url,
-        name,
-        content,
+        ...body,
       },
     });
     return SUCCESS_RESPONSE;
   }
 
-  async update(id, thumbnail, name, content) {
-    const data = {
-      name,
-      content,
-    };
+  async update(body: NewsUpdateDto, thumbnail?: File) {
+    const { id, ...data } = body;
 
     if (thumbnail) {
       const thumbnailUploadedFile = await this.fileService.create(thumbnail);
@@ -40,27 +40,33 @@ export class NewsService {
     return SUCCESS_RESPONSE;
   }
 
-  async getOne(id) {
+  async getOne(id: number) {
     const news = await this.prisma.news.findFirst({
       where: { id },
     });
     return news;
   }
 
-  async getMany(page: number, take: number, keySearch: string) {
+  async getMany(page: number, perPage: number, keySearch: string) {
     console.log(keySearch);
     const news = await this.prisma.news.findMany({
       where: { name: { contains: keySearch } },
-      skip: page * take,
-      take,
+      skip: page * perPage,
+      take: perPage,
+      orderBy: { createAt: 'desc' },
     });
     const totalNews = await this.prisma.news.count();
     return {
       data: news,
       page,
-      per_page: take,
+      per_page: perPage,
       page_size: news.length,
       total: totalNews,
     };
+  }
+
+  async delete(id: number) {
+    await this.prisma.news.delete({ where: { id } });
+    return SUCCESS_RESPONSE;
   }
 }

@@ -11,7 +11,7 @@ import { Response } from 'express';
 export class FileService {
   constructor(private prisma: PrismaService) {}
 
-  async create(file) {
+  async create(file: File) {
     const fileUploaded = await this.prisma.file.create({
       data: { content: convertFileToBase64(file) },
     });

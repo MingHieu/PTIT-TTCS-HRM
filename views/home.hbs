@@ -2,7 +2,7 @@
 
 <div class="news-list-header">
     <form class="search-container">
-        <input type="text" class="search-input" name="keySearch" placeholder="Tìm kiếm...">
+        <input type="text" class="search-input" name="key_search" placeholder="Tìm kiếm...">
         <i class="fa fa-search search-btn"></i>
     </form>
     <a href="/news/create" class="create-new">Tạo bản tin mới</a>
@@ -21,7 +21,7 @@
                 <p class="news-item__create-at">{{formatDateTime this.createAt}}</p>
             </div>
             <div class="news-item__footer">
-                <a href="/news/edit/{{this.id}}" class="news-item__edit-btn">Chỉnh sửa</a>
+                <a href="/news/{{this.id}}/edit" class="news-item__edit-btn">Chỉnh sửa</a>
             </div>
         </div>
     </div>

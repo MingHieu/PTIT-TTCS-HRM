@@ -165,12 +165,8 @@
     padding-right: 0;
     white-space: nowrap;
     position: static;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-
-  .tabs:hover {
     overflow-x: scroll;
+    margin-bottom: 1rem;
   }
 
   .tab-links {
