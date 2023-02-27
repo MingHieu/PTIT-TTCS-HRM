@@ -72,14 +72,22 @@ export class AppService {
     return res.redirect('/login');
   }
 
+  async home() {
+    return {
+      title: 'Trang chủ',
+      css: 'news.css',
+      header: true,
+    };
+  }
+
   async news(page: number, perPage: number, keySearch: string) {
     if (!page) page = 1;
     if (!perPage) perPage = 10;
     if (!keySearch) keySearch = '';
     const data = await this.#news.getMany(page - 1, perPage, keySearch);
     return {
-      title: 'Trang chủ',
-      css: 'home.css',
+      title: 'Bản tin',
+      css: 'news.css',
       header: true,
       pagination: true,
       data,

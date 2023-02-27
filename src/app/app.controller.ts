@@ -53,7 +53,13 @@ export class AppController {
 
   @Get()
   @Render('home')
-  root(@Query() query: PaginationDto) {
+  root() {
+    return this.appService.home();
+  }
+
+  @Get('news')
+  @Render('news')
+  news(@Query() query: PaginationDto) {
     return this.appService.news(query.page, query.per_page, query.key_search);
   }
 
