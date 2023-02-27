@@ -75,8 +75,13 @@ export class AppService {
   async home() {
     return {
       title: 'Trang chủ',
-      css: 'news.css',
+      css: 'home.css',
+      js: 'home.js',
+      jsLibrary: [
+        '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>',
+      ],
       header: true,
+      layout: 'other',
     };
   }
 

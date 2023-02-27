@@ -57,103 +57,6 @@ export class AppController {
     return this.appService.home();
   }
 
-  @Get('news')
-  @Render('news')
-  news(@Query() query: PaginationDto) {
-    return this.appService.news(query.page, query.per_page, query.key_search);
-  }
-
-  @Get('news/create')
-  @Render('news-create')
-  newsCreateGet() {
-    return {
-      title: 'Tạo bản tin mới',
-      css: 'news-create.css',
-      js: 'news-create.js',
-      header: true,
-      jsLibrary: [
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/nested-list@latest"></script>',
-      ],
-    };
-  }
-
-  @Post('news/create')
-  @UseInterceptors(FileInterceptor('thumbnail'))
-  newsCreatePost(@Body() body: NewsCreateDto, @UploadedFile() thumbnail) {
-    return this.appService.createNews(body, thumbnail);
-  }
-
-  @Get('news/:newsId/edit')
-  @Render('news-create')
-  newsEditGet(@Param('newsId', new ParseIntPipe()) newsId) {
-    return this.appService.getNews(newsId);
-  }
-
-  @Post('news/:newsId/edit')
-  @UseInterceptors(FileInterceptor('thumbnail'))
-  newsEditPost(
-    @Param('newsId', new ParseIntPipe()) newsId,
-    @Body() body: NewsCreateDto,
-    @UploadedFile() thumbnail,
-  ) {
-    return this.appService.updateNews(newsId, body, thumbnail);
-  }
-
-  @Get('news/:newsId/delete')
-  newsDelete(
-    @Param('newsId', new ParseIntPipe()) newsId,
-    @Res() res: Response,
-  ) {
-    return this.appService.deleteNews(newsId, res);
-  }
-
-  @Get('event')
-  @Render('event')
-  event(@Query() query: PaginationDto) {
-    return this.appService.event(query.page, query.per_page, query.key_search);
-  }
-
-  @Get('event/create')
-  @Render('event-create')
-  eventCreateGet() {
-    return {
-      title: 'Tạo sự kiện mới',
-      css: 'event-create.css',
-      js: 'event-create.js',
-      header: true,
-    };
-  }
-
-  @Post('event/create')
-  eventCreatePost(@Body() body: EventCreateDto) {
-    return this.appService.createEvent(body);
-  }
-
-  @Get('event/:eventId/edit')
-  @Render('event-create')
-  eventEditGet(@Param('eventId', new ParseIntPipe()) eventId) {
-    return this.appService.getEvent(eventId);
-  }
-
-  @Post('event/:eventId/edit')
-  eventEditPost(
-    @Param('eventId', new ParseIntPipe()) eventId,
-    @Body() body: EventCreateDto,
-  ) {
-    return this.appService.updateEvent(eventId, body);
-  }
-
-  @Get('event/:eventId/delete')
-  eventDelete(
-    @Param('eventId', new ParseIntPipe()) eventId,
-    @Res() res: Response,
-  ) {
-    return this.appService.deleteEvent(eventId, res);
-  }
-
   @Get('employee')
   @Render('employee')
   employee(@Query() query: PaginationDto) {
@@ -260,6 +163,50 @@ export class AppController {
     return res.redirect(`${username}/information`);
   }
 
+  @Get('event')
+  @Render('event')
+  event(@Query() query: PaginationDto) {
+    return this.appService.event(query.page, query.per_page, query.key_search);
+  }
+
+  @Get('event/create')
+  @Render('event-create')
+  eventCreateGet() {
+    return {
+      title: 'Tạo sự kiện mới',
+      css: 'event-create.css',
+      js: 'event-create.js',
+      header: true,
+    };
+  }
+
+  @Post('event/create')
+  eventCreatePost(@Body() body: EventCreateDto) {
+    return this.appService.createEvent(body);
+  }
+
+  @Get('event/:eventId/edit')
+  @Render('event-create')
+  eventEditGet(@Param('eventId', new ParseIntPipe()) eventId) {
+    return this.appService.getEvent(eventId);
+  }
+
+  @Post('event/:eventId/edit')
+  eventEditPost(
+    @Param('eventId', new ParseIntPipe()) eventId,
+    @Body() body: EventCreateDto,
+  ) {
+    return this.appService.updateEvent(eventId, body);
+  }
+
+  @Get('event/:eventId/delete')
+  eventDelete(
+    @Param('eventId', new ParseIntPipe()) eventId,
+    @Res() res: Response,
+  ) {
+    return this.appService.deleteEvent(eventId, res);
+  }
+
   @Get('request')
   @Render('request')
   request() {
@@ -279,6 +226,59 @@ export class AppController {
       css: 'request-detail.css',
       header: true,
     };
+  }
+
+  @Get('news')
+  @Render('news')
+  news(@Query() query: PaginationDto) {
+    return this.appService.news(query.page, query.per_page, query.key_search);
+  }
+
+  @Get('news/create')
+  @Render('news-create')
+  newsCreateGet() {
+    return {
+      title: 'Tạo bản tin mới',
+      css: 'news-create.css',
+      js: 'news-create.js',
+      header: true,
+      jsLibrary: [
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/nested-list@latest"></script>',
+      ],
+    };
+  }
+
+  @Post('news/create')
+  @UseInterceptors(FileInterceptor('thumbnail'))
+  newsCreatePost(@Body() body: NewsCreateDto, @UploadedFile() thumbnail) {
+    return this.appService.createNews(body, thumbnail);
+  }
+
+  @Get('news/:newsId/edit')
+  @Render('news-create')
+  newsEditGet(@Param('newsId', new ParseIntPipe()) newsId) {
+    return this.appService.getNews(newsId);
+  }
+
+  @Post('news/:newsId/edit')
+  @UseInterceptors(FileInterceptor('thumbnail'))
+  newsEditPost(
+    @Param('newsId', new ParseIntPipe()) newsId,
+    @Body() body: NewsCreateDto,
+    @UploadedFile() thumbnail,
+  ) {
+    return this.appService.updateNews(newsId, body, thumbnail);
+  }
+
+  @Get('news/:newsId/delete')
+  newsDelete(
+    @Param('newsId', new ParseIntPipe()) newsId,
+    @Res() res: Response,
+  ) {
+    return this.appService.deleteNews(newsId, res);
   }
 
   @Get('profile')

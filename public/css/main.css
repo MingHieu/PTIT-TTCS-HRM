@@ -149,3 +149,9 @@ input:focus {
 .pagination__button {
   margin: 10px;
 }
+
+@media (max-width: 1200px) {
+  main {
+    border-radius: 0;
+  }
+}

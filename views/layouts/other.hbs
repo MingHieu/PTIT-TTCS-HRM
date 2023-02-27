@@ -10,14 +10,40 @@
         type="text/css" />
     <link rel="stylesheet" href="/css/main.css">
 
+    {{#if cssLibrary}}
+    {{#each cssLibrary}}
+    {{{this}}}
+    {{/each}}
+    {{/if}}
+
+    {{#if header}}
+    <link rel="stylesheet" href="/css/header.css">
+    {{/if}}
+
     {{#if css}}
     <link rel="stylesheet" href="/css/{{css}}">
     {{/if}}
 </head>
 
 <body>
+    {{#if header}}
+    {{> header}}
+    {{/if}}
 
     {{{body}}}
+
+    {{#if jsLibrary}}
+    {{#each jsLibrary}}
+    {{{this}}}
+    {{/each}}
+    {{/if}}
+
+
+    <script src="/js/main.js"></script>
+
+    {{#if header}}
+    <script src="/js/header.js"></script>
+    {{/if}}
 
     {{#if js}}
     <script src="/js/{{js}}"></script>
