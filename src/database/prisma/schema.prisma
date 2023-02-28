@@ -27,11 +27,13 @@ model User {
     token String?
     role  String
 
-    events      Event[]
-    projects    Project[]
-    requests    Request[]
-    salaries    Salary[]
-    attendances Attendance[]
+    events           Event[]
+    projectsAsLeader Project[]    @relation("leader")
+    projectsAsMember Project[]    @relation("members")
+    requests         Request[]
+    salaries         Salary[]
+    attendances      Attendance[]
+    skills           Skill[]
 }
 
 model Attendance {
@@ -58,43 +60,15 @@ model Request {
     id       Int      @id @default(autoincrement())
     createAt DateTime @default(now())
 
-    name String
-    type Int
-
-    dayOffRequest   DayOffRequest? @relation(fields: [dayOffRequestId], references: [id])
-    dayOffRequestId Int?
-
-    salaryRequest   SalaryRequest? @relation(fields: [salaryRequestId], references: [id])
-    salaryRequestId Int?
-
-    supportRequest   SupportRequest? @relation(fields: [supportRequestId], references: [id])
-    supportRequestId Int?
-
-    sender User @relation(fields: [userId], references: [id])
-    userId Int
+    name    String
+    content Json
+    type    Int
 
     status Int
     reply  String?
-}
 
-model DayOffRequest {
-    id      Int       @id @default(autoincrement())
-    reason  Int
-    content String?
-    Request Request[]
-}
-
-model SalaryRequest {
-    id      Int       @id @default(autoincrement())
-    reason  Int
-    content String?
-    Request Request[]
-}
-
-model SupportRequest {
-    id      Int       @id @default(autoincrement())
-    content String
-    Request Request[]
+    sender User @relation(fields: [userId], references: [id])
+    userId Int
 }
 
 model News {
@@ -125,9 +99,22 @@ model Project {
     finishAt DateTime?
 
     name    String
+    skills  Skill[]
     content Json
 
-    participants User[]
+    leader   User @relation("leader", fields: [leaderId], references: [id])
+    leaderId Int
+
+    members User[] @relation("members")
+}
+
+model Skill {
+    id   Int    @id @default(autoincrement())
+    name String
+    type Int
+
+    projects Project[]
+    users    User[]
 }
 
 model Notification {
