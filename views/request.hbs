@@ -25,36 +25,18 @@
             </tr>
         </thead>
         <tbody>
+            {{#each data.data}}
             <tr>
-                <td><a href="/request/1">1</a></td>
-                <td><a href="/request/1">John Doe</a></td>
-                <td><a href="/request/1">nvwebapp01</a></td>
-                <td><a href="/request/1">Xin nghỉ phép</a></td>
-                <td><a href="/request/1">01/02/2023</a></td>
-                <td data-status="0"><a href="/request/1">
-                        <span>Đã duyệt</span>
+                <td><a href="/request/{{this.id}}">{{formatIndex @index}}</a></td>
+                <td><a href="/request/{{this.id}}">{{this.sender.name}}</a></td>
+                <td><a href="/request/{{this.id}}">{{this.sender.username}}</a></td>
+                <td><a href="/request/{{this.id}}">{{this.name}}</a></td>
+                <td><a href="/request/{{this.id}}">{{formatDate this.createAt}}</a></td>
+                <td data-status="{{this.status}}"><a href="/request/{{this.id}}">
+                        <span>{{formatRequestStatus this.status}}</span>
                     </a></td>
             </tr>
-            <tr>
-                <td><a href="/request/2">2</a></td>
-                <td><a href="/request/2">Jane Smith</a></td>
-                <td><a href="/request/2">nvwebapp02</a></td>
-                <td><a href="/request/2">Xin làm thêm giờ</a></td>
-                <td><a href="/request/2">28/01/2023</a></td>
-                <td data-status="1"><a href="/request/1">
-                        <span>Đang chờ duyệt</span>
-                    </a></td>
-            </tr>
-            <tr>
-                <td><a href="/request/3">3</a></td>
-                <td><a href="/request/3">Bob Johnson</a></td>
-                <td><a href="/request/3">nvwebapp03</a></td>
-                <td><a href="/request/3">Xin đi công tác</a></td>
-                <td><a href="/request/3">15/01/2023</a></td>
-                <td data-status="2"><a href="/request/1">
-                        <span>Từ chối</span>
-                    </a></td>
-            </tr>
+            {{/each}}
         </tbody>
     </table>
 </div>

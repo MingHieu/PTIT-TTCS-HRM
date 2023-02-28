@@ -5,13 +5,23 @@
   text-transform: uppercase;
 }
 
+.container img {
+  display: block;
+  max-width: 200px;
+  max-height: 200px;
+  margin-inline: auto;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
 .container label {
   display: block;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-.container input {
+.container input,
+.container textarea {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -19,6 +29,7 @@
   margin-bottom: 10px;
   background: #fff;
   color: #333;
+  resize: none;
 }
 
 .container input[data-status='0'] {

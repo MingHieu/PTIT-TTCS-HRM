@@ -61,14 +61,14 @@ model Request {
     createAt DateTime @default(now())
 
     name    String
-    content Json
+    content String?
     type    Int
 
     status Int
     reply  String?
 
-    sender User @relation(fields: [userId], references: [id])
-    userId Int
+    sender User @relation(fields: [senderUsername], references: [username])
+    senderUsername String
 }
 
 model News {
@@ -99,19 +99,19 @@ model Project {
     finishAt DateTime?
 
     name    String
-    skills  Skill[]
     content Json
+    skills  Skill[]
+    status  Int
 
-    leader   User @relation("leader", fields: [leaderId], references: [id])
-    leaderId Int
+    leader         User   @relation("leader", fields: [leaderUsername], references: [username])
+    leaderUsername String
 
     members User[] @relation("members")
 }
 
 model Skill {
     id   Int    @id @default(autoincrement())
-    name String
-    type Int
+    name String @unique
 
     projects Project[]
     users    User[]

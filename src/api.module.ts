@@ -10,6 +10,8 @@ import { RequestModule } from './model/request/request.module';
 import { EventModule } from './model/event/event.module';
 import { NotificationModule } from './model/notification/notification.module';
 import { FileModule } from './model/file/file.module';
+import { ProjectModule } from './model/project/project.module';
+import { SkillModule } from './model/skill/skill.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { FileModule } from './model/file/file.module';
     EventModule,
     NotificationModule,
     FileModule,
+    ProjectModule,
+    SkillModule,
   ],
   controllers: [],
   providers: [],

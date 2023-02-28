@@ -46,6 +46,11 @@ input:focus {
   border: 1px solid var(--infor-color) !important;
 }
 
+a {
+  text-decoration: none;
+  color: var(--primary-text-color);
+}
+
 .btn {
   display: inline-block;
   border-radius: 10px;

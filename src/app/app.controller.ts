@@ -24,6 +24,8 @@ import { PaginationDto } from 'src/common/dto';
 import { ParseIntPipe } from 'src/common/pipe';
 import { UserCreateDto } from 'src/model/user/dto';
 import { GENDERS } from 'src/common/constants';
+import { ProjectCreateDto } from 'src/model/project/dto';
+import { RequestUpdateDto } from 'src/model/request/dto';
 
 @Controller()
 export class AppController {
@@ -57,10 +59,58 @@ export class AppController {
     return this.appService.home();
   }
 
-  @Get('/project')
+  @Get('project')
   @Render('project')
-  project() {
-    return this.appService.project();
+  project(@Query() query: PaginationDto) {
+    return this.appService.project(
+      query.page,
+      query.per_page,
+      query.key_search,
+    );
+  }
+
+  @Get('project/create')
+  @Render('project-create')
+  projectCreateGet() {
+    return {
+      title: 'Tạo dự án mới',
+      css: 'project-create.css',
+      js: 'project-create.js',
+      header: true,
+      data: {
+        sex: GENDERS,
+        roles: ROLES,
+      },
+    };
+  }
+
+  @Post('project/create')
+  projectCreatePost(@Body() body: ProjectCreateDto) {
+    return this.appService.createProject(body);
+  }
+
+  @Get('project/:projectId/edit')
+  @Render('project-create')
+  projectEditGet() {
+    return {
+      title: 'Chỉnh sửa dự án',
+      css: 'project-create.css',
+      js: 'project-create.js',
+      header: true,
+      edit: true,
+      data: {
+        sex: GENDERS,
+        roles: ROLES,
+      },
+    };
+  }
+
+  @Post('project/:projectId/edit')
+  projectEditPost(
+    @Param('projectId') projectId,
+    @Body() body: ProjectCreateDto,
+  ) {
+    return this.appService.updateProject(projectId, body);
   }
 
   @Get('employee')
@@ -144,6 +194,17 @@ export class AppController {
     };
   }
 
+  @Get('employee/:username/project')
+  @Render('employee-detail-project')
+  employeeProjectDetail() {
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-project.css',
+      project: true,
+      layout: 'employee-detail',
+    };
+  }
+
   @Get('employee/:username/event')
   @Render('employee-detail-event')
   employeeEventDetail() {
@@ -215,23 +276,27 @@ export class AppController {
 
   @Get('request')
   @Render('request')
-  request() {
-    return {
-      title: 'Danh sách yêu cầu',
-      css: 'request.css',
-      header: true,
-      // pagination: true,
-    };
+  request(@Query() query: PaginationDto) {
+    return this.appService.request(
+      query.page,
+      query.per_page,
+      query.key_search,
+    );
   }
 
   @Get('request/:requestId')
   @Render('request-detail')
-  requestDetail() {
-    return {
-      title: 'Chi tiết yêu cầu',
-      css: 'request-detail.css',
-      header: true,
-    };
+  requestDetailGet(@Param('requestId', new ParseIntPipe()) requestId) {
+    return this.appService.getRequest(requestId);
+  }
+
+  @Post('request/:requestId')
+  @Render('request-detail')
+  requestDetailPost(
+    @Param('requestId', new ParseIntPipe()) requestId,
+    @Body('status') status: RequestUpdateDto['status'],
+  ) {
+    return this.appService.updateRequest(requestId, status);
   }
 
   @Get('news')

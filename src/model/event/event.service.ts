@@ -36,7 +36,9 @@ export class EventService {
       where: { name: { contains: keySearch } },
       skip: page * perPage,
       take: perPage,
-      include: { participants: true },
+      include: {
+        participants: { select: { name: true, username: true, avatar: true } },
+      },
       orderBy: { createAt: 'desc' },
     });
     const totalEvent = await this.prisma.event.count();

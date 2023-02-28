@@ -14,6 +14,9 @@ import { NewsCreateDto } from 'src/model/news/dto';
 import { EventCreateDto } from 'src/model/event/dto';
 import { UserCreateDto } from 'src/model/user/dto';
 import { GENDERS } from 'src/common/constants';
+import { ProjectCreateDto } from 'src/model/project/dto';
+import { ProjectService } from 'src/model/project/project.service';
+import { RequestService } from 'src/model/request/request.service';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -23,6 +26,9 @@ export class AppService {
   #event: EventService;
   #user: UserService;
   #file: FileService;
+  #project: ProjectService;
+  #request: RequestService;
+
   constructor() {
     this.init();
   }
@@ -35,6 +41,8 @@ export class AppService {
     this.#event = this.#api.get(EventService);
     this.#user = this.#api.get(UserService);
     this.#file = this.#api.get(FileService);
+    this.#project = this.#api.get(ProjectService);
+    this.#request = this.#api.get(RequestService);
   }
 
   checkLogin(jwtPayload: IJwtPayload, res: Response, view, renderOptions) {
@@ -96,12 +104,50 @@ export class AppService {
     };
   }
 
-  async project() {
+  async project(page: number, perPage: number, keySearch: string) {
+    if (!page) page = 1;
+    if (!perPage) perPage = 10;
+    if (!keySearch) keySearch = '';
+    const data = await this.#project.getMany(page - 1, perPage, keySearch);
+
     return {
       title: 'Dự án',
       css: 'project.css',
       header: true,
+      pagination: true,
+      data,
     };
+  }
+
+  async createProject(body: ProjectCreateDto) {
+    return this.#project.create(body);
+  }
+
+  async updateProject(id: number, body: ProjectCreateDto) {
+    return this.#project.update({ ...body, id });
+  }
+
+  async getProject(id: number) {
+    const renderOptions = {
+      title: 'Chỉnh sửa bản tin',
+      css: 'news-create.css',
+      js: 'news-create.js',
+      header: true,
+      jsLibrary: [
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>',
+        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/nested-list@latest"></script>',
+      ],
+      edit: true,
+    };
+    const news = await this.#project.getOne(id);
+    return { ...renderOptions, data: { news } };
+  }
+
+  async deleteProject(id: number, res: Response) {
+    await this.#project.delete(id);
+    return res.redirect('/project');
   }
 
   async news(page: number, perPage: number, keySearch: string) {
@@ -146,7 +192,7 @@ export class AppService {
 
   async deleteNews(id: number, res: Response) {
     await this.#news.delete(id);
-    return res.redirect('/');
+    return res.redirect('/news');
   }
 
   async event(page: number, perPage: number, keySearch: string) {
@@ -249,6 +295,30 @@ export class AppService {
       return this.signOut(res);
     }
     return res.redirect('/employee');
+  }
+
+  async request(page: number, perPage: number, keySearch: string) {
+    if (!page) page = 1;
+    if (!perPage) perPage = 10;
+    if (!keySearch) keySearch = '';
+    const data = await this.#request.getMany(page - 1, perPage, keySearch);
+    return {
+      title: 'Danh sách yêu cầu',
+      css: 'request.css',
+      header: true,
+      pagination: true,
+      data,
+    };
+  }
+
+  async getRequest(id: number) {
+    const renderOptions = {
+      title: 'Chi tiết yêu cầu',
+      css: 'request-detail.css',
+      header: true,
+    };
+    const request = await this.#request.getOne(id);
+    return { ...renderOptions, data: { request } };
   }
 
   async profile(jwtPayload: IJwtPayload) {
