@@ -57,3 +57,7 @@ useQuery('a[href="delete"').onclick = (e) => {
     }
   });
 };
+
+useQuery('#show-modal').onclick = () => {
+  showModal();
+};

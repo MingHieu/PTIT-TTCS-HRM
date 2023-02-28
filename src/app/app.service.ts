@@ -1,3 +1,4 @@
+import { REQUEST_STATUS } from './../model/request/constants/request-status';
 import { PrismaClient } from '@prisma/client';
 import { INestApplication, Injectable } from '@nestjs/common';
 import { Response } from 'express';
@@ -17,6 +18,7 @@ import { GENDERS } from 'src/common/constants';
 import { ProjectCreateDto } from 'src/model/project/dto';
 import { ProjectService } from 'src/model/project/project.service';
 import { RequestService } from 'src/model/request/request.service';
+import { RequestUpdateDto } from 'src/model/request/dto';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -64,6 +66,8 @@ export class AppService {
       res.cookie('jwt_token', user.token, {
         httpOnly: true,
       });
+      res.cookie('user_avatar', user.avatar);
+      res.cookie('username', user.username);
       return res.redirect('/');
     } catch (e) {
       return res.render('login', {
@@ -85,6 +89,8 @@ export class AppService {
     const projectCount = await this.#prisma.project.count();
     const eventCount = await this.#prisma.event.count();
     const requestCount = await this.#prisma.request.count();
+    const userStatistic = await this.#user.statistic();
+    const projectStatistic = await this.#project.statistic();
 
     return {
       title: 'Trang chủ',
@@ -100,6 +106,8 @@ export class AppService {
         projectCount,
         eventCount,
         requestCount,
+        userStatistic: JSON.stringify(userStatistic),
+        projectStatistic: JSON.stringify(projectStatistic),
       },
     };
   }
@@ -252,8 +260,17 @@ export class AppService {
     return this.#user.create(body, avatar);
   }
 
-  async updateEmployee(username: string, body: UserCreateDto, avatar?: File) {
+  async updateEmployee(
+    jwtPayload: IJwtPayload,
+    res: Response,
+    username: string,
+    body: UserCreateDto,
+    avatar?: File,
+  ) {
     const user = await this.#user.update(username, body, avatar);
+    if (user.username === jwtPayload.username) {
+      res.cookie('user_avatar', user.avatar);
+    }
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-information.css',
@@ -311,13 +328,27 @@ export class AppService {
     };
   }
 
-  async getRequest(id: number) {
+  async getRequest(id: number, action: string) {
     const renderOptions = {
       title: 'Chi tiết yêu cầu',
       css: 'request-detail.css',
       header: true,
     };
     const request = await this.#request.getOne(id);
+    if (action && request.status === REQUEST_STATUS.pending) {
+      if (action === 'reject' || action === 'accept') {
+        const request = await this.#request.update({
+          id,
+          status:
+            action === 'reject' ? REQUEST_STATUS.reject : REQUEST_STATUS.accept,
+        });
+        return { ...renderOptions, data: { request } };
+      }
+      return {
+        ...renderOptions,
+        errorMsg: 'Thao tác không tìm thấy',
+      };
+    }
     return { ...renderOptions, data: { request } };
   }
 
@@ -335,7 +366,7 @@ export class AppService {
   async changePassword(
     jwtPayload: IJwtPayload,
     body: ChangePasswordDto,
-    action,
+    action: string,
   ) {
     const renderOptions = {
       title: 'Thông tin cá nhân',
@@ -344,18 +375,11 @@ export class AppService {
       header: true,
     };
     if (action === 'changePassword') {
-      try {
-        await this.#auth.changePassword(jwtPayload, body);
-        return {
-          ...renderOptions,
-          successMsg: 'Đổi mật khẩu thành công',
-        };
-      } catch (e) {
-        return {
-          ...renderOptions,
-          errorMsg: e.message,
-        };
-      }
+      await this.#auth.changePassword(jwtPayload, body);
+      return {
+        ...renderOptions,
+        successMsg: 'Đổi mật khẩu thành công',
+      };
     }
     return {
       ...renderOptions,

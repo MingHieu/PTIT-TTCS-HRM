@@ -23,7 +23,7 @@ if (successMsg) {
 
 const errorMsg = useQuery('#errorMsg');
 if (errorMsg) {
-  showErrorToast(errorMsg.value, false);
+  showToast(errorMsg.value, false);
 }
 
 const loader = useQuery('.loader-wrapper');
@@ -33,4 +33,17 @@ const showLoading = () => {
 
 const hideLoading = () => {
   loader.style.display = 'none';
+};
+
+const modalContainer = useQuery('.modal-container');
+if (modalContainer) {
+  modalContainer.onclick = (e) => {
+    if (e.target == modalContainer) {
+      modalContainer.style.display = 'none';
+    }
+  };
+}
+
+const showModal = () => {
+  modalContainer.style.display = 'grid';
 };

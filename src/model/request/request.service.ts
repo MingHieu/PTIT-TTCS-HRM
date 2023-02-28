@@ -17,11 +17,14 @@ export class RequestService {
 
   async update(body: RequestUpdateDto) {
     const { id, ...data } = body;
-    await this.prisma.request.update({
+    const request = await this.prisma.request.update({
       where: { id },
       data: { ...data },
+      include: {
+        sender: { select: { name: true, username: true, avatar: true } },
+      },
     });
-    return SUCCESS_RESPONSE;
+    return request;
   }
 
   async getOne(id: number) {

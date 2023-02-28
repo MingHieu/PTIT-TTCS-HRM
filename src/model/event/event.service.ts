@@ -26,6 +26,9 @@ export class EventService {
   async getOne(id: number) {
     const event = await this.prisma.event.findFirst({
       where: { id },
+      include: {
+        participants: { select: { name: true, username: true, avatar: true } },
+      },
     });
     return event;
   }

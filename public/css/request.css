@@ -44,8 +44,6 @@
 .request-list td a {
   display: block;
   padding: 15px 10px;
-
-  color: #333;
 }
 
 .request-list td:nth-child(1) {

@@ -139,7 +139,6 @@ async function seedProject() {
     create: {
       id: 1,
       startAt: new Date(),
-      finishAt: new Date(),
       name: 'Dự án chấm công bằng khuôn mặt',
       status: 1,
       content: '',
@@ -187,7 +186,9 @@ async function seedRequest() {
         status:
           REQUEST_STATUS[
             Object.keys(REQUEST_STATUS)[
-              Math.round(Math.random() * Object.keys(REQUEST_STATUS).length)
+              Math.round(
+                Math.random() * (Object.keys(REQUEST_STATUS).length - 1),
+              )
             ]
           ],
         senderUsername: 'hrwebapp01',

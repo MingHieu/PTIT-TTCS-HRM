@@ -24,7 +24,7 @@
   justify-content: center;
 }
 
-.button-wrapper button,
+.container button,
 .button-wrapper a {
   display: block;
   background-color: var(--button-background);
@@ -34,11 +34,16 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
-  margin-inline: 10px;
+}
+
+#show-modal {
+  margin-bottom: 10px;
+  margin-inline: auto;
 }
 
 .button-wrapper a {
   background-color: red;
+  margin-right: 20px;
 }
 
 .button-wrapper button:hover {
@@ -47,4 +52,54 @@
 
 .button-wrapper button:active {
   background-color: #222;
+}
+
+.participant-modal {
+  width: 100%;
+  max-width: 800px;
+}
+
+.participant-list {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: auto;
+}
+
+.participant-list table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+.participant-list tr:not(thead tr):hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.participant-list th,
+.participant-list td {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.participant-list th {
+  padding: 15px 10px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.participant-list td a {
+  display: block;
+  padding: 15px 10px;
+}
+
+.participant-list td:nth-child(1) {
+  width: 5%;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #show-modal {
+    width: 100%;
+  }
 }

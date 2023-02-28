@@ -11,7 +11,8 @@
         <input type="text" id="username" name="username" value="{{data.request.sender.username}}" disabled>
 
         <label for="createAt">Thời gian tạo yêu cầu:</label>
-        <input type="date" id="createAt" name="createAt" value="{{formatDateInput data.request.createAt}}" disabled>
+        <input type="date" id="createAt" name="createAt" {{#if
+            data.request.createAt}}value="{{formatDateInput data.request.createAt}}" {{/if}}disabled>
 
         <label for="name">Yêu cầu:</label>
         <input type="text" id="name" name="name" value="{{data.request.name}}" disabled>
@@ -25,8 +26,8 @@
 
         {{#checkRequestStatus data.request.status}}
         <div class="button-container">
-            <a href="#" class="btn reject-btn" style="margin-right:10px">Từ chối</a>
-            <a href="#" class="btn accept-btn">Chấp thuận</a>
+            <a href="?action=rejectt" class="btn reject-btn" style="margin-right:10px">Từ chối</a>
+            <a href="?action=accept" class="btn accept-btn">Chấp thuận</a>
         </div>
         {{/checkRequestStatus}}
     </form>

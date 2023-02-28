@@ -1,5 +1,6 @@
 <div class="container">
     <h1>{{title}}</h1>
+    {{#if edit}}<button id="show-modal">Danh sách người tham gia</button>{{/if}}
     <form>
         <label for="name">Tên sự kiện:</label>
         <input type="text" id="name" name="name" value="{{data.news.name}}" required>
@@ -9,7 +10,8 @@
             {{/if}} required>
 
         <label for="to">Thời gian kết thúc:</label>
-        <input type="date" id="to" name="to" {{#if data.news.to}}value="{{formatDateInput data.news.to}}" {{/if}} required>
+        <input type="date" id="to" name="to" {{#if data.news.to}}value="{{formatDateInput data.news.to}}" {{/if}}
+            required>
 
         <label for="address">Địa điểm:</label>
         <input type="text" id="address" name="address" value="{{data.news.address}}" required>
@@ -23,4 +25,32 @@
             <button type="submit">{{#if edit}}Chỉnh sửa{{else}}Tạo mới{{/if}}</button>
         </div>
     </form>
+
+    {{#if edit}}
+    <div class="modal-container">
+        <div class="modal participant-modal">
+            <h1>Danh sách người tham gia</h1>
+            <div class="participant-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Tên đăng nhập</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each data.news.participants}}
+                        <tr>
+                            <td><a href="/employee/{{this.username}}">{{formatIndex @index}}</a></td>
+                            <td><a href="/employee/{{this.username}}">{{this.name}}</a></td>
+                            <td><a href="/employee/{{this.username}}">{{this.username}}</a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{/if}}
 </div>

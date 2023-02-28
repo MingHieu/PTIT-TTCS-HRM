@@ -1,10 +1,10 @@
 import { FileService } from 'src/model/file/file.service';
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
 import { UserCreateDto } from './dto';
 import * as argon from 'argon2';
 import { SUCCESS_RESPONSE } from 'src/common/constants';
-
+import * as moment from 'moment';
 @Injectable()
 export class UserService {
   constructor(
@@ -98,6 +98,25 @@ export class UserService {
   async delete(username: string) {
     await this.prisma.user.delete({ where: { username } });
     return SUCCESS_RESPONSE;
+  }
+
+  async statistic() {
+    const data = [];
+    const date = new Date();
+    for (let i = 1; i <= date.getMonth() + 1; ++i) {
+      const startDate = moment([date.getFullYear(), i - 1]);
+      const lastDate = moment(startDate).endOf('month');
+      const userCount = await this.prisma.user.count({
+        where: {
+          joinAt: {
+            gte: startDate.toDate(),
+            lte: lastDate.toDate(),
+          },
+        },
+      });
+      data.push(userCount);
+    }
+    return data;
   }
 
   getUsername(name: string) {

@@ -14,7 +14,6 @@ header {
 }
 
 .logo a {
-  color: #333;
   font-weight: bold;
   font-size: 24px;
 }
@@ -42,8 +41,6 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #333;
-
   font-weight: bold;
 }
 
@@ -51,7 +48,7 @@ nav ul li a:last-child span {
   display: none;
 }
 
-.user-avatar {
+.user-avatar-header {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -102,7 +99,7 @@ nav ul li a:last-child span {
     background-color: #ddd;
   }
 
-  .user-avatar {
+  .user-avatar-header {
     margin-right: 10px;
   }
 

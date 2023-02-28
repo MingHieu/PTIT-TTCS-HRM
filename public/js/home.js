@@ -5,7 +5,7 @@ new Chart(useQuery('#project-dashboard__body'), {
     datasets: [
       {
         label: 'Số dự án',
-        data: [1, 3, 5, 2, 3, 0],
+        data: JSON.parse(useQuery('input[name="projectStatistic"]').value),
         borderWidth: 1,
       },
     ],
@@ -30,7 +30,7 @@ new Chart(useQuery('#employee-dashboard__body'), {
     datasets: [
       {
         label: 'Nhân viên mới',
-        data: [20, 3, 50, 0, 3, 0],
+        data: JSON.parse(useQuery('input[name="userStatistic"]').value),
       },
     ],
   },

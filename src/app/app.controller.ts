@@ -25,7 +25,6 @@ import { ParseIntPipe } from 'src/common/pipe';
 import { UserCreateDto } from 'src/model/user/dto';
 import { GENDERS } from 'src/common/constants';
 import { ProjectCreateDto } from 'src/model/project/dto';
-import { RequestUpdateDto } from 'src/model/request/dto';
 
 @Controller()
 export class AppController {
@@ -157,8 +156,16 @@ export class AppController {
     @Param('username') username,
     @Body() body: UserCreateDto,
     @UploadedFile() avatar,
+    @GetUser() jwtPayload: IJwtPayload,
+    @Res() res: Response,
   ) {
-    return this.appService.updateEmployee(username, body, avatar);
+    return this.appService.updateEmployee(
+      jwtPayload,
+      res,
+      username,
+      body,
+      avatar,
+    );
   }
 
   @Get('employee/:username/salary')
@@ -286,17 +293,11 @@ export class AppController {
 
   @Get('request/:requestId')
   @Render('request-detail')
-  requestDetailGet(@Param('requestId', new ParseIntPipe()) requestId) {
-    return this.appService.getRequest(requestId);
-  }
-
-  @Post('request/:requestId')
-  @Render('request-detail')
-  requestDetailPost(
+  requestDetailGet(
     @Param('requestId', new ParseIntPipe()) requestId,
-    @Body('status') status: RequestUpdateDto['status'],
+    @Query('action') action: string,
   ) {
-    return this.appService.updateRequest(requestId, status);
+    return this.appService.getRequest(requestId, action);
   }
 
   @Get('news')
