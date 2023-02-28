@@ -26,7 +26,7 @@
   background-color: #f9f9f9;
   color: #333;
   text-decoration: none;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 .tab-links li a[href='/signout'] {
@@ -68,7 +68,7 @@
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   margin-bottom: 10px;
   background: #fff;
   color: #333;

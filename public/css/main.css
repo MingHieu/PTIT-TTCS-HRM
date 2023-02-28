@@ -4,12 +4,15 @@
   --button-background: #333;
   --button-background-hover: #555;
   --success-color: #008a05;
-  --success-background: #bfedc1;
+  --success-background: #e0ffe1;
   --warning-color: #ffae00;
-  --warning-background: #ffecbc;
-  --error-color: #ff6161;
-  --error-background: #ffc7c7;
+  --warning-background: #fff1cf;
+  --error-color: #f54748;
+  --error-background: #fcebeb;
   --infor-color: #1cadff;
+  --primary-text-color: #333;
+  --secondary-text-color: #949494;
+  --border-color: #ddd;
 }
 
 * {
@@ -20,7 +23,7 @@
 
 body {
   font-size: 16px;
-  color: #333;
+  color: var(--primary-text-color);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
     Noto Sans, sans-serif, BlinkMacSystemFont, Oxygen, Open Sans, Helvetica Neue;
   background: rgb(247, 249, 251);
@@ -30,7 +33,6 @@ main {
   max-width: 1200px;
   margin: 50px auto;
   padding: 20px;
-  border-radius: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -89,15 +91,17 @@ input:focus {
 .search-container {
   display: flex;
   align-items: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  border: 1px solid var(--border-color);
 }
 
 .search-input {
+  width: 500px;
+  height: 100%;
   padding: 10px;
   border: none;
   border-radius: 5px;
-  width: 300px;
   font-size: 18px;
   outline: none;
 }
@@ -108,13 +112,13 @@ input:focus {
 }
 
 .search-container:has(.search-input:focus) {
+  border: 1px solid var(--infor-color);
   outline: 1px solid var(--infor-color);
 }
 
-.search-btn {
-  color: #333;
-  font-size: 18px;
-  margin-right: 10px;
+.search-icon {
+  color: var(--secondary-text-color);
+  margin-left: 10px;
 }
 
 /* Pagination  */
@@ -148,10 +152,4 @@ input:focus {
 
 .pagination__button {
   margin: 10px;
-}
-
-@media (max-width: 1200px) {
-  main {
-    border-radius: 0;
-  }
 }

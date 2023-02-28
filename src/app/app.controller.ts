@@ -57,6 +57,12 @@ export class AppController {
     return this.appService.home();
   }
 
+  @Get('/project')
+  @Render('project')
+  project() {
+    return this.appService.project();
+  }
+
   @Get('employee')
   @Render('employee')
   employee(@Query() query: PaginationDto) {

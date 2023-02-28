@@ -73,6 +73,11 @@ export class AppService {
   }
 
   async home() {
+    const userCount = await this.#prisma.user.count();
+    const projectCount = await this.#prisma.project.count();
+    const eventCount = await this.#prisma.event.count();
+    const requestCount = await this.#prisma.request.count();
+
     return {
       title: 'Trang chủ',
       css: 'home.css',
@@ -82,6 +87,20 @@ export class AppService {
       ],
       header: true,
       layout: 'other',
+      data: {
+        userCount,
+        projectCount,
+        eventCount,
+        requestCount,
+      },
+    };
+  }
+
+  async project() {
+    return {
+      title: 'Dự án',
+      css: 'project.css',
+      header: true,
     };
   }
 

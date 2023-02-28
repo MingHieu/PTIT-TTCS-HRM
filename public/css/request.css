@@ -14,7 +14,7 @@
 
 .request-list {
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   overflow: auto;
 }
 
