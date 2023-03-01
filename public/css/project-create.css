@@ -11,7 +11,8 @@
   font-weight: bold;
 }
 
-.container input {
+.container input,
+.container select {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -24,7 +25,7 @@
   justify-content: center;
 }
 
-.button-wrapper button,
+.container button,
 .button-wrapper a {
   display: block;
   background-color: var(--button-background);
@@ -41,10 +42,76 @@
   background-color: red;
 }
 
-.button-wrapper button:hover {
+.container button:hover {
   background-color: #555;
 }
 
-.button-wrapper button:active {
+.container button:active {
   background-color: #222;
+}
+
+#add-member,
+#add-skill {
+  display: inline-block;
+  padding: 5px 8px;
+  margin-top: 0;
+}
+
+.skill-list-modal,
+.member-list-modal {
+  width: 100%;
+  max-width: 500px;
+}
+
+.skill-list {
+  margin-top: 10px;
+}
+
+.skill-choosen,
+#skill-choosen-input {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 20px;
+}
+
+#skill-choosen-input {
+  margin-bottom: 10px;
+}
+
+.skill-tag {
+  background-color: var(--infor-background);
+  border-radius: 15px;
+  color: var(--infor-color);
+  font-size: 12px;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.delete-skill-tag {
+  background-color: var(--error-background);
+  color: var(--error-color);
+  border-radius: 50%;
+  padding: 2px 6px;
+  margin-left: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
+
+.skill {
+  border-bottom: 1px solid var(--border-color);
+  padding-block: 15px;
+  cursor: pointer;
+}
+
+.skill:last-child {
+  border-bottom: none;
+}
+
+.skill:hover {
+  background-color: #ddd;
 }

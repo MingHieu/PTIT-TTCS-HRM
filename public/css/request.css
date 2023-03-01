@@ -88,12 +88,4 @@
   .request-list-header {
     flex-direction: column;
   }
-
-  .search-container {
-    width: 100%;
-  }
-
-  .search-input {
-    width: 100%;
-  }
 }

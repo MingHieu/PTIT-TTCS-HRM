@@ -93,3 +93,9 @@
   margin-right: 10px;
   color: var(--secondary-text-color);
 }
+
+@media (max-width: 768px) {
+  .project-list-header {
+    flex-direction: column;
+  }
+}

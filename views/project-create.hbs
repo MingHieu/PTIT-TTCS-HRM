@@ -1,27 +1,38 @@
 <div class="container">
     <h1>{{title}}</h1>
     <form>
-        <label for="name">Tên sự kiện:</label>
-        <input type="text" id="name" name="name" value="{{data.news.name}}" required>
+        <label for="name">Tên dự án:</label>
+        <input type="text" id="name" name="name" value="{{data.project.name}}" required>
 
-        <label for="from">Thời gian bắt đầu:</label>
-        <input type="date" id="from" name="from" {{#if data.news.from}}value="{{formatDateInput data.news.from}}"
-            {{/if}} required>
+        <label for="startAt">Thời gian bắt đầu:</label>
+        <input type="date" id="startAt" name="startAt" {{#if
+            data.project.from}}value="{{formatDateInput data.project.from}}" {{/if}} required>
 
-        <label for="to">Thời gian kết thúc:</label>
-        <input type="date" id="to" name="to" {{#if data.news.to}}value="{{formatDateInput data.news.to}}" {{/if}}
-            required>
+        <label for="finishAt">Thời gian kết thúc:</label>
+        <input type="date" id="finishAt" name="finishAt" {{#if
+            data.project.to}}value="{{formatDateInput data.project.to}}" {{/if}}>
 
-        <label for="address">Địa điểm:</label>
-        <input type="text" id="address" name="address" value="{{data.news.address}}" required>
+        <label for="skills">Công nghệ sử dụng <button type="button" id="add-skill">+</button></label>
+        <input type="text" id="skill-list" value="{{data.skills}}" hidden>
+        <div id="skill-choosen-input"></div>
 
-        <label for="expiredAt">Thời gian hết hạn đăng ký:</label>
-        <input type="date" id="expiredAt" name="expiredAt" {{#if
-            data.news.expiredAt}}value="{{formatDateInput data.news.expiredAt}}" {{/if}} required>
+        <label for="status">Trạng thái</label>
+        <select name="status" id="status">
+            {{#each data.status}}
+            <option value="{{this}}">{{formatProjectStatus this}}</option>
+            {{/each}}
+        </select>
+
+        <label for="members">Nhân viên tham gia <button type="button" id="add-member">+</button></label>
+        <div id="members"></div>
 
         <div class="button-wrapper">
             {{#if edit}}<a href="delete">Xoá dự án</a>{{/if}}
             <button type="submit">{{#if edit}}Chỉnh sửa{{else}}Tạo mới{{/if}}</button>
         </div>
     </form>
+
+    <div class="modal-container">
+        <div class="modal"></div>
+    </div>
 </div>

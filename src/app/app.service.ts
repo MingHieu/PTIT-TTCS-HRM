@@ -1,4 +1,4 @@
-import { REQUEST_STATUS } from './../model/request/constants/request-status';
+import { REQUEST_STATUS } from 'src/model/request/constants';
 import { PrismaClient } from '@prisma/client';
 import { INestApplication, Injectable } from '@nestjs/common';
 import { Response } from 'express';
@@ -18,7 +18,9 @@ import { GENDERS } from 'src/common/constants';
 import { ProjectCreateDto } from 'src/model/project/dto';
 import { ProjectService } from 'src/model/project/project.service';
 import { RequestService } from 'src/model/request/request.service';
-import { RequestUpdateDto } from 'src/model/request/dto';
+import { PROJECT_STATUS } from 'src/model/project/constants';
+import { SkillService } from 'src/model/skill/skill.service';
+import { SalaryService } from 'src/model/salary/salary.service';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -30,6 +32,8 @@ export class AppService {
   #file: FileService;
   #project: ProjectService;
   #request: RequestService;
+  #skill: SkillService;
+  #salary: SalaryService;
 
   constructor() {
     this.init();
@@ -45,6 +49,8 @@ export class AppService {
     this.#file = this.#api.get(FileService);
     this.#project = this.#api.get(ProjectService);
     this.#request = this.#api.get(RequestService);
+    this.#skill = this.#api.get(SkillService);
+    this.#salary = this.#api.get(SalaryService);
   }
 
   checkLogin(jwtPayload: IJwtPayload, res: Response, view, renderOptions) {
@@ -124,6 +130,20 @@ export class AppService {
       header: true,
       pagination: true,
       data,
+    };
+  }
+
+  async getCreateProject() {
+    const skills = await this.#skill.getAll();
+    return {
+      title: 'Tạo dự án mới',
+      css: 'project-create.css',
+      js: 'project-create.js',
+      header: true,
+      data: {
+        status: PROJECT_STATUS,
+        skills: JSON.stringify(skills),
+      },
     };
   }
 

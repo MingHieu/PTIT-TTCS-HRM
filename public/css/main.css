@@ -10,6 +10,7 @@
   --error-color: #f54748;
   --error-background: #fcebeb;
   --infor-color: #1cadff;
+  --infor-background: #eaf7ff;
   --primary-text-color: #333;
   --secondary-text-color: #949494;
   --border-color: #ddd;
@@ -105,14 +106,15 @@ a {
   width: 500px;
   height: 100%;
   padding: 10px;
-  border: none;
+  border: none !important;
   border-radius: 5px;
   font-size: 18px;
-  outline: none;
+  outline: none !important;
+  margin: 0 !important;
 }
 
 .search-input:focus {
-  outline: none;
+  outline: none !important;
   border: none !important;
 }
 
@@ -157,6 +159,21 @@ a {
 
 .pagination__button {
   margin: 10px;
+}
+
+@media (max-width: 768px) {
+  .create-new {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .search-container {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
 }
 
 /* Modal */

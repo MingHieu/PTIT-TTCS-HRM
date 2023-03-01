@@ -71,16 +71,7 @@ export class AppController {
   @Get('project/create')
   @Render('project-create')
   projectCreateGet() {
-    return {
-      title: 'Tạo dự án mới',
-      css: 'project-create.css',
-      js: 'project-create.js',
-      header: true,
-      data: {
-        sex: GENDERS,
-        roles: ROLES,
-      },
-    };
+    return this.appService.getCreateProject();
   }
 
   @Post('project/create')
