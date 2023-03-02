@@ -41,7 +41,7 @@ export class NewsService {
   }
 
   async getOne(id: number) {
-    const news = await this.prisma.news.findFirst({
+    const news = await this.prisma.news.findUnique({
       where: { id },
     });
     return news;

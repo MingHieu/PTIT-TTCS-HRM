@@ -8,9 +8,9 @@ import { RequestCreateDto, RequestUpdateDto } from './dto';
 export class RequestService {
   constructor(private prisma: PrismaService) {}
 
-  async create(body: RequestCreateDto) {
+  async create(body: RequestCreateDto, username: string) {
     await this.prisma.request.create({
-      data: { ...body, status: REQUEST_STATUS.pending },
+      data: { ...body, status: REQUEST_STATUS.pending, username },
     });
     return SUCCESS_RESPONSE;
   }
@@ -21,17 +21,17 @@ export class RequestService {
       where: { id },
       data: { ...data },
       include: {
-        sender: { select: { name: true, username: true, avatar: true } },
+        user: { select: { name: true, username: true, avatar: true } },
       },
     });
     return request;
   }
 
   async getOne(id: number) {
-    const event = await this.prisma.request.findFirst({
+    const event = await this.prisma.request.findUnique({
       where: { id },
       include: {
-        sender: { select: { name: true, username: true, avatar: true } },
+        user: { select: { name: true, username: true, avatar: true } },
       },
     });
     return event;
@@ -44,7 +44,7 @@ export class RequestService {
       skip: page * perPage,
       take: perPage,
       include: {
-        sender: { select: { name: true, username: true, avatar: true } },
+        user: { select: { name: true, username: true, avatar: true } },
       },
       orderBy: { createAt: 'desc' },
     });

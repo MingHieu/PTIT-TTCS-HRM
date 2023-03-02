@@ -13,8 +13,4 @@ export class RequestCreateDto {
 
   @IsInt()
   type: GetElementType<typeof REQUEST_TYPE>['type'];
-
-  @IsString()
-  @IsNotEmpty()
-  senderUsername: string;
 }

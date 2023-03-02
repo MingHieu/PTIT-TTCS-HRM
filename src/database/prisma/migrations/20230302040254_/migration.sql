@@ -22,10 +22,11 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Attendance" (
     "id" SERIAL NOT NULL,
+    "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "checkIn" TIMESTAMP(3),
     "checkOut" TIMESTAMP(3),
     "status" INTEGER NOT NULL,
-    "userId" INTEGER,
+    "username" TEXT NOT NULL,
 
     CONSTRAINT "Attendance_pkey" PRIMARY KEY ("id")
 );
@@ -36,7 +37,7 @@ CREATE TABLE "Salary" (
     "createAt" TIMESTAMP(3) NOT NULL,
     "value" BIGINT NOT NULL,
     "note" TEXT,
-    "userId" INTEGER,
+    "username" TEXT NOT NULL,
 
     CONSTRAINT "Salary_pkey" PRIMARY KEY ("id")
 );
@@ -50,7 +51,7 @@ CREATE TABLE "Request" (
     "type" INTEGER NOT NULL,
     "status" INTEGER NOT NULL,
     "reply" TEXT,
-    "senderUsername" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
 
     CONSTRAINT "Request_pkey" PRIMARY KEY ("id")
 );
@@ -134,6 +135,14 @@ CREATE TABLE "File" (
 );
 
 -- CreateTable
+CREATE TABLE "Setting" (
+    "name" TEXT NOT NULL,
+    "value" TEXT,
+
+    CONSTRAINT "Setting_pkey" PRIMARY KEY ("name")
+);
+
+-- CreateTable
 CREATE TABLE "_EventToUser" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -188,13 +197,13 @@ CREATE UNIQUE INDEX "_SkillToUser_AB_unique" ON "_SkillToUser"("A", "B");
 CREATE INDEX "_SkillToUser_B_index" ON "_SkillToUser"("B");
 
 -- AddForeignKey
-ALTER TABLE "Attendance" ADD CONSTRAINT "Attendance_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Attendance" ADD CONSTRAINT "Attendance_username_fkey" FOREIGN KEY ("username") REFERENCES "User"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Salary" ADD CONSTRAINT "Salary_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Salary" ADD CONSTRAINT "Salary_username_fkey" FOREIGN KEY ("username") REFERENCES "User"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Request" ADD CONSTRAINT "Request_senderUsername_fkey" FOREIGN KEY ("senderUsername") REFERENCES "User"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Request" ADD CONSTRAINT "Request_username_fkey" FOREIGN KEY ("username") REFERENCES "User"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Project" ADD CONSTRAINT "Project_leaderUsername_fkey" FOREIGN KEY ("leaderUsername") REFERENCES "User"("username") ON DELETE RESTRICT ON UPDATE CASCADE;

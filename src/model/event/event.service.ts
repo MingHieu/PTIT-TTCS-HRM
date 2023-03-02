@@ -24,7 +24,7 @@ export class EventService {
   }
 
   async getOne(id: number) {
-    const event = await this.prisma.event.findFirst({
+    const event = await this.prisma.event.findUnique({
       where: { id },
       include: {
         participants: { select: { name: true, username: true, avatar: true } },
@@ -56,6 +56,14 @@ export class EventService {
 
   async delete(id: number) {
     await this.prisma.event.delete({ where: { id } });
+    return SUCCESS_RESPONSE;
+  }
+
+  async subscribe(id: number, username: string) {
+    await this.prisma.event.update({
+      where: { id },
+      data: { participants: { connect: { username } } },
+    });
     return SUCCESS_RESPONSE;
   }
 }

@@ -1,14 +1,14 @@
 <div class="container">
     <h1>{{title}}</h1>
     <form method="post">
-        {{#if data.request.sender.avatar}}
-        <img src="{{data.request.sender.avatar}}">
+        {{#if data.request.user.avatar}}
+        <img src="{{data.request.user.avatar}}">
         {{/if}}
         <label for="senderName">Họ và tên:</label>
-        <input type="text" id="senderName" name="senderName" value="{{data.request.sender.name}}" disabled>
+        <input type="text" id="senderName" name="senderName" value="{{data.request.user.name}}" disabled>
 
         <label for="username">Tên đăng nhập:</label>
-        <input type="text" id="username" name="username" value="{{data.request.sender.username}}" disabled>
+        <input type="text" id="username" name="username" value="{{data.request.user.username}}" disabled>
 
         <label for="createAt">Thời gian tạo yêu cầu:</label>
         <input type="date" id="createAt" name="createAt" {{#if

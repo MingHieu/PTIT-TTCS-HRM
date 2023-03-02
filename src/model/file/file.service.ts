@@ -19,7 +19,7 @@ export class FileService {
   }
 
   async getOne(id: number, res: Response) {
-    const file = await this.prisma.file.findFirst({
+    const file = await this.prisma.file.findUnique({
       where: { id },
     });
     const fileContent = convertBase64ToFile(file.content);

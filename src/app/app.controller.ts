@@ -79,7 +79,7 @@ export class AppController {
     return this.appService.createProject(body);
   }
 
-  @Get('project/:projectId/edit')
+  @Get('project/:id/edit')
   @Render('project-create')
   projectEditGet() {
     return {
@@ -95,12 +95,9 @@ export class AppController {
     };
   }
 
-  @Post('project/:projectId/edit')
-  projectEditPost(
-    @Param('projectId') projectId,
-    @Body() body: ProjectCreateDto,
-  ) {
-    return this.appService.updateProject(projectId, body);
+  @Post('project/:id/edit')
+  projectEditPost(@Param('id') id, @Body() body: ProjectCreateDto) {
+    return this.appService.updateProject(id, body);
   }
 
   @Get('employee')
@@ -250,26 +247,23 @@ export class AppController {
     return this.appService.createEvent(body);
   }
 
-  @Get('event/:eventId/edit')
+  @Get('event/:id/edit')
   @Render('event-create')
-  eventEditGet(@Param('eventId', new ParseIntPipe()) eventId) {
-    return this.appService.getEvent(eventId);
+  eventEditGet(@Param('id', new ParseIntPipe()) id) {
+    return this.appService.getEvent(id);
   }
 
-  @Post('event/:eventId/edit')
+  @Post('event/:id/edit')
   eventEditPost(
-    @Param('eventId', new ParseIntPipe()) eventId,
+    @Param('id', new ParseIntPipe()) id,
     @Body() body: EventCreateDto,
   ) {
-    return this.appService.updateEvent(eventId, body);
+    return this.appService.updateEvent(id, body);
   }
 
-  @Get('event/:eventId/delete')
-  eventDelete(
-    @Param('eventId', new ParseIntPipe()) eventId,
-    @Res() res: Response,
-  ) {
-    return this.appService.deleteEvent(eventId, res);
+  @Get('event/:id/delete')
+  eventDelete(@Param('id', new ParseIntPipe()) id, @Res() res: Response) {
+    return this.appService.deleteEvent(id, res);
   }
 
   @Get('request')
@@ -282,13 +276,13 @@ export class AppController {
     );
   }
 
-  @Get('request/:requestId')
+  @Get('request/:id')
   @Render('request-detail')
   requestDetailGet(
-    @Param('requestId', new ParseIntPipe()) requestId,
+    @Param('id', new ParseIntPipe()) id,
     @Query('action') action: string,
   ) {
-    return this.appService.getRequest(requestId, action);
+    return this.appService.getRequest(id, action);
   }
 
   @Get('news')
@@ -320,28 +314,25 @@ export class AppController {
     return this.appService.createNews(body, thumbnail);
   }
 
-  @Get('news/:newsId/edit')
+  @Get('news/:id/edit')
   @Render('news-create')
-  newsEditGet(@Param('newsId', new ParseIntPipe()) newsId) {
-    return this.appService.getNews(newsId);
+  newsEditGet(@Param('id', new ParseIntPipe()) id) {
+    return this.appService.getNews(id);
   }
 
-  @Post('news/:newsId/edit')
+  @Post('news/:id/edit')
   @UseInterceptors(FileInterceptor('thumbnail'))
   newsEditPost(
-    @Param('newsId', new ParseIntPipe()) newsId,
+    @Param('id', new ParseIntPipe()) id,
     @Body() body: NewsCreateDto,
     @UploadedFile() thumbnail,
   ) {
-    return this.appService.updateNews(newsId, body, thumbnail);
+    return this.appService.updateNews(id, body, thumbnail);
   }
 
-  @Get('news/:newsId/delete')
-  newsDelete(
-    @Param('newsId', new ParseIntPipe()) newsId,
-    @Res() res: Response,
-  ) {
-    return this.appService.deleteNews(newsId, res);
+  @Get('news/:id/delete')
+  newsDelete(@Param('id', new ParseIntPipe()) id, @Res() res: Response) {
+    return this.appService.deleteNews(id, res);
   }
 
   @Get('profile')
@@ -366,11 +357,11 @@ export class AppController {
     return this.appService.uploadFile(image);
   }
 
-  @Get('file/:fileId')
+  @Get('file/:id')
   getFile(
-    @Param('fileId', new ParseIntPipe()) fileId,
+    @Param('id', new ParseIntPipe()) id,
     @Res({ passthrough: true }) res,
   ) {
-    return this.appService.getFile(fileId, res);
+    return this.appService.getFile(id, res);
   }
 }

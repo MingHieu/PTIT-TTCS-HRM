@@ -12,6 +12,7 @@ import { NotificationModule } from './model/notification/notification.module';
 import { FileModule } from './model/file/file.module';
 import { ProjectModule } from './model/project/project.module';
 import { SkillModule } from './model/skill/skill.module';
+import { SettingModule } from './model/setting/setting.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SkillModule } from './model/skill/skill.module';
     FileModule,
     ProjectModule,
     SkillModule,
+    SettingModule,
   ],
   controllers: [],
   providers: [],

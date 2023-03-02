@@ -37,13 +37,15 @@ model User {
 }
 
 model Attendance {
-    id       Int       @id @default(autoincrement())
+    id       Int      @id @default(autoincrement())
+    createAt DateTime @default(now())
+
     checkIn  DateTime?
     checkOut DateTime?
     status   Int
 
-    User   User? @relation(fields: [userId], references: [id])
-    userId Int?
+    user     User   @relation(fields: [username], references: [username])
+    username String
 }
 
 model Salary {
@@ -52,8 +54,8 @@ model Salary {
     value    BigInt
     note     String?
 
-    User   User? @relation(fields: [userId], references: [id])
-    userId Int?
+    user     User   @relation(fields: [username], references: [username])
+    username String
 }
 
 model Request {
@@ -67,8 +69,8 @@ model Request {
     status Int
     reply  String?
 
-    sender User @relation(fields: [senderUsername], references: [username])
-    senderUsername String
+    user     User   @relation(fields: [username], references: [username])
+    username String
 }
 
 model News {
@@ -139,4 +141,9 @@ model Permission {
 model File {
     id      Int    @id @default(autoincrement())
     content String
+}
+
+model Setting {
+    name  String  @id
+    value String?
 }

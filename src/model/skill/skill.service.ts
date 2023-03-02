@@ -6,7 +6,7 @@ export class SkillService {
   constructor(private prisma: PrismaService) {}
 
   async getAll() {
-    const requests = await this.prisma.skill.findMany();
-    return requests;
+    const skills = await this.prisma.skill.findMany();
+    return skills;
   }
 }

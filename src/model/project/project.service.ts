@@ -33,7 +33,7 @@ export class ProjectService {
   }
 
   async getOne(id: number) {
-    const project = await this.prisma.project.findFirst({
+    const project = await this.prisma.project.findUnique({
       where: { id },
       include: {
         skills: true,

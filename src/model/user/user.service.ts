@@ -52,7 +52,7 @@ export class UserService {
   }
 
   async getOne(username: string) {
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findUnique({
       where: { username },
     });
     delete user.password;

@@ -28,8 +28,8 @@
             {{#each data.data}}
             <tr>
                 <td><a href="/request/{{this.id}}">{{formatIndex @index}}</a></td>
-                <td><a href="/request/{{this.id}}">{{this.sender.name}}</a></td>
-                <td><a href="/request/{{this.id}}">{{this.sender.username}}</a></td>
+                <td><a href="/request/{{this.id}}">{{this.user.name}}</a></td>
+                <td><a href="/request/{{this.id}}">{{this.user.username}}</a></td>
                 <td><a href="/request/{{this.id}}">{{this.name}}</a></td>
                 <td><a href="/request/{{this.id}}">{{formatDate this.createAt}}</a></td>
                 <td data-status="{{this.status}}"><a href="/request/{{this.id}}">

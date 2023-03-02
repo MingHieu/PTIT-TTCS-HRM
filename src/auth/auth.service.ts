@@ -90,7 +90,7 @@ export class AuthService {
   }
 
   async changePassword(jwtPayload: IJwtPayload, body: ChangePasswordDto) {
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findUnique({
       where: { username: jwtPayload.username },
     });
     const pwMatches = await argon.verify(user.password, body.currentPassword);
