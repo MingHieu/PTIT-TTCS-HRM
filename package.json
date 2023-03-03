@@ -22,9 +22,10 @@
     "db:dev:rm": "docker compose rm dev-db -s -f -v",
     "db:dev:up": "docker compose up dev-db -d",
     "db:dev:restart": "yarn db:dev:rm && yarn db:dev:up",
-    "db:dev:migrate": "npx prisma migrate dev",
-    "db:dev:show": "npx prisma studio",
-    "db:dev:seed": "npx prisma db seed"
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:studio": "npx prisma studio",
+    "prisma:seed": "npx prisma db seed"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
