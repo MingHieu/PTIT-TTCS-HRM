@@ -8,8 +8,7 @@ $ yarn start:dev
 ```
 # Production
 ``` bash
-$ yarn db:prod:up
+$ yarn docker:prod:up
 $ yarn prisma:prod:migrate
 $ yarn prisma:prod:seed
-$ yarn docker:prod:up
 ```
