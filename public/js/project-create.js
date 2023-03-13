@@ -1,62 +1,40 @@
-// Skill
-let skillsChoosen = [];
-
-const renderSkillChoosenInForm = () => {
-  const skillsChoosenEl = useQuery('#skill-choosen-input');
-  skillsChoosenEl.innerHTML = '';
-  skillsChoosen.forEach((skill) => {
-    const skillTag = document.createElement('p');
-    skillTag.classList.add('skill-tag');
-
-    const deleteSkillTag = document.createElement('span');
-    deleteSkillTag.classList.add('delete-skill-tag');
-    deleteSkillTag.innerHTML = 'x';
-    deleteSkillTag.onclick = () => {
-      skillsChoosen = skillsChoosen.filter(
-        (skillChoosen) => skillChoosen.id != skill.id,
-      );
-      skillsChoosenEl.removeChild(skillTag);
+/******************************/
+/***********Skill**************/
+/******************************/
+let skillChosenList = [];
+const renderSkillChosen = (container, isInModal = false) => {
+  container.innerHTML = '';
+  const deleteButtonClass = isInModal
+    ? 'delete-skill-tag-modal'
+    : 'delete-skill-tag';
+  skillChosenList.forEach((skill) => {
+    container.innerHTML += `
+      <p class="skill-tag">
+        ${skill.name}<span class="${deleteButtonClass}">x</span>
+      </p>`;
+  });
+  useQueryAll(`.${deleteButtonClass}`).forEach((deleteButton, index) => {
+    deleteButton.onclick = () => {
+      skillChosenList.splice(index, 1);
+      renderSkillChosen(useQuery('.skill-chosen-list'));
+      if (isInModal) {
+        renderSkillChosen(useQuery('.skill-chosen-list-modal'), true);
+      }
     };
-
-    skillTag.innerHTML = skill.name;
-    skillTag.appendChild(deleteSkillTag);
-    skillsChoosenEl.appendChild(skillTag);
   });
 };
-renderSkillChoosenInForm();
-
+renderSkillChosen(useQuery('.skill-chosen-list'));
 useQuery('#add-skill').onclick = () => {
   resetModal();
   const modal = useQuery('.modal');
   modal.classList.remove('member-list-modal');
   modal.classList.add('skill-list-modal');
 
-  const skillsChoosenEl = document.createElement('div');
-  skillsChoosenEl.classList.add('skill-choosen');
-  modal.appendChild(skillsChoosenEl);
+  const skillChosenListEl = document.createElement('div');
+  skillChosenListEl.classList.add('skill-chosen-list-modal');
+  modal.appendChild(skillChosenListEl);
 
-  const renderSkillsChoosen = () => {
-    skillsChoosenEl.innerHTML = '';
-    skillsChoosen.forEach((skill) => {
-      const skillTag = document.createElement('p');
-      skillTag.classList.add('skill-tag');
-
-      const deleteSkillTag = document.createElement('span');
-      deleteSkillTag.classList.add('delete-skill-tag');
-      deleteSkillTag.innerHTML = 'x';
-      deleteSkillTag.onclick = () => {
-        skillsChoosen = skillsChoosen.filter(
-          (skillChoosen) => skillChoosen.id != skill.id,
-        );
-        skillsChoosenEl.removeChild(skillTag);
-        renderSkillChoosenInForm();
-      };
-
-      skillTag.innerHTML = skill.name;
-      skillTag.appendChild(deleteSkillTag);
-      skillsChoosenEl.appendChild(skillTag);
-    });
-  };
+  renderSkillChosen(skillChosenListEl, true);
 
   const skillListEl = document.createElement('div');
   skillListEl.classList.add('skill-list');
@@ -75,33 +53,130 @@ useQuery('#add-skill').onclick = () => {
       skillEl.classList.add('skill');
       skillEl.innerHTML = index + 1 + '. ' + skill.name;
       skillEl.onclick = () => {
-        if (skillsChoosen.findIndex((val) => val.id == skill.id) == -1) {
-          skillsChoosen.push(skill);
-          renderSkillsChoosen();
-          renderSkillChoosenInForm();
+        if (skillChosenList.findIndex((val) => val.id == skill.id) == -1) {
+          skillChosenList.push(skill);
+          renderSkillChosen(skillChosenListEl, true);
+          renderSkillChosen(useQuery('.skill-chosen-list'));
         }
       };
       skillListEl.appendChild(skillEl);
     });
   };
 
-  renderSkillsChoosen();
-  renderSkillList();
-  showModal();
-
   const searchInput = useQuery('.search-input');
   searchInput.onkeyup = () => {
     renderSkillList(searchInput.value);
   };
+
+  renderSkillList();
+  showModal();
 };
 
-// Member
-let members = [];
+/******************************/
+/***********Member**************/
+/******************************/
+let memberChosenList = [];
+const renderMemberChosen = (container, isInModal = false) => {
+  // container.innerHTML = '';
+  const deleteButtonClass = isInModal
+    ? 'member-el__delete'
+    : 'member-el__delete-modal';
+  memberChosenList.forEach((member, index) => {
+    container.innerHTML += `
+      <div class="member-el">
+        <div class="member-el__information">
+          <div class="member-el__avatar"></div>
+          <div>
+              <div class="member-el__username">username</div>
+              <div class="member-el__name">Lê Minh Hiếu</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-square-minus ${deleteButtonClass}"></i>
+      </div>`;
+  });
+  useQueryAll(`.${deleteButtonClass}`).forEach((deleteButton, index) => {
+    deleteButton.onclick = () => {
+      memberChosenList.splice(index, 1);
+      renderMemberChosen(useQuery('.member-chosen-list'));
+      if (isInModal) {
+        renderSkillChosen(useQuery('.member-chosen-list-modal'), true);
+      }
+    };
+  });
+};
+renderMemberChosen(useQuery('.member-chosen-list'));
 useQuery('#add-member').onclick = () => {
   const modal = useQuery('.modal');
   resetModal();
   modal.classList.remove('skill-list-modal');
   modal.classList.add('member-list-modal');
+
+  const memberChosenListEl = document.createElement('div');
+  memberChosenListEl.classList.add('member-chosen-list-modal');
+  modal.appendChild(memberChosenListEl);
+
+  renderSkillChosen(memberChosenListEl, true);
+
+  const memberListEl = document.createElement('div');
+  memberListEl.classList.add('member-list');
+  modal.appendChild(memberListEl);
+
+  let members = [1, 2];
+  let timer;
+
+  const searchMember = (query) => {
+    clearTimeout(timer);
+    if (query) {
+      renderMemberList({ loading: true });
+      timer = setTimeout(() => {
+        console.log('call API');
+        renderMemberList();
+      }, 2000);
+    } else {
+      renderMemberList({ firstTime: true });
+    }
+  };
+
+  const renderMemberList = (props) => {
+    if (props?.loading) {
+      if (useQuery('.member-loading')) {
+        return;
+      }
+      memberListEl.innerHTML = `
+      <div style="flex: 1;display: flex;justify-content: center;align-items: center;">
+        <lottie-player class="member-loading" src="https://assets10.lottiefiles.com/packages/lf20_ht6o1bdu.json"  background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player>
+      </div> 
+        `;
+    } else if (props?.firstTime) {
+      memberListEl.innerHTML =
+        '<p class="member-list-empty">Tìm kiếm người cho dự án</p>';
+    } else if (!members.length) {
+      memberListEl.innerHTML =
+        '<p class="member-list-empty">Không tìm thấy</p>';
+    } else {
+      memberListEl.innerHTML = '';
+      members.forEach((member) => {
+        memberListEl.innerHTML += `
+        <div class="member-el" style="cursor:pointer">
+          <div class="member-el__information">
+            <div class="member-el__avatar"></div>
+            <div>
+                <div class="member-el__username">username</div>
+                <div class="member-el__name">Lê Minh Hiếu</div>
+            </div>
+          </div>
+        </div>
+      `;
+      });
+    }
+  };
+
+  const searchInput = useQuery('.search-input');
+  searchInput.oninput = () => {
+    searchMember(searchInput.value);
+  };
+
+  renderMemberList({ firstTime: true });
   showModal();
 };
 

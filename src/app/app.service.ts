@@ -133,20 +133,6 @@ export class AppService {
     };
   }
 
-  async getCreateProject() {
-    const skills = await this.#skill.getAll();
-    return {
-      title: 'Tạo dự án mới',
-      css: 'project-create.css',
-      js: 'project-create.js',
-      header: true,
-      data: {
-        status: PROJECT_STATUS,
-        skills: JSON.stringify(skills),
-      },
-    };
-  }
-
   async createProject(body: ProjectCreateDto) {
     return this.#project.create(body);
   }
@@ -155,22 +141,24 @@ export class AppService {
     return this.#project.update({ ...body, id });
   }
 
-  async getProject(id: number) {
-    const renderOptions = {
-      title: 'Chỉnh sửa bản tin',
-      css: 'news-create.css',
-      js: 'news-create.js',
-      header: true,
+  async getProject(id?: number) {
+    const skills = await this.#skill.getAll();
+    console.log(skills);
+
+    return {
+      title: !!id ? 'Chỉnh sửa dự án' : 'Tạo dự án mới',
+      css: 'project-create.css',
+      js: 'project-create.js',
       jsLibrary: [
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>',
-        '<script src="https://cdn.jsdelivr.net/npm/@editorjs/nested-list@latest"></script>',
+        '<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>',
       ],
-      edit: true,
+      header: true,
+      data: {
+        status: PROJECT_STATUS,
+        skills: JSON.stringify(skills),
+      },
+      edit: !!id,
     };
-    const news = await this.#project.getOne(id);
-    return { ...renderOptions, data: { news } };
   }
 
   async deleteProject(id: number, res: Response) {

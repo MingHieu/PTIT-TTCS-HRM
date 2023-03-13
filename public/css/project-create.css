@@ -67,8 +67,8 @@
   margin-top: 10px;
 }
 
-.skill-choosen,
-#skill-choosen-input {
+.skill-chosen-list,
+.skill-chosen-list-modal {
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -76,7 +76,7 @@
   column-gap: 20px;
 }
 
-#skill-choosen-input {
+.skill-chosen-list {
   margin-bottom: 10px;
 }
 
@@ -89,7 +89,8 @@
   position: relative;
 }
 
-.delete-skill-tag {
+.delete-skill-tag,
+.delete-skill-tag-modal {
   background-color: var(--error-background);
   color: var(--error-color);
   border-radius: 50%;
@@ -114,4 +115,63 @@
 
 .skill:hover {
   background-color: #ddd;
+}
+
+.member-chosen-list,
+.member-chosen-list-modal {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.member-el {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+}
+
+.member-el__information {
+  display: flex;
+  align-items: center;
+}
+
+.member-el__avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: red;
+  margin-right: 10px;
+}
+
+.member-el__name {
+  font-weight: bold;
+}
+
+.member-el__delete,
+.member-el__delete-modal {
+  color: red;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.member-list {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.member-list-empty {
+  font-size: 24px;
+  color: grey;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

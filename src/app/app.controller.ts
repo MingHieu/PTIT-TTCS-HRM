@@ -71,7 +71,7 @@ export class AppController {
   @Get('project/create')
   @Render('project-create')
   projectCreateGet() {
-    return this.appService.getCreateProject();
+    return this.appService.getProject();
   }
 
   @Post('project/create')
@@ -81,22 +81,15 @@ export class AppController {
 
   @Get('project/:id/edit')
   @Render('project-create')
-  projectEditGet() {
-    return {
-      title: 'Chỉnh sửa dự án',
-      css: 'project-create.css',
-      js: 'project-create.js',
-      header: true,
-      edit: true,
-      data: {
-        sex: GENDERS,
-        roles: ROLES,
-      },
-    };
+  projectEditGet(@Param('id', new ParseIntPipe()) id) {
+    return this.appService.getProject(id);
   }
 
   @Post('project/:id/edit')
-  projectEditPost(@Param('id') id, @Body() body: ProjectCreateDto) {
+  projectEditPost(
+    @Param('id', new ParseIntPipe()) id,
+    @Body() body: ProjectCreateDto,
+  ) {
     return this.appService.updateProject(id, body);
   }
 

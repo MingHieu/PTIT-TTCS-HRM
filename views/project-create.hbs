@@ -14,7 +14,7 @@
 
         <label for="skills">Công nghệ sử dụng <button type="button" id="add-skill">+</button></label>
         <input type="text" id="skill-list" value="{{data.skills}}" hidden>
-        <div id="skill-choosen-input"></div>
+        <div class="skill-chosen-list"></div>
 
         <label for="status">Trạng thái</label>
         <select name="status" id="status">
@@ -24,7 +24,7 @@
         </select>
 
         <label for="members">Nhân viên tham gia <button type="button" id="add-member">+</button></label>
-        <div id="members"></div>
+        <div class="member-chosen-list"></div>
 
         <div class="button-wrapper">
             {{#if edit}}<a href="delete">Xoá dự án</a>{{/if}}
