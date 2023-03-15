@@ -16,7 +16,7 @@ async function seedSetting() {
       update: {},
       create: {
         name: SETTING[key].name,
-        value: SETTING[key].initialValue,
+        value: JSON.stringify(SETTING[key].initialValue),
       },
     });
   }
@@ -37,6 +37,7 @@ async function seedAccount() {
       address: 'Thanh Trì, Hà Nội',
       joinAt: new Date(),
       role: ROLES.HR,
+      dayOffRemain: SETTING.DAY_OFF_NUMBERS.initialValue,
     },
   });
 
@@ -54,6 +55,7 @@ async function seedAccount() {
       address: 'Thanh Trì, Hà Nội',
       joinAt: new Date(),
       role: ROLES.NV,
+      dayOffRemain: SETTING.DAY_OFF_NUMBERS.initialValue,
     },
   });
 }
@@ -217,12 +219,8 @@ async function seedAttendance() {
   let status: typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS];
   const time = moment().hour(7).minute(0).toDate();
 
-  const companyCheckInTime = await prisma.setting.findUnique({
-    where: { name: SETTING.CHECK_IN.name },
-  });
-  const [companyCheckInHours, companyCheckInMinutes] = companyCheckInTime.value
-    .split(':')
-    .map((val) => +val);
+  const [companyCheckInHours, companyCheckInMinutes] =
+    SETTING.CHECK_IN.initialValue.split(':').map((val) => +val);
 
   const checkInHours = time.getHours();
   const checkInMinutes = time.getMinutes();

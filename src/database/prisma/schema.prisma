@@ -23,6 +23,7 @@ model User {
     dob         DateTime
     address     String
     joinAt      DateTime
+    dayOffRemain Int
 
     token String?
     role  String

@@ -13,6 +13,7 @@ CREATE TABLE "User" (
     "dob" TIMESTAMP(3) NOT NULL,
     "address" TEXT NOT NULL,
     "joinAt" TIMESTAMP(3) NOT NULL,
+    "dayOffRemain" INTEGER NOT NULL,
     "token" TEXT,
     "role" TEXT NOT NULL,
 
