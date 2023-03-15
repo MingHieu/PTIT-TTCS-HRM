@@ -1,3 +1,4 @@
+import { SettingService } from 'src/model/setting/setting.service';
 import { FileService } from 'src/model/file/file.service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
@@ -10,6 +11,7 @@ export class UserService {
   constructor(
     private prisma: PrismaService,
     private fileService: FileService,
+    private setting: SettingService,
   ) {}
 
   async create(body: UserCreateDto, avatar?: File) {
@@ -24,6 +26,8 @@ export class UserService {
       Object.assign(body, { avatar: uploadedFile.url });
     }
 
+    const dayOffRemain = await this.setting.getOne('day_off_numbers');
+
     const user = await this.prisma.user.create({
       data: {
         ...body,
@@ -32,6 +36,7 @@ export class UserService {
             ? username + (usernameExistNumber + 1)
             : username,
         password: hashPassword,
+        dayOffRemain: JSON.parse(dayOffRemain.value),
       },
     });
     delete user.password;

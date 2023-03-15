@@ -106,7 +106,6 @@ export class AppService {
         '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>',
       ],
       header: true,
-      layout: 'other',
       data: {
         userCount,
         projectCount,

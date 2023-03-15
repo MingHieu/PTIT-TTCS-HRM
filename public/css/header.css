@@ -1,8 +1,6 @@
 header {
+  display: none;
   background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -30,80 +28,90 @@ header {
   outline: none;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  align-items: center;
+.nav-container {
+  /* 200px width + 40px padding */
+  width: 240px;
+  align-self: stretch;
+  position: sticky;
 }
 
-nav ul li {
-  margin-right: 20px;
+nav {
+  position: fixed;
+  width: fit-content;
+  height: 100%;
+  background-color: #fff;
+  padding: 20px;
+  overflow: overlay;
+}
+
+nav ul {
+  height: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+nav ul li a h1 {
+  font-weight: bold;
+  font-size: 24px;
 }
 
 nav ul li a {
+  width: 200px;
+  padding: 10px;
+  margin-bottom: 10px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
 }
 
-nav ul li a:last-child span {
-  display: none;
+nav ul li a i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+nav ul li:not(:first-child):hover {
+  background-color: #ddd;
+  border-radius: 10px;
 }
 
 .user-avatar-header {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 
-@media only screen and (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: stretch;
-  }
+a[href='/signout'] {
+  border: 1px solid #ff0000;
+  background-color: #ff0000e6;
+  color: #fff;
+}
 
-  .menu-toggle {
+@media (max-width: 1200px) {
+  header {
     display: block;
   }
 
-  nav.show ul {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-
-  nav ul {
+  .nav-container {
+    width: 100%;
     display: none;
-    background-color: #fff;
-    position: absolute;
-    top: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
     right: 0;
-    width: min(300px, 100%);
-    z-index: 1;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    bottom: 0;
+    z-index: 999;
   }
 
-  nav ul li {
-    width: 100%;
+  .nav-container.show {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
   }
 
-  nav ul li a {
-    display: inline-block;
-    width: 100%;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-  }
-
-  nav ul li:hover {
-    background-color: #ddd;
-  }
-
-  .user-avatar-header {
-    margin-right: 10px;
-  }
-
-  nav ul li a:last-child span {
+  .menu-toggle {
     display: block;
   }
 }

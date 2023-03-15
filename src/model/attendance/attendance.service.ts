@@ -15,8 +15,11 @@ export class AttendanceService {
     const time = new Date();
 
     const companyCheckInTime = await this.setting.getOne(SETTING.CHECK_IN.name);
-    const [companyCheckInHours, companyCheckInMinutes] =
-      companyCheckInTime.value.split(':').map((val) => +val);
+    const [companyCheckInHours, companyCheckInMinutes] = JSON.parse(
+      companyCheckInTime.value,
+    )
+      .split(':')
+      .map((val) => +val);
 
     const checkInHours = time.getHours();
     const checkInMinutes = time.getMinutes();

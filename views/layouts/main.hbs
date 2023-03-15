@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/loader.css">
-    
+
     {{#if cssLibrary}}
     {{#each cssLibrary}}
     {{{this}}}
@@ -28,39 +28,48 @@
 </head>
 
 <body>
+
     {{#if header}}
     {{> header}}
     {{/if}}
 
-    <main>
-        {{{body}}}
-        {{#if pagination}}
-        <div class="pagination">
-            <p>{{formatPagination data}}</p>
-            <input type="text" name="pagination" hidden>
-            <input type="checkbox" name="lastPage" checked="{{isLastPage data}}" hidden>
-            <div>
-                <button id="pg-button-prev" type="button" class="pagination__button">
-                    <i class="fa fa-chevron-left"></i>
-                </button>
+    <div class="body">
+        {{#if header}}
+        {{> navbar}}
+        {{/if}}
 
-                <button id="pg-button-next" type="button" class="pagination__button">
-                    <i class="fa fa-chevron-right"></i>
-                </button>
-            </div>
+        <div class="main-container">
+            <main>
+                {{{body}}}
+                {{#if pagination}}
+                <div class="pagination">
+                    <p>{{formatPagination data}}</p>
+                    <input type="text" name="pagination" hidden>
+                    <input type="checkbox" name="lastPage" checked="{{isLastPage data}}" hidden>
+                    <div>
+                        <button id="pg-button-prev" type="button" class="pagination__button">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+
+                        <button id="pg-button-next" type="button" class="pagination__button">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                {{/if}}
+
+                {{#if successMsg}}
+                <input type="text" id="successMsg" value="{{successMsg}}" hidden>
+                {{/if}}
+
+                {{#if errorMsg}}
+                <input type="text" id="errorMsg" value="{{errorMsg}}" hidden>
+                {{/if}}
+
+                {{>loader}}
+            </main>
         </div>
-        {{/if}}
-
-        {{#if successMsg}}
-        <input type="text" id="successMsg" value="{{successMsg}}" hidden>
-        {{/if}}
-
-        {{#if errorMsg}}
-        <input type="text" id="errorMsg" value="{{errorMsg}}" hidden>
-        {{/if}}
-
-        {{>loader}}
-    </main>
+    </div>
 
     {{#if jsLibrary}}
     {{#each jsLibrary}}

@@ -30,6 +30,22 @@ body {
   background: #f7f9fb;
 }
 
+.body {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-container {
+  flex: 1;
+  padding-inline: 50px;
+}
+
+@media (max-width: 1200px) {
+  .main-container {
+    padding-inline: 0;
+  }
+}
+
 main {
   max-width: 1200px;
   margin: 50px auto;

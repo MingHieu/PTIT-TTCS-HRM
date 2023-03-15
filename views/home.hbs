@@ -1,48 +1,45 @@
-<main>
-    <div class="card-container">
-        <div class="card">
-            <p class="card__name-big">Số lượng nhân viên</p>
-            <div>
-                <p class="card__quantity">{{data.userCount}}</p>
-                <p class="card__name-small">Nhân viên</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <p class="card__name-big">Số lượng dự án</p>
-            <div>
-                <p class="card__quantity">{{data.projectCount}}</p>
-                <p class="card__name-small">Dự án</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <p class="card__name-big">Số lượng sự kiện</p>
-            <div>
-                <p class="card__quantity">{{data.eventCount}}</p>
-                <p class="card__name-small">Sự kiện</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <p class="card__name-big">Số lượng yêu cầu</p>
-            <div>
-                <p class="card__quantity">{{data.requestCount}}</p>
-                <p class="card__name-small">Yêu cầu</p>
-            </div>
+<div class="card-container">
+    <div class="card">
+        <p class="card__name-big">Số lượng nhân viên</p>
+        <div>
+            <p class="card__quantity">{{data.userCount}}</p>
+            <p class="card__name-small">Nhân viên</p>
         </div>
     </div>
 
-    <div class="dashboard">
-        <p class="dashboard__title">Thống kê nhân viên</p>
-        <input type="text" name="userStatistic" value="{{data.userStatistic}}" hidden>
-        <canvas id="employee-dashboard__body"></canvas>
+    <div class="card">
+        <p class="card__name-big">Số lượng dự án</p>
+        <div>
+            <p class="card__quantity">{{data.projectCount}}</p>
+            <p class="card__name-small">Dự án</p>
+        </div>
     </div>
 
-    <div class="dashboard">
-        <p class="dashboard__title">Thống kê công việc</p>
-        <input type="text" name="projectStatistic" value="{{data.projectStatistic}}" hidden>
-        <canvas id="project-dashboard__body"></canvas>
+    <div class="card">
+        <p class="card__name-big">Số lượng sự kiện</p>
+        <div>
+            <p class="card__quantity">{{data.eventCount}}</p>
+            <p class="card__name-small">Sự kiện</p>
+        </div>
     </div>
 
-</main>
+    <div class="card">
+        <p class="card__name-big">Số lượng yêu cầu</p>
+        <div>
+            <p class="card__quantity">{{data.requestCount}}</p>
+            <p class="card__name-small">Yêu cầu</p>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard">
+    <p class="dashboard__title">Thống kê nhân viên</p>
+    <input type="text" name="userStatistic" value="{{data.userStatistic}}" hidden>
+    <canvas id="employee-dashboard__body"></canvas>
+</div>
+
+<div class="dashboard">
+    <p class="dashboard__title">Thống kê công việc</p>
+    <input type="text" name="projectStatistic" value="{{data.projectStatistic}}" hidden>
+    <canvas id="project-dashboard__body"></canvas>
+</div>

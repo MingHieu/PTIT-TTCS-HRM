@@ -1,9 +1,15 @@
 const menuToggle = useQuery('.menu-toggle');
-const nav = useQuery('nav');
+const nav = useQuery('.nav-container');
 
 menuToggle.addEventListener('click', () => {
   nav.classList.toggle('show');
 });
+
+nav.onclick = (e) => {
+  if (e.target === nav) {
+    nav.classList.toggle('show');
+  }
+};
 
 const cookies = document.cookie
   .split(';')

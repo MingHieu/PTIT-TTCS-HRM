@@ -1,28 +1,22 @@
-.container {
-  width: 100%;
-  display: flex;
-}
-
 .tabs {
-  flex: 1;
-  max-width: 300px;
-  height: 100%;
-  padding-right: 20px;
-  border-right: 1px solid #ddd;
-  position: sticky;
-  top: 20px;
+  white-space: nowrap;
 }
 
 .tab-links {
+  display: flex;
+  flex-wrap: wrap;
   list-style: none;
-  margin-bottom: -10px;
+}
+
+.tab-links li {
+  margin-right: 20px;
+  margin-bottom: 1rem;
 }
 
 .tab-links li a {
   display: block;
   padding: 10px;
   border-radius: 5px;
-  margin-bottom: 10px;
   background-color: #f9f9f9;
   border: 1px solid var(--border-color);
 }
@@ -41,45 +35,11 @@
 
 .tab-contents {
   flex: 1;
-  padding-left: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
 }
 
 .tab-content h1 {
   font-size: 24px;
   margin-bottom: 20px;
-}
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .tabs {
-    max-width: 9999px;
-    height: 0;
-    border: none;
-    padding-right: 0;
-    white-space: nowrap;
-    position: static;
-    overflow-x: scroll;
-    margin-bottom: 1rem;
-  }
-
-  .tab-links {
-    display: flex;
-  }
-
-  .tab-links li {
-    margin-right: 20px;
-  }
-
-  .tab-links li:last-child {
-    margin-right: 0;
-  }
-
-  .tab-contents {
-    border-top: 1px solid #ccc;
-    padding-top: 1rem;
-    padding-left: 0;
-  }
 }

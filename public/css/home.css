@@ -7,8 +7,8 @@ main {
 
 .card-container {
   display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
 }
 
 .card {
@@ -66,4 +66,8 @@ main {
 
 .dashboard canvas {
   max-height: 350px;
+}
+
+canvas {
+  max-width: 100%;
 }
