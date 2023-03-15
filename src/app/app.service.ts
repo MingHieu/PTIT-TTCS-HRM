@@ -141,12 +141,11 @@ export class AppService {
     return this.#project.update({ ...body, id });
   }
 
-  async getProject(id?: number) {
+  async getProjectCreate() {
     const skills = await this.#skill.getAll();
-    console.log(skills);
 
     return {
-      title: !!id ? 'Chỉnh sửa dự án' : 'Tạo dự án mới',
+      title: 'Tạo dự án mới',
       css: 'project-create.css',
       js: 'project-create.js',
       jsLibrary: [
@@ -157,7 +156,30 @@ export class AppService {
         status: PROJECT_STATUS,
         skills: JSON.stringify(skills),
       },
-      edit: !!id,
+    };
+  }
+
+  async getProjectEdit(id: number) {
+    const project = await this.#project.getOne(id);
+    const skills = await this.#skill.getAll();
+
+    return {
+      title: 'Chỉnh sửa dự án',
+      css: 'project-create.css',
+      js: 'project-create.js',
+      jsLibrary: [
+        '<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>',
+      ],
+      header: true,
+      data: {
+        status: PROJECT_STATUS,
+        skills: JSON.stringify(skills),
+        data: project,
+        skillsChosen: JSON.stringify(project.skills),
+        membersChosen: JSON.stringify(project.members),
+        leader: JSON.stringify(project.leader),
+      },
+      edit: true,
     };
   }
 
@@ -262,6 +284,14 @@ export class AppService {
       pagination: true,
       data,
     };
+  }
+
+  async getManyEmployee(page: number, perPage: number, keySearch: string) {
+    if (!page) page = 1;
+    if (!perPage) perPage = 10;
+    if (!keySearch) keySearch = '';
+    const data = await this.#user.getMany(page - 1, perPage, keySearch);
+    return data;
   }
 
   async createEmployee(body: UserCreateDto, avatar?: File) {

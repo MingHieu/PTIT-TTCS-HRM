@@ -71,7 +71,7 @@ export class AppController {
   @Get('project/create')
   @Render('project-create')
   projectCreateGet() {
-    return this.appService.getProject();
+    return this.appService.getProjectCreate();
   }
 
   @Post('project/create')
@@ -82,7 +82,7 @@ export class AppController {
   @Get('project/:id/edit')
   @Render('project-create')
   projectEditGet(@Param('id', new ParseIntPipe()) id) {
-    return this.appService.getProject(id);
+    return this.appService.getProjectEdit(id);
   }
 
   @Post('project/:id/edit')
@@ -93,10 +93,24 @@ export class AppController {
     return this.appService.updateProject(id, body);
   }
 
+  @Get('project/:id/delete')
+  projectDelete(@Param('id', new ParseIntPipe()) id, @Res() res: Response) {
+    return this.appService.deleteProject(id, res);
+  }
+
   @Get('employee')
   @Render('employee')
   employee(@Query() query: PaginationDto) {
     return this.appService.employee(
+      query.page,
+      query.per_page,
+      query.key_search,
+    );
+  }
+
+  @Get('employee/all')
+  getManyEmployee(@Query() query: PaginationDto) {
+    return this.appService.getManyEmployee(
       query.page,
       query.per_page,
       query.key_search,

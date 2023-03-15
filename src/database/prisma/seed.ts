@@ -122,8 +122,8 @@ async function seedProject() {
       finishAt: new Date(),
       name: 'Dự án quản lý đào tạo',
       status: 0,
-      content: '',
       leaderUsername: 'hrwebapp01',
+      members: { connect: { username: 'nvwebapp01' } },
       skills: {
         connect: [
           { name: SKILLS[0] },
@@ -141,8 +141,8 @@ async function seedProject() {
       startAt: new Date(),
       name: 'Dự án chấm công bằng khuôn mặt',
       status: 1,
-      content: '',
       leaderUsername: 'hrwebapp01',
+      members: { connect: { username: 'nvwebapp01' } },
       skills: {
         connect: [
           { name: SKILLS[3] },
@@ -161,8 +161,8 @@ async function seedProject() {
       finishAt: new Date(),
       name: 'Dự án quản lý chung cư',
       status: 2,
-      content: '',
       leaderUsername: 'hrwebapp01',
+      members: { connect: { username: 'nvwebapp01' } },
       skills: {
         connect: [
           { name: SKILLS[6] },

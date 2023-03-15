@@ -1,7 +1,10 @@
 /******************************/
-/***********Skill**************/
+/***********SKILL**************/
 /******************************/
 let skillChosenList = [];
+if (useQuery('#skill-chosen-list')) {
+  skillChosenList = JSON.parse(useQuery('#skill-chosen-list').value);
+}
 const renderSkillChosen = (container, isInModal = false) => {
   container.innerHTML = '';
   const deleteButtonClass = isInModal
@@ -73,11 +76,21 @@ useQuery('#add-skill').onclick = () => {
 };
 
 /******************************/
-/***********Member**************/
+/***********MEMBER**************/
 /******************************/
 let memberChosenList = [];
+if (useQuery('#member-chosen-list')) {
+  memberChosenList.push(...JSON.parse(useQuery('#member-chosen-list').value));
+  const leader = JSON.parse(useQuery('#leader').value);
+  memberChosenList.splice(
+    memberChosenList.findIndex((member) => member.username == leader.username),
+    1,
+  );
+  leader.leader = true;
+  memberChosenList.unshift(leader);
+}
 const renderMemberChosen = (container, isInModal = false) => {
-  // container.innerHTML = '';
+  container.innerHTML = '';
   const deleteButtonClass = isInModal
     ? 'member-el__delete'
     : 'member-el__delete-modal';
@@ -85,14 +98,36 @@ const renderMemberChosen = (container, isInModal = false) => {
     container.innerHTML += `
       <div class="member-el">
         <div class="member-el__information">
-          <div class="member-el__avatar"></div>
+          <img class="member-el__avatar" src="${
+            member.avatar || '/img/default-user.jpeg'
+          }" />
           <div>
-              <div class="member-el__username">username</div>
-              <div class="member-el__name">Lê Minh Hiếu</div>
+              <div class="member-el__username">${member.username}</div>
+              <div class="member-el__name">${member.name}</div>
           </div>
         </div>
-        <i class="fa-solid fa-square-minus ${deleteButtonClass}"></i>
+        <div class="member-el__button-container">
+          <i class="${
+            member.leader ? 'fa-solid' : 'fa-regular'
+          } fa-star leader-button"></i>
+          <i class="fa-solid fa-square-minus ${deleteButtonClass}"></i>
+        </div>
       </div>`;
+  });
+  useQueryAll(`.leader-button`).forEach((leaderButton, index) => {
+    leaderButton.onclick = () => {
+      if (memberChosenList[index].leader) return;
+      const member = memberChosenList.splice(index, 1);
+      memberChosenList.unshift(...member);
+      memberChosenList[0].leader = true;
+      if (memberChosenList.length > 1) {
+        memberChosenList[1].leader = false;
+      }
+      renderMemberChosen(useQuery('.member-chosen-list'));
+      if (isInModal) {
+        renderSkillChosen(useQuery('.member-chosen-list-modal'), true);
+      }
+    };
   });
   useQueryAll(`.${deleteButtonClass}`).forEach((deleteButton, index) => {
     deleteButton.onclick = () => {
@@ -111,17 +146,11 @@ useQuery('#add-member').onclick = () => {
   modal.classList.remove('skill-list-modal');
   modal.classList.add('member-list-modal');
 
-  const memberChosenListEl = document.createElement('div');
-  memberChosenListEl.classList.add('member-chosen-list-modal');
-  modal.appendChild(memberChosenListEl);
-
-  renderSkillChosen(memberChosenListEl, true);
-
   const memberListEl = document.createElement('div');
   memberListEl.classList.add('member-list');
   modal.appendChild(memberListEl);
 
-  let members = [1, 2];
+  let members = [];
   let timer;
 
   const searchMember = (query) => {
@@ -129,10 +158,15 @@ useQuery('#add-member').onclick = () => {
     if (query) {
       renderMemberList({ loading: true });
       timer = setTimeout(() => {
-        console.log('call API');
-        renderMemberList();
+        fetch(`${location.origin}/employee/all?key_search=${searchInput.value}`)
+          .then((res) => res.json())
+          .then((data) => {
+            members = data.data;
+            renderMemberList();
+          });
       }, 2000);
     } else {
+      members = [];
       renderMemberList({ firstTime: true });
     }
   };
@@ -157,16 +191,30 @@ useQuery('#add-member').onclick = () => {
       memberListEl.innerHTML = '';
       members.forEach((member) => {
         memberListEl.innerHTML += `
-        <div class="member-el" style="cursor:pointer">
+        <div class="member-el member-el-modal" style="cursor:pointer">
           <div class="member-el__information">
-            <div class="member-el__avatar"></div>
+            <img class="member-el__avatar" src="${
+              member.avatar || '/img/default-user.jpeg'
+            }" />
             <div>
-                <div class="member-el__username">username</div>
-                <div class="member-el__name">Lê Minh Hiếu</div>
+                <div class="member-el__username">${member.username}</div>
+                <div class="member-el__name">${member.name}</div>
             </div>
           </div>
         </div>
       `;
+      });
+      useQueryAll('.member-el-modal').forEach((el, index) => {
+        el.onclick = () => {
+          if (
+            memberChosenList.findIndex(
+              (member) => member.username == members[index].username,
+            ) == -1
+          ) {
+            memberChosenList.push(members[index]);
+            renderMemberChosen(useQuery('.member-chosen-list'));
+          }
+        };
       });
     }
   };
@@ -189,4 +237,59 @@ const resetModal = () => {
         </svg>
         <input type="text" class="search-input" name="key_search" placeholder="Tìm kiếm...">
     </div>`;
+};
+
+/********************/
+/****SUBMIT FORM****/
+/********************/
+const form = useQuery('form');
+form.onsubmit = (e) => {
+  e.preventDefault();
+  showLoading();
+  const formData = new FormData(form);
+  const body = {};
+  formData.forEach((value, key) => (body[key] = value));
+  body.status = +body.status;
+  body.skills = skillChosenList.map((skill) => skill.id);
+  body.members = memberChosenList.map((member) => ({
+    username: member.username,
+    leader: member.leader,
+  }));
+  fetch(location.pathname, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error();
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      showToast(
+        location.pathname.includes('edit')
+          ? 'Chỉnh sửa thành công'
+          : 'Tạo mới thành công',
+      );
+      if (!location.pathname.includes('edit')) {
+        form.reset();
+        skillChosenList = [];
+        renderSkillChosen(useQuery('.skill-chosen-list'));
+        memberChosenList = [];
+        renderMemberChosen(useQuery('.member-chosen-list'));
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      showToast(
+        location.pathname.includes('edit')
+          ? 'Chỉnh sửa thất bại'
+          : 'Tạo mới thất bại',
+        false,
+      );
+    });
 };

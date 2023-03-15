@@ -28,16 +28,9 @@ export class ProjectCreateDto {
   @IsInt()
   status: typeof PROJECT_STATUS[keyof typeof PROJECT_STATUS];
 
-  @IsJSON()
-  content: string;
+  @IsArray()
+  skills: number[];
 
   @IsArray()
-  skillId: number[];
-
-  @IsString()
-  @IsNotEmpty()
-  leaderUsername: string;
-
-  @IsArray()
-  membersUsername: string[];
+  members: { username: string; leader?: boolean }[];
 }

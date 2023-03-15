@@ -100,10 +100,9 @@ model Project {
     startAt  DateTime
     finishAt DateTime?
 
-    name    String
-    content Json
-    skills  Skill[]
-    status  Int
+    name   String
+    skills Skill[]
+    status Int
 
     leader         User   @relation("leader", fields: [leaderUsername], references: [username])
     leaderUsername String

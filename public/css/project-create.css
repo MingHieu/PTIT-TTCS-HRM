@@ -145,7 +145,6 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: red;
   margin-right: 10px;
 }
 
@@ -158,6 +157,18 @@
   color: red;
   cursor: pointer;
   font-size: 24px;
+}
+
+.leader-button {
+  color: var(--warning-color);
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.member-el__button-container {
+  display: flex;
+  align-items: center;
 }
 
 .member-list {

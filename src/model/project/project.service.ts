@@ -8,25 +8,43 @@ export class ProjectService {
   constructor(private prisma: PrismaService) {}
 
   async create(body: ProjectCreateDto) {
-    const { skillId, membersUsername, ...data } = body;
+    const { skills, members, ...data } = body;
     await this.prisma.project.create({
       data: {
         ...data,
-        members: { connect: membersUsername.map((username) => ({ username })) },
-        skills: { connect: skillId.map((id) => ({ id })) },
+        leader: {
+          connect: {
+            username:
+              members[members.findIndex(({ leader }) => leader)].username ||
+              members[0].username,
+          },
+        },
+        members: {
+          connect: members.map(({ username }) => ({ username })),
+        },
+        skills: { connect: skills.map((id) => ({ id })) },
       },
     });
     return SUCCESS_RESPONSE;
   }
 
   async update(body: ProjectUpdateDto) {
-    const { id, membersUsername, skillId, ...data } = body;
+    const { id, members, skills, ...data } = body;
     await this.prisma.project.update({
       where: { id },
       data: {
         ...data,
-        members: { connect: membersUsername.map((username) => ({ username })) },
-        skills: { connect: skillId.map((id) => ({ id })) },
+        leader: {
+          connect: {
+            username:
+              members[members.findIndex(({ leader }) => leader)].username ||
+              members[0].username,
+          },
+        },
+        members: {
+          connect: members.map(({ username }) => ({ username })),
+        },
+        skills: { connect: skills.map((id) => ({ id })) },
       },
     });
     return SUCCESS_RESPONSE;

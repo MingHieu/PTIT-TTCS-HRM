@@ -86,7 +86,6 @@ CREATE TABLE "Project" (
     "startAt" TIMESTAMP(3) NOT NULL,
     "finishAt" TIMESTAMP(3),
     "name" TEXT NOT NULL,
-    "content" JSONB NOT NULL,
     "status" INTEGER NOT NULL,
     "leaderUsername" TEXT NOT NULL,
 
