@@ -119,11 +119,7 @@ export class AppService {
   }
 
   async project(page: number, perPage: number, keySearch: string) {
-    if (!page) page = 1;
-    if (!perPage) perPage = 10;
-    if (!keySearch) keySearch = '';
-    const data = await this.#project.getMany(page - 1, perPage, keySearch);
-
+    const data = await this.#project.getMany(page, perPage, keySearch);
     return {
       title: 'Dự án',
       css: 'project.css',
@@ -189,10 +185,7 @@ export class AppService {
   }
 
   async news(page: number, perPage: number, keySearch: string) {
-    if (!page) page = 1;
-    if (!perPage) perPage = 10;
-    if (!keySearch) keySearch = '';
-    const data = await this.#news.getMany(page - 1, perPage, keySearch);
+    const data = await this.#news.getMany(page, perPage, keySearch);
     return {
       title: 'Bản tin',
       css: 'news.css',
@@ -234,10 +227,7 @@ export class AppService {
   }
 
   async event(page: number, perPage: number, keySearch: string) {
-    if (!page) page = 1;
-    if (!perPage) perPage = 10;
-    if (!keySearch) keySearch = '';
-    const data = await this.#event.getMany(page - 1, perPage, keySearch);
+    const data = await this.#event.getMany(page, perPage, keySearch);
     return {
       title: 'Danh sách sự kiện',
       css: 'event.css',
@@ -273,10 +263,7 @@ export class AppService {
   }
 
   async employee(page: number, perPage: number, keySearch: string) {
-    if (!page) page = 1;
-    if (!perPage) perPage = 10;
-    if (!keySearch) keySearch = '';
-    const data = await this.#user.getMany(page - 1, perPage, keySearch);
+    const data = await this.#user.getMany(page, perPage, keySearch);
     return {
       title: 'Danh sách nhân viên',
       css: 'employee.css',
@@ -287,10 +274,7 @@ export class AppService {
   }
 
   async getManyEmployee(page: number, perPage: number, keySearch: string) {
-    if (!page) page = 1;
-    if (!perPage) perPage = 10;
-    if (!keySearch) keySearch = '';
-    const data = await this.#user.getMany(page - 1, perPage, keySearch);
+    const data = await this.#user.getMany(page, perPage, keySearch);
     return data;
   }
 
@@ -353,10 +337,7 @@ export class AppService {
   }
 
   async request(page: number, perPage: number, keySearch: string) {
-    if (!page) page = 1;
-    if (!perPage) perPage = 10;
-    if (!keySearch) keySearch = '';
-    const data = await this.#request.getMany(page - 1, perPage, keySearch);
+    const data = await this.#request.getMany(page, perPage, keySearch);
     return {
       title: 'Danh sách yêu cầu',
       css: 'request.css',

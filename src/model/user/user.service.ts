@@ -59,8 +59,11 @@ export class UserService {
     return user;
   }
 
-  async getMany(page: number, take: number, keySearch: string) {
-    console.log(keySearch);
+  async getMany(page: number, perPage: number, keySearch: string) {
+    if (!page) page = 1;
+    if (!perPage) perPage = 10;
+    if (!keySearch) keySearch = '';
+    page--;
     const users = await this.prisma.user.findMany({
       where: {
         OR: {
@@ -68,8 +71,8 @@ export class UserService {
           username: { contains: keySearch },
         },
       },
-      skip: page * take,
-      take,
+      skip: page * perPage,
+      take: perPage,
       select: {
         id: true,
         avatar: true,
@@ -89,7 +92,7 @@ export class UserService {
     return {
       data: users,
       page,
-      per_page: take,
+      per_page: perPage,
       page_size: users.length,
       total: totalUsers,
     };

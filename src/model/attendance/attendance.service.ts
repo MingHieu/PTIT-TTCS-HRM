@@ -43,6 +43,9 @@ export class AttendanceService {
   }
 
   async getMany(page: number, perPage: number, username: string) {
+    if (!page) page = 1;
+    if (!perPage) perPage = 10;
+    page--;
     const attendances = await this.prisma.attendance.findMany({
       where: { username },
       skip: page * perPage,

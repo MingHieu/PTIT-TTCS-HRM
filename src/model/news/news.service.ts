@@ -48,7 +48,10 @@ export class NewsService {
   }
 
   async getMany(page: number, perPage: number, keySearch: string) {
-    console.log(keySearch);
+    if (!page) page = 1;
+    if (!perPage) perPage = 10;
+    if (!keySearch) keySearch = '';
+    page--;
     const news = await this.prisma.news.findMany({
       where: { name: { contains: keySearch } },
       skip: page * perPage,
