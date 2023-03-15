@@ -1,18 +1,8 @@
-import { toInt, toDate } from 'src/helpers';
+import { toInt } from 'src/helpers';
 import { Transform } from 'class-transformer';
-import {
-  IsDate,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class SalaryCreateDto {
-  @IsString()
-  @IsNotEmpty()
-  username: string;
-
   @Transform(({ value }) => toInt(value))
   @IsInt()
   value: number;
@@ -20,8 +10,4 @@ export class SalaryCreateDto {
   @IsString()
   @IsOptional()
   note?: string;
-
-  @Transform(({ value }) => toDate(value))
-  @IsDate()
-  createAt: Date;
 }

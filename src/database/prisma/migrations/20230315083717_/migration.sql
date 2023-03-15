@@ -21,20 +21,19 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Attendance" (
-    "id" SERIAL NOT NULL,
-    "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "date" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "checkIn" TIMESTAMP(3),
     "checkOut" TIMESTAMP(3),
     "status" INTEGER NOT NULL,
     "username" TEXT NOT NULL,
 
-    CONSTRAINT "Attendance_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Attendance_pkey" PRIMARY KEY ("username","date")
 );
 
 -- CreateTable
 CREATE TABLE "Salary" (
     "id" SERIAL NOT NULL,
-    "createAt" TIMESTAMP(3) NOT NULL,
+    "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "value" BIGINT NOT NULL,
     "note" TEXT,
     "username" TEXT NOT NULL,

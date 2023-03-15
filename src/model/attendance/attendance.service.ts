@@ -4,42 +4,64 @@ import { PrismaService } from 'src/database/prisma/prisma.service';
 import { AttendanceUpsertDto } from './dto';
 import { SETTING } from 'src/model/setting/constants';
 import { ATTENDANCE_STATUS } from './constants';
+import moment from 'moment';
 
 @Injectable()
 export class AttendanceService {
   constructor(private prisma: PrismaService, private setting: SettingService) {}
 
-  async upsert(body: AttendanceUpsertDto, username: string) {
-    const { id, checkIn, checkOut } = body;
+  async checkIn() {
     let status: typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS];
-    if (!checkIn && !checkOut) {
-      status = ATTENDANCE_STATUS.dayoff;
-    } else if (checkIn) {
-      const companyCheckInTime = await this.setting.getOne(SETTING.CHECK_IN);
-      const [companyCheckInHours, companyCheckInMinutes] =
-        companyCheckInTime.value.split(':');
+    const time = new Date();
 
-      const checkInHours = checkIn.getHours();
-      const checkInMinutes = checkIn.getMinutes();
-      if (!checkIn && !checkOut) {
-        status = ATTENDANCE_STATUS.dayoff;
-      } else if (checkInHours > +companyCheckInHours) {
-        status = ATTENDANCE_STATUS.late;
-      } else if (
-        checkInHours == +companyCheckInHours &&
-        checkInMinutes > +companyCheckInMinutes
-      ) {
-        status = ATTENDANCE_STATUS.late;
-      } else {
-        status = ATTENDANCE_STATUS.ontime;
-      }
+    const companyCheckInTime = await this.setting.getOne(SETTING.CHECK_IN);
+    const [companyCheckInHours, companyCheckInMinutes] =
+      companyCheckInTime.value.split(':').map((val) => +val);
+
+    const checkInHours = time.getHours();
+    const checkInMinutes = time.getMinutes();
+
+    if (
+      checkInHours > companyCheckInHours ||
+      (checkInHours == companyCheckInHours &&
+        checkInMinutes > companyCheckInMinutes)
+    ) {
+      status = ATTENDANCE_STATUS.late;
+    } else {
+      status = ATTENDANCE_STATUS.ontime;
     }
 
-    await this.prisma.attendance.upsert({
-      where: { id },
-      update: { checkOut },
-      create: { username, status, checkIn },
-    });
+    return { status, checkIn: time };
+  }
+
+  async upsert(body: AttendanceUpsertDto, username: string) {
+    const { checkIn, status } = body;
+
+    if (checkIn) {
+      await this.prisma.attendance.upsert({
+        where: {
+          username_date: {
+            username,
+            date: moment().format('YYYY-MM-DD'),
+          },
+        },
+        update: { checkOut: new Date() },
+        create: { username, ...(await this.checkIn()) },
+      });
+    }
+
+    if (status) {
+      await this.prisma.attendance.upsert({
+        where: {
+          username_date: {
+            username,
+            date: moment().format('YYYY-MM-DD'),
+          },
+        },
+        update: { status },
+        create: { username, status },
+      });
+    }
   }
 
   async getMany(page: number, perPage: number, username: string) {
@@ -50,7 +72,7 @@ export class AttendanceService {
       where: { username },
       skip: page * perPage,
       take: perPage,
-      orderBy: { createAt: 'desc' },
+      orderBy: { date: 'desc' },
     });
     const totalAttendances = await this.prisma.attendance.count();
     return {

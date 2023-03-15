@@ -1,17 +1,10 @@
-import { Transform } from 'class-transformer';
-import { IsDate, IsInt, IsOptional } from 'class-validator';
-import { toDate } from 'src/helpers';
+import { IsBoolean, IsInt } from 'class-validator';
+import { ATTENDANCE_STATUS } from '../constants';
+
 export class AttendanceUpsertDto {
+  @IsBoolean()
+  checkIn?: boolean;
+
   @IsInt()
-  @IsOptional()
-  id?: number;
-
-  @Transform(({ value }) => toDate(value))
-  @IsDate()
-  checkIn: Date;
-
-  @Transform(({ value }) => toDate(value))
-  @IsDate()
-  @IsOptional()
-  checkOut?: Date;
+  status?: typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS];
 }

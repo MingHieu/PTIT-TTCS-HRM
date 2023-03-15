@@ -9,7 +9,7 @@ export class AttendanceController {
   constructor(private attendanceService: AttendanceService) {}
 
   @Post('check')
-  checkInOrOut(
+  checkIn(
     @Body() body: AttendanceUpsertDto,
     @GetUser('username') username: string,
   ) {

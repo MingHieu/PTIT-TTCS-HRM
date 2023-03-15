@@ -37,8 +37,7 @@ model User {
 }
 
 model Attendance {
-    id       Int      @id @default(autoincrement())
-    createAt DateTime @default(now())
+    date DateTime @default(now()) @db.Date
 
     checkIn  DateTime?
     checkOut DateTime?
@@ -46,11 +45,13 @@ model Attendance {
 
     user     User   @relation(fields: [username], references: [username])
     username String
+
+    @@id([username, date])
 }
 
 model Salary {
     id       Int      @id @default(autoincrement())
-    createAt DateTime
+    createAt DateTime @default(now())
     value    BigInt
     note     String?
 
