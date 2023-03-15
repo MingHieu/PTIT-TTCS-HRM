@@ -27,11 +27,11 @@
         <tbody>
             {{#each data.data}}
             <tr>
-                <td><a href="/employee/{{this.username}}">{{formatIndex @index}}</a></td>
-                <td><a href="/employee/{{this.username}}">{{this.name}}</a></td>
-                <td><a href="/employee/{{this.username}}">{{this.username}}</a></td>
-                <td><a href="/employee/{{this.username}}">{{formatDate this.joinAt}}</a></td>
-                <td><a href="/employee/{{this.username}}">{{formatPosition this.role}}</a></td>
+                <td><a href="/employee/{{this.username}}/">{{formatIndex @index}}</a></td>
+                <td><a href="/employee/{{this.username}}/">{{this.name}}</a></td>
+                <td><a href="/employee/{{this.username}}/">{{this.username}}</a></td>
+                <td><a href="/employee/{{this.username}}/">{{formatDate this.joinAt}}</a></td>
+                <td><a href="/employee/{{this.username}}/">{{formatPosition this.role}}</a></td>
             </tr>
             {{/each}}
         </tbody>

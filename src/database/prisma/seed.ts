@@ -3,8 +3,24 @@ import { PERMISSIONS, ROLES } from '../../auth/constants';
 import * as argon from 'argon2';
 import { SKILLS } from '../../model/skill/constants';
 import { REQUEST_TYPE, REQUEST_STATUS } from '../../model/request/constants';
+import * as moment from 'moment';
+import { SETTING } from '../../model/setting/constants';
+import { ATTENDANCE_STATUS } from '../../model/attendance/constants';
 
 const prisma = new PrismaClient();
+
+async function seedSetting() {
+  for (const key in SETTING) {
+    await prisma.setting.upsert({
+      where: { name: SETTING[key].name },
+      update: {},
+      create: {
+        name: SETTING[key].name,
+        value: SETTING[key].initialValue,
+      },
+    });
+  }
+}
 
 async function seedAccount() {
   await prisma.user.upsert({
@@ -197,7 +213,58 @@ async function seedRequest() {
   }
 }
 
+async function seedAttendance() {
+  let status: typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS];
+  const time = moment().hour(7).minute(0).toDate();
+
+  const companyCheckInTime = await prisma.setting.findUnique({
+    where: { name: SETTING.CHECK_IN.name },
+  });
+  const [companyCheckInHours, companyCheckInMinutes] = companyCheckInTime.value
+    .split(':')
+    .map((val) => +val);
+
+  const checkInHours = time.getHours();
+  const checkInMinutes = time.getMinutes();
+
+  if (
+    checkInHours > companyCheckInHours ||
+    (checkInHours == companyCheckInHours &&
+      checkInMinutes > companyCheckInMinutes)
+  ) {
+    status = ATTENDANCE_STATUS.late;
+  } else {
+    status = ATTENDANCE_STATUS.ontime;
+  }
+
+  await prisma.attendance.upsert({
+    where: {
+      username_date: {
+        username: 'hrwebapp01',
+        date: new Date(),
+      },
+    },
+    update: {},
+    create: {
+      date: new Date(),
+      username: 'hrwebapp01',
+      checkIn: moment().hour(7).minute(0).toDate(),
+      checkOut: moment().hour(18).minute(0).toDate(),
+      status,
+    },
+  });
+}
+
+async function seedSalary() {
+  await prisma.salary.upsert({
+    where: { id: 0 },
+    update: {},
+    create: { id: 0, value: 10000000, username: 'hrwebapp01' },
+  });
+}
+
 async function main() {
+  await seedSetting();
   await seedRoles();
   await seedPermissions();
   await seedNews();
@@ -206,6 +273,8 @@ async function main() {
   await seedSkill();
   await seedProject();
   await seedRequest();
+  await seedSalary();
+  await seedAttendance();
 }
 
 main()

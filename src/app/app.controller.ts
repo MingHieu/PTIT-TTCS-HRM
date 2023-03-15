@@ -165,57 +165,37 @@ export class AppController {
 
   @Get('employee/:username/salary')
   @Render('employee-detail-salary')
-  employeeSalaryDetail() {
-    return {
-      title: 'Thông tin nhân viên',
-      css: 'employee-detail-salary.css',
-      salary: true,
-      layout: 'employee-detail',
-    };
+  employeeSalaryDetailGet(@Param('username') username) {
+    return this.appService.employeeSalaryDetail(username);
+  }
+
+  @Post('employee/:username/salary')
+  employeeSalaryDetailPost(@Param('username') username) {
+    return this.appService.updateEmployeeSalary(username);
   }
 
   @Get('employee/:username/attendance')
   @Render('employee-detail-attendance')
-  employeeAttendanceDetail() {
-    return {
-      title: 'Thông tin nhân viên',
-      css: 'employee-detail-attendance.css',
-      attendance: true,
-      layout: 'employee-detail',
-    };
-  }
-
-  @Get('employee/:username/request')
-  @Render('employee-detail-request')
-  employeeRequestDetail() {
-    return {
-      title: 'Thông tin nhân viên',
-      css: 'employee-detail-request.css',
-      request: true,
-      layout: 'employee-detail',
-    };
+  employeeAttendanceDetail(@Param('username') username) {
+    return this.appService.employeeAttendanceDetail(username);
   }
 
   @Get('employee/:username/project')
   @Render('employee-detail-project')
-  employeeProjectDetail() {
-    return {
-      title: 'Thông tin nhân viên',
-      css: 'employee-detail-project.css',
-      project: true,
-      layout: 'employee-detail',
-    };
+  employeeProjectDetail(@Param('username') username) {
+    return this.appService.employeeProjectDetail(username);
+  }
+
+  @Get('employee/:username/request')
+  @Render('employee-detail-request')
+  employeeRequestDetail(@Param('username') username) {
+    return this.appService.employeeRequestDetail(username);
   }
 
   @Get('employee/:username/event')
   @Render('employee-detail-event')
-  employeeEventDetail() {
-    return {
-      title: 'Thông tin nhân viên',
-      css: 'employee-detail-event.css',
-      event: true,
-      layout: 'employee-detail',
-    };
+  employeeEventDetail(@Param('username') username) {
+    return this.appService.employeeEventDetail(username);
   }
 
   @Get('employee/:username/delete')
@@ -228,8 +208,8 @@ export class AppController {
   }
 
   @Get('employee/:username')
-  employeeDetail(@Param('username') username, @Res() res: Response) {
-    return res.redirect(`${username}/information`);
+  employeeDetail(@Res() res: Response) {
+    return res.redirect(`information`);
   }
 
   @Get('event')

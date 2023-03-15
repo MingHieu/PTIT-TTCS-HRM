@@ -14,7 +14,7 @@ export class AttendanceService {
     let status: typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS];
     const time = new Date();
 
-    const companyCheckInTime = await this.setting.getOne(SETTING.CHECK_IN);
+    const companyCheckInTime = await this.setting.getOne(SETTING.CHECK_IN.name);
     const [companyCheckInHours, companyCheckInMinutes] =
       companyCheckInTime.value.split(':').map((val) => +val);
 
@@ -42,7 +42,7 @@ export class AttendanceService {
         where: {
           username_date: {
             username,
-            date: moment().format('YYYY-MM-DD'),
+            date: new Date(),
           },
         },
         update: { checkOut: new Date() },

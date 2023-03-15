@@ -7,9 +7,9 @@ import { SalaryCreateDto } from './dto';
 export class SalaryService {
   constructor(private prisma: PrismaService) {}
 
-  async create(body: SalaryCreateDto) {
+  async create(body: SalaryCreateDto, username: string) {
     await this.prisma.salary.create({
-      data: { ...body },
+      data: { ...body, username },
     });
     return SUCCESS_RESPONSE;
   }

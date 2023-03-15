@@ -324,6 +324,56 @@ export class AppService {
     };
   }
 
+  async employeeSalaryDetail(username: string) {
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-salary.css',
+      js: 'employee-detail-salary.js',
+      salary: true,
+      layout: 'employee-detail',
+    };
+  }
+
+  async updateEmployeeSalary(username: string) {
+    return true;
+  }
+
+  async employeeAttendanceDetail(username: string) {
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-attendance.css',
+      attendance: true,
+      layout: 'employee-detail',
+    };
+  }
+
+  async employeeProjectDetail(username: string) {
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-project.css',
+      project: true,
+      layout: 'employee-detail',
+    };
+  }
+
+  async employeeRequestDetail(username: string) {
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-request.css',
+      request: true,
+      layout: 'employee-detail',
+    };
+  }
+
+  async employeeEventDetail(username: string) {
+    return {
+      title: 'Thông tin nhân viên',
+      css: 'employee-detail-event.css',
+      event: true,
+      layout: 'employee-detail',
+    };
+  }
+
   async deleteAccount(
     jwtPayload: IJwtPayload,
     username: string,

@@ -7,12 +7,15 @@ import { SETTING } from './constants';
 export class SettingService {
   constructor(private prisma: PrismaService) {}
 
-  async update(name: typeof SETTING[keyof typeof SETTING], value: string) {
+  async update(
+    name: typeof SETTING[keyof typeof SETTING]['name'],
+    value: string,
+  ) {
     await this.prisma.setting.update({ where: { name }, data: { value } });
     return SUCCESS_RESPONSE;
   }
 
-  async getOne(name: typeof SETTING[keyof typeof SETTING]) {
+  async getOne(name: typeof SETTING[keyof typeof SETTING]['name']) {
     const setting = await this.prisma.setting.findUnique({ where: { name } });
     return setting;
   }
