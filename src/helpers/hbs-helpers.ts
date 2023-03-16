@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import { ROLES } from 'src/auth/constants';
 import { GENDERS } from 'src/common/constants';
 import { IPagination } from 'src/common/types';
+import { ATTENDANCE_STATUS } from 'src/model/attendance/constants';
 import { PROJECT_STATUS } from 'src/model/project/constants';
 import { REQUEST_STATUS } from 'src/model/request/constants';
 import { SETTING } from 'src/model/setting/constants';
@@ -18,6 +19,7 @@ export const hbsHelpers = {
     }
   },
   formatDate: function (date: Date) {
+    if (!date) return '???';
     return moment(date).format('DD/MM/yyyy');
   },
   formatDateInput: function (date: Date) {
@@ -25,6 +27,9 @@ export const hbsHelpers = {
   },
   formatDateTime: function (date: Date) {
     return moment(date).format('DD/MM/yyyy, hh:mm A');
+  },
+  formatTime: function (date: Date) {
+    return moment(date).format('HH:mm');
   },
   formatDateDistance: function (from: Date, to: Date) {
     if (from.getDate() == to.getDate()) {
@@ -109,6 +114,27 @@ export const hbsHelpers = {
         return 'Số ngày nghỉ phép 1 năm:';
       default:
         return '';
+    }
+  },
+  formatMoney: function (value: number) {
+    const formatter = new Intl.NumberFormat('vi', {
+      style: 'currency',
+      currency: 'VND',
+    });
+    return formatter.format(value);
+  },
+  formatAttendanceStatus: function (
+    status: typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS],
+  ) {
+    switch (status) {
+      case 0:
+        return 'Đúng giờ';
+      case 1:
+        return 'Đi muộn';
+      case 2:
+        return 'Nghỉ có phép';
+      case 3:
+        return 'Nghỉ không lương';
     }
   },
 };

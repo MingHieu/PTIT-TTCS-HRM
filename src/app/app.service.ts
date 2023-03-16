@@ -37,8 +37,6 @@ export class AppService {
   #project: ProjectService;
   #request: RequestService;
   #skill: SkillService;
-  #salary: SalaryService;
-  #attendance: AttendanceService;
   #notification: NotificationService;
   #setting: SettingService;
 
@@ -57,9 +55,6 @@ export class AppService {
     this.#project = this.#api.get(ProjectService);
     this.#request = this.#api.get(RequestService);
     this.#skill = this.#api.get(SkillService);
-    this.#salary = this.#api.get(SalaryService);
-    this.#salary = this.#api.get(SalaryService);
-    this.#attendance = this.#api.get(AttendanceService);
     this.#notification = this.#api.get(NotificationService);
     this.#setting = this.#api.get(SettingService);
   }
@@ -323,12 +318,15 @@ export class AppService {
   }
 
   async employeeSalaryDetail(username: string) {
+    const user = await this.#user.getSalary(username);
+
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-salary.css',
       js: 'employee-detail-salary.js',
       salary: true,
       layout: 'employee-detail',
+      data: user.salaries,
     };
   }
 
@@ -337,38 +335,50 @@ export class AppService {
   }
 
   async employeeAttendanceDetail(username: string) {
+    const user = await this.#user.getAttendance(username);
+
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-attendance.css',
       attendance: true,
       layout: 'employee-detail',
+      data: user.attendances,
     };
   }
 
   async employeeProjectDetail(username: string) {
+    const user = await this.#user.getProject(username);
+
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-project.css',
       project: true,
       layout: 'employee-detail',
+      data: [...user.projectsAsMember, ...user.projectsAsLeader],
     };
   }
 
   async employeeRequestDetail(username: string) {
+    const user = await this.#user.getRequest(username);
+
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-request.css',
       request: true,
       layout: 'employee-detail',
+      data: user.requests,
     };
   }
 
   async employeeEventDetail(username: string) {
+    const user = await this.#user.getEvent(username);
+
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-event.css',
       event: true,
       layout: 'employee-detail',
+      data: user.events,
     };
   }
 

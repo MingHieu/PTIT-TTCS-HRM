@@ -136,4 +136,56 @@ export class UserService {
     }
     return username.toLowerCase();
   }
+
+  async getSalary(username: string) {
+    const salaries = await this.prisma.user.findUnique({
+      where: { username },
+      select: { salaries: true },
+    });
+
+    return salaries;
+  }
+
+  async getAttendance(username: string) {
+    const attendances = await this.prisma.user.findUnique({
+      where: { username },
+      select: { attendances: true },
+    });
+
+    return attendances;
+  }
+
+  async getProject(username: string) {
+    const projects = await this.prisma.user.findUnique({
+      where: { username },
+      select: {
+        projectsAsMember: { include: { skills: true } },
+        projectsAsLeader: { include: { skills: true } },
+      },
+    });
+
+    return projects;
+  }
+
+  async getRequest(username: string) {
+    const requests = await this.prisma.user.findUnique({
+      where: { username },
+      select: {
+        requests: true,
+      },
+    });
+
+    return requests;
+  }
+
+  async getEvent(username: string) {
+    const events = await this.prisma.user.findUnique({
+      where: { username },
+      select: {
+        events: true,
+      },
+    });
+
+    return events;
+  }
 }

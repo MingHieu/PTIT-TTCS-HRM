@@ -116,6 +116,9 @@ async function seedEvent() {
       to: new Date(Date.now() + 11 * 24 * 3600 * 1000),
       expiredAt: new Date(Date.now() + 5 * 24 * 3600 * 1000),
       address: '123 Main St, Anytown, USA',
+      participants: {
+        connect: [{ username: 'hrwebapp01' }, { username: 'nvwebapp01' }],
+      },
     },
   });
 }
@@ -265,9 +268,9 @@ async function main() {
   await seedSetting();
   await seedRoles();
   await seedPermissions();
+  await seedAccount();
   await seedNews();
   await seedEvent();
-  await seedAccount();
   await seedSkill();
   await seedProject();
   await seedRequest();

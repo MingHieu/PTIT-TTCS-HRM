@@ -10,27 +10,15 @@
                 </tr>
             </thead>
             <tbody>
+                {{#each data}}
                 <tr>
-                    <td><a href="/request/1">Xin nghỉ phép</a></td>
-                    <td><a href="/request/1">01/02/2023</a></td>
-                    <td data-status="0"><a href="/request/1">
-                            <span>Đã duyệt</span>
+                    <td><a href="/request/{{this.id}}">{{this.name}}</a></td>
+                    <td><a href="/request/{{this.id}}">{{formatDate this.createAt}}</a></td>
+                    <td data-status="{{this.status}}"><a href="/request/{{this.id}}">
+                            <span>{{formatRequestStatus this.status}}</span>
                         </a></td>
                 </tr>
-                <tr>
-                    <td><a href="/request/2">Xin làm thêm giờ</a></td>
-                    <td><a href="/request/2">28/01/2023</a></td>
-                    <td data-status="1"><a href="/request/2">
-                            <span>Đang chờ duyệt</span>
-                        </a></td>
-                </tr>
-                <tr>
-                    <td><a href="/request/3">Xin đi công tác</a></td>
-                    <td><a href="/request/3">15/01/2023</a></td>
-                    <td data-status="2"><a href="/request/3">
-                            <span>Từ chối</span>
-                        </a></td>
-                </tr>
+                {{/each}}
             </tbody>
         </table>
     </div>

@@ -44,10 +44,12 @@
   background-color: #ffecbc;
 }
 
-#attendance-tab td:last-child[data-status='2'] {
+#attendance-tab td:last-child[data-status='2'],
+#attendance-tab td:last-child[data-status='3'] {
   color: #ff6161;
 }
 
-#attendance-tab td:last-child[data-status='2'] span {
+#attendance-tab td:last-child[data-status='2'] span,
+#attendance-tab td:last-child[data-status='3'] span {
   background-color: #ffc7c7;
 }
