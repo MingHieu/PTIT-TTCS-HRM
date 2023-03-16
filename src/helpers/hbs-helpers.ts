@@ -4,6 +4,7 @@ import { GENDERS } from 'src/common/constants';
 import { IPagination } from 'src/common/types';
 import { PROJECT_STATUS } from 'src/model/project/constants';
 import { REQUEST_STATUS } from 'src/model/request/constants';
+import { SETTING } from 'src/model/setting/constants';
 
 export const hbsHelpers = {
   formatGender: function (sex: typeof GENDERS[keyof typeof GENDERS]) {
@@ -97,5 +98,17 @@ export const hbsHelpers = {
     options,
   ) {
     return status == 1 ? options.fn(this) : options.inverse(this);
+  },
+  formatSettingName: function (
+    name: typeof SETTING[keyof typeof SETTING]['name'],
+  ) {
+    switch (name) {
+      case 'check_in_time':
+        return 'Thời gian vào làm:';
+      case 'day_off_numbers':
+        return 'Số ngày nghỉ phép 1 năm:';
+      default:
+        return '';
+    }
   },
 };

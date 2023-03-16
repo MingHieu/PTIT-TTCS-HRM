@@ -16,7 +16,7 @@ async function seedSetting() {
       update: {},
       create: {
         name: SETTING[key].name,
-        value: JSON.stringify(SETTING[key].initialValue),
+        value: SETTING[key].initialValue,
       },
     });
   }
@@ -37,7 +37,7 @@ async function seedAccount() {
       address: 'Thanh Trì, Hà Nội',
       joinAt: new Date(),
       role: ROLES.HR,
-      dayOffRemain: SETTING.DAY_OFF_NUMBERS.initialValue,
+      dayOffRemain: +SETTING.DAY_OFF_NUMBERS.initialValue,
     },
   });
 
@@ -55,7 +55,7 @@ async function seedAccount() {
       address: 'Thanh Trì, Hà Nội',
       joinAt: new Date(),
       role: ROLES.NV,
-      dayOffRemain: SETTING.DAY_OFF_NUMBERS.initialValue,
+      dayOffRemain: +SETTING.DAY_OFF_NUMBERS.initialValue,
     },
   });
 }

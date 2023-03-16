@@ -146,7 +146,6 @@ export class AppController {
 
   @Post('employee/:username/information')
   @UseInterceptors(FileInterceptor('avatar'))
-  @Render('employee-detail-information')
   employeeInformationDetailPost(
     @Param('username') username,
     @Body() body: UserCreateDto,
@@ -390,7 +389,7 @@ export class AppController {
   }
 
   @Post('setting')
-  settingPost() {
-    return this.appService.updateSetting();
+  settingPost(@Body() body, @Res() res) {
+    return this.appService.updateSetting(body, res);
   }
 }

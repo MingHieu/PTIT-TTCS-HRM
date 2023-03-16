@@ -24,6 +24,7 @@ import { SalaryService } from 'src/model/salary/salary.service';
 import { AttendanceService } from 'src/model/attendance/attendance.service';
 import { NotificationService } from 'src/model/notification/notification.service';
 import { SettingService } from 'src/model/setting/setting.service';
+import { SETTING } from 'src/model/setting/constants';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -302,19 +303,7 @@ export class AppService {
     if (user.username === jwtPayload.username) {
       res.cookie('user_avatar', user.avatar);
     }
-    return {
-      title: 'Thông tin nhân viên',
-      css: 'employee-detail-information.css',
-      js: 'employee-detail-information.js',
-      information: true,
-      layout: 'employee-detail',
-      data: {
-        user,
-        roles: ROLES,
-        sex: GENDERS,
-      },
-      successMsg: 'Cập nhật thành công',
-    };
+    return res.redirect(`/employee/${username}/information`);
   }
 
   async employeeInformationDetail(username: string) {
@@ -503,12 +492,28 @@ export class AppService {
   }
 
   async getSetting() {
+    const settingList = await this.#setting.getAll();
+
     return {
       title: 'Cài đặt chung',
       css: 'setting.css',
       header: true,
+      data: settingList,
     };
   }
 
-  async updateSetting() {}
+  async updateSetting(
+    body: {
+      [key in typeof SETTING[keyof typeof SETTING]['name']]: string;
+    },
+    res: Response,
+  ) {
+    for (const key in body) {
+      await this.#setting.update(
+        key as typeof SETTING[keyof typeof SETTING]['name'],
+        body[key],
+      );
+    }
+    return res.redirect('/setting');
+  }
 }

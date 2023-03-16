@@ -7,6 +7,6 @@ export const SETTING = {
   },
   DAY_OFF_NUMBERS: {
     name: 'day_off_numbers',
-    initialValue: 12,
+    initialValue: '12',
   },
 } as const;

@@ -1,0 +1,11 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    <form method="post">
+        {{#each data}}
+        <label for="{{this.name}}">{{formatSettingName this.name}}</label>
+        <input type="text" id="{{this.name}}" name="{{this.name}}" value="{{this.value}}">
+        {{/each}}
+
+        <button type="submit">Lưu thay đổi</button>
+    </form>
+</div>
