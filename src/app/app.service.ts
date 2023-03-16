@@ -21,6 +21,9 @@ import { RequestService } from 'src/model/request/request.service';
 import { PROJECT_STATUS } from 'src/model/project/constants';
 import { SkillService } from 'src/model/skill/skill.service';
 import { SalaryService } from 'src/model/salary/salary.service';
+import { AttendanceService } from 'src/model/attendance/attendance.service';
+import { NotificationService } from 'src/model/notification/notification.service';
+import { SettingService } from 'src/model/setting/setting.service';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -34,6 +37,9 @@ export class AppService {
   #request: RequestService;
   #skill: SkillService;
   #salary: SalaryService;
+  #attendance: AttendanceService;
+  #notification: NotificationService;
+  #setting: SettingService;
 
   constructor() {
     this.init();
@@ -51,6 +57,10 @@ export class AppService {
     this.#request = this.#api.get(RequestService);
     this.#skill = this.#api.get(SkillService);
     this.#salary = this.#api.get(SalaryService);
+    this.#salary = this.#api.get(SalaryService);
+    this.#attendance = this.#api.get(AttendanceService);
+    this.#notification = this.#api.get(NotificationService);
+    this.#setting = this.#api.get(SettingService);
   }
 
   checkLogin(jwtPayload: IJwtPayload, res: Response, view, renderOptions) {
@@ -467,4 +477,38 @@ export class AppService {
     const file = await this.#file.getOne(id, res);
     return file;
   }
+
+  async notification(page: number, perPage: number, keySearch: string) {
+    return {
+      title: 'Thông báo',
+      css: 'notification.css',
+      header: true,
+    };
+  }
+
+  async createNotification(body: {}) {
+    return {
+      title: 'Tạo thông báo mới',
+      css: 'notification-create.css',
+      header: true,
+    };
+  }
+
+  async getNotification(id: number) {
+    return {
+      title: 'Chi tiết thông báo',
+      css: 'notification-create.css',
+      header: true,
+    };
+  }
+
+  async getSetting() {
+    return {
+      title: 'Cài đặt chung',
+      css: 'setting.css',
+      header: true,
+    };
+  }
+
+  async updateSetting() {}
 }

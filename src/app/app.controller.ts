@@ -351,4 +351,46 @@ export class AppController {
   ) {
     return this.appService.getFile(id, res);
   }
+
+  @Get('notification')
+  @Render('notification')
+  notification(@Query() query: PaginationDto) {
+    return this.appService.notification(
+      query.page,
+      query.per_page,
+      query.key_search,
+    );
+  }
+
+  @Get('notification/create')
+  @Render('notification-create')
+  notificationCreateGet() {
+    return {
+      title: 'Tạo bản tin mới',
+      css: 'notification-create.css',
+      header: true,
+    };
+  }
+
+  @Post('notification/create')
+  notificationCreatePost(@Body() body: NewsCreateDto) {
+    return this.appService.createNotification(body);
+  }
+
+  @Get('notification/:id')
+  @Render('notification-create')
+  notificationDetail(@Param('id', new ParseIntPipe()) id) {
+    return this.appService.getNotification(id);
+  }
+
+  @Get('setting')
+  @Render('setting')
+  settingGet() {
+    return this.appService.getSetting();
+  }
+
+  @Post('setting')
+  settingPost() {
+    return this.appService.updateSetting();
+  }
 }
