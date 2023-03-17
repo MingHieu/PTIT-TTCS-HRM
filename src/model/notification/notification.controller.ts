@@ -6,7 +6,7 @@ import { NotificationService } from './notification.service';
 export class NotificationController {
   constructor(private notificationService: NotificationService) {}
 
-  @Get('all')
+  @Get()
   getMany(@Query() query: PaginationDto) {
     return this.notificationService.getMany(
       query.page,

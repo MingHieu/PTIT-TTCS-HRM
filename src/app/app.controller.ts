@@ -25,6 +25,7 @@ import { ParseIntPipe } from 'src/common/pipe';
 import { UserCreateDto } from 'src/model/user/dto';
 import { GENDERS } from 'src/common/constants';
 import { ProjectCreateDto } from 'src/model/project/dto';
+import { NotificationCreateDto } from 'src/model/notification/dto';
 
 @Controller()
 export class AppController {
@@ -365,14 +366,14 @@ export class AppController {
   @Render('notification-create')
   notificationCreateGet() {
     return {
-      title: 'Tạo bản tin mới',
+      title: 'Tạo thông báo mới',
       css: 'notification-create.css',
       header: true,
     };
   }
 
   @Post('notification/create')
-  notificationCreatePost(@Body() body: NewsCreateDto) {
+  notificationCreatePost(@Body() body: NotificationCreateDto) {
     return this.appService.createNotification(body);
   }
 

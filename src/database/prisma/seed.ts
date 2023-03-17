@@ -264,6 +264,19 @@ async function seedSalary() {
   });
 }
 
+async function seedNotification() {
+  await prisma.notification.upsert({
+    where: { id: 0 },
+    update: {},
+    create: {
+      id: 0,
+      name: 'Lịch nghỉ tết 2023',
+      content:
+        'Mọi người theo dõi bản tin lịch nghỉ tết 2023 để nắm bắt được thông tin lịch nghỉ nhé',
+    },
+  });
+}
+
 async function main() {
   await seedSetting();
   await seedRoles();
@@ -276,6 +289,7 @@ async function main() {
   await seedRequest();
   await seedSalary();
   await seedAttendance();
+  await seedNotification();
 }
 
 main()

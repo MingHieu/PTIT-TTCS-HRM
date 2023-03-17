@@ -1,1 +1,26 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    <form>
+        <label for="name">Tên sự kiện:</label>
+        <input type="text" id="name" name="name" value="{{data.news.name}}" required>
 
+        <label for="from">Thời gian bắt đầu:</label>
+        <input type="date" id="from" name="from" value="{{formatDateInput data.news.from}}" {{#if detail}}required
+            {{else}}disabled{{/if}}>
+
+        <label for="to">Thời gian kết thúc:</label>
+        <input type="date" id="to" name="to" {{#if data.news.to}}value="{{formatDateInput data.news.to}}" {{/if}} {{#if
+            detail}}required {{else}}disabled{{/if}}>
+
+        <label for="address">Địa điểm:</label>
+        <input type="text" id="address" name="address" value="{{data.news.address}}" required>
+
+        <label for="expiredAt">Thời gian hết hạn đăng ký:</label>
+        <input type="date" id="expiredAt" name="expiredAt" {{#if
+            data.news.expiredAt}}value="{{formatDateInput data.news.expiredAt}}" {{/if}} required>
+
+        <div class="button-wrapper">
+            <button type="submit">{{#if detail}}Tạo mới{{/if}}</button>
+        </div>
+    </form>
+</div>

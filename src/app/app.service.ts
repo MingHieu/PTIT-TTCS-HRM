@@ -20,11 +20,10 @@ import { ProjectService } from 'src/model/project/project.service';
 import { RequestService } from 'src/model/request/request.service';
 import { PROJECT_STATUS } from 'src/model/project/constants';
 import { SkillService } from 'src/model/skill/skill.service';
-import { SalaryService } from 'src/model/salary/salary.service';
-import { AttendanceService } from 'src/model/attendance/attendance.service';
 import { NotificationService } from 'src/model/notification/notification.service';
 import { SettingService } from 'src/model/setting/setting.service';
 import { SETTING } from 'src/model/setting/constants';
+import { NotificationCreateDto } from 'src/model/notification/dto';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -478,26 +477,27 @@ export class AppService {
   }
 
   async notification(page: number, perPage: number, keySearch: string) {
+    const data = await this.#notification.getMany(page, perPage, keySearch);
     return {
       title: 'Thông báo',
       css: 'notification.css',
       header: true,
+      pagination: true,
+      data,
     };
   }
 
-  async createNotification(body: {}) {
-    return {
-      title: 'Tạo thông báo mới',
-      css: 'notification-create.css',
-      header: true,
-    };
+  async createNotification(body: NotificationCreateDto) {
+    return this.#notification.create(body);
   }
 
   async getNotification(id: number) {
+    const notification = await this.#notification.getOne(id);
     return {
       title: 'Chi tiết thông báo',
       css: 'notification-create.css',
       header: true,
+      data: notification,
     };
   }
 

@@ -36,7 +36,7 @@ export class UserService {
             ? username + (usernameExistNumber + 1)
             : username,
         password: hashPassword,
-        dayOffRemain: JSON.parse(dayOffRemain.value),
+        dayOffRemain: +dayOffRemain.value,
       },
     });
     delete user.password;
