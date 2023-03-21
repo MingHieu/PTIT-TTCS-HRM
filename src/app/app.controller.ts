@@ -369,18 +369,30 @@ export class AppController {
       title: 'Tạo thông báo mới',
       css: 'notification-create.css',
       header: true,
+      create: true,
     };
   }
 
   @Post('notification/create')
-  notificationCreatePost(@Body() body: NotificationCreateDto) {
-    return this.appService.createNotification(body);
+  notificationCreatePost(
+    @Body() body: NotificationCreateDto,
+    @Res() res: Response,
+  ) {
+    return this.appService.createNotification(body, res);
   }
 
   @Get('notification/:id')
   @Render('notification-create')
   notificationDetail(@Param('id', new ParseIntPipe()) id) {
     return this.appService.getNotification(id);
+  }
+
+  @Get('notification/:id/delete')
+  notificationDelete(
+    @Param('id', new ParseIntPipe()) id,
+    @Res() res: Response,
+  ) {
+    return this.appService.deleteNotification(id, res);
   }
 
   @Get('setting')

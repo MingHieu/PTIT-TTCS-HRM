@@ -43,4 +43,9 @@ export class NotificationService {
       total: totalNotifications,
     };
   }
+
+  async delete(id: number) {
+    await this.prisma.notification.delete({ where: { id } });
+    return SUCCESS_RESPONSE;
+  }
 }

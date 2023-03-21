@@ -30,3 +30,36 @@
   resize: none;
 }
 
+.container textarea {
+  min-height: 200px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.button-wrapper button,
+.button-wrapper a {
+  display: block;
+  background-color: var(--button-background);
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-inline: 10px;
+}
+
+.button-wrapper a {
+  background-color: red;
+}
+
+.button-wrapper button:hover {
+  background-color: #555;
+}
+
+.button-wrapper button:active {
+  background-color: #222;
+}

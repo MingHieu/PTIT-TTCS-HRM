@@ -30,6 +30,14 @@ body {
   background: #f7f9fb;
 }
 
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 .body {
   display: flex;
   min-height: 100vh;
@@ -58,7 +66,8 @@ button {
   font-size: 16px;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   outline: 1px solid var(--infor-color);
   border: 1px solid var(--infor-color) !important;
 }

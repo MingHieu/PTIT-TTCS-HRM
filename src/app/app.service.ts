@@ -487,8 +487,9 @@ export class AppService {
     };
   }
 
-  async createNotification(body: NotificationCreateDto) {
-    return this.#notification.create(body);
+  async createNotification(body: NotificationCreateDto, res: Response) {
+    await this.#notification.create(body);
+    return res.redirect('/notification');
   }
 
   async getNotification(id: number) {
@@ -499,6 +500,11 @@ export class AppService {
       header: true,
       data: notification,
     };
+  }
+
+  async deleteNotification(id: number, res: Response) {
+    await this.#notification.delete(id);
+    return res.redirect('/notification');
   }
 
   async getSetting() {

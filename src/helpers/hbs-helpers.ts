@@ -25,6 +25,9 @@ export const hbsHelpers = {
   formatDateInput: function (date: Date) {
     return moment(date).format('yyyy-MM-DD');
   },
+  formatDateTimeInput: function (date: Date) {
+    return moment(date).format('yyyy-MM-DD HH:mm:ss');
+  },
   formatDateTime: function (date: Date) {
     return moment(date).format('DD/MM/yyyy, hh:mm A');
   },
