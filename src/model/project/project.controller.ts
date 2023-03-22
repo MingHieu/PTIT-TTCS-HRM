@@ -15,6 +15,11 @@ export class ProjectController {
     );
   }
 
+  @Get('all/:username')
+  getAllByUsername(@Param('username') username) {
+    return this.projectService.getAllByUsername(username);
+  }
+
   @Get(':id')
   getOne(@Param('id') id: number) {
     return this.projectService.getOne(id);

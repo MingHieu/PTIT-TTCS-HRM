@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    <form method="post">
+        <label for="from">Từ ngày:</label>
+        <input type="date" id="from" name="from" required>
+
+        <label for="to">Đến ngày:</label>
+        <input type="date" id="to" name="to" required>
+
+        {{#if data}}
+        <input type="text" name="attendance-data" value="{{data}}" hidden>
+        {{/if}}
+
+        <div class="button-wrapper">
+            <button type="submit">Xuất</button>
+        </div>
+    </form>
+</div>

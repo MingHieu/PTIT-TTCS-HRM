@@ -27,7 +27,7 @@
   justify-content: flex-end;
 }
 
-#salary-tab button[type='submit'] {
+#salary-tab a {
   background-color: var(--button-background);
   color: #fff;
   padding: 10px;
@@ -38,10 +38,10 @@
   margin-top: -10px;
 }
 
-#salary-tab button[type='submit']:hover {
+#salary-tab a:hover {
   background-color: #555;
 }
 
-#salary-tab button[type='submit']:active {
+#salary-tab a:active {
   background-color: #222;
 }

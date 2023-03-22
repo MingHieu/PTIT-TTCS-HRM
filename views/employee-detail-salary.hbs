@@ -1,7 +1,7 @@
 <div id="salary-tab" class="tab-content">
     <h1>Lịch sử lương</h1>
     <div class="button-wrapper">
-        <button type="submit">Cập nhật lương</button>
+        <a href="/employee/{{data.username}}/salaryUpdate">Cập nhật lương</a>
     </div>
     <div class="table-wrapper">
         <table>
@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each data}}
+                {{#each data.data}}
                 <tr>
                     <td>{{formatDate this.createAt}}</td>
                     <td>{{formatMoney this.value}}</td>

@@ -86,6 +86,17 @@ export class ProjectService {
     };
   }
 
+  async getAllByUsername(username: string) {
+    const projects = await this.prisma.project.findMany({
+      where: {
+        OR: [{ leaderUsername: username }, { members: { some: { username } } }],
+      },
+      include: { skills: true },
+      orderBy: { startAt: 'desc' },
+    });
+    return projects;
+  }
+
   async delete(id: number) {
     await this.prisma.project.delete({ where: { id } });
     return SUCCESS_RESPONSE;

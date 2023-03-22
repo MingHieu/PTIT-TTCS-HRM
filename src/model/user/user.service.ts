@@ -71,10 +71,10 @@ export class UserService {
     page--;
     const users = await this.prisma.user.findMany({
       where: {
-        OR: {
-          name: { contains: keySearch },
-          username: { contains: keySearch },
-        },
+        OR: [
+          { name: { contains: keySearch } },
+          { username: { contains: keySearch } },
+        ],
       },
       skip: page * perPage,
       take: perPage,
@@ -135,57 +135,5 @@ export class UserService {
       username += nameStrings[i][0];
     }
     return username.toLowerCase();
-  }
-
-  async getSalary(username: string) {
-    const salaries = await this.prisma.user.findUnique({
-      where: { username },
-      select: { salaries: true },
-    });
-
-    return salaries;
-  }
-
-  async getAttendance(username: string) {
-    const attendances = await this.prisma.user.findUnique({
-      where: { username },
-      select: { attendances: true },
-    });
-
-    return attendances;
-  }
-
-  async getProject(username: string) {
-    const projects = await this.prisma.user.findUnique({
-      where: { username },
-      select: {
-        projectsAsMember: { include: { skills: true } },
-        projectsAsLeader: { include: { skills: true } },
-      },
-    });
-
-    return projects;
-  }
-
-  async getRequest(username: string) {
-    const requests = await this.prisma.user.findUnique({
-      where: { username },
-      select: {
-        requests: true,
-      },
-    });
-
-    return requests;
-  }
-
-  async getEvent(username: string) {
-    const events = await this.prisma.user.findUnique({
-      where: { username },
-      select: {
-        events: true,
-      },
-    });
-
-    return events;
   }
 }

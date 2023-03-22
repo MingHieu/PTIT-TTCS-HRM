@@ -61,6 +61,14 @@ export class RequestService {
     };
   }
 
+  async getAllByUsername(username: string) {
+    const requests = await this.prisma.request.findMany({
+      where: { username },
+      orderBy: { createAt: 'desc' },
+    });
+    return requests;
+  }
+
   async delete(id: number) {
     await this.prisma.request.delete({ where: { id } });
     return SUCCESS_RESPONSE;

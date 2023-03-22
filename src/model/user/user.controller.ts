@@ -16,29 +16,4 @@ export class UserController {
   get(@GetUser('username') username: string) {
     return this.userService.getOne(username);
   }
-
-  @Get('salary')
-  getSalary(@GetUser('username') username: string) {
-    return this.userService.getSalary(username);
-  }
-
-  @Get('attendance')
-  getAttendance(@GetUser('username') username: string) {
-    return this.userService.getAttendance(username);
-  }
-
-  @Get('project')
-  getProject(@GetUser('username') username: string) {
-    return this.userService.getProject(username);
-  }
-
-  @Get('request')
-  getRequest(@GetUser('username') username: string) {
-    return this.userService.getRequest(username);
-  }
-
-  @Get('event')
-  getEvent(@GetUser('username') username: string) {
-    return this.userService.getEvent(username);
-  }
 }

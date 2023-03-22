@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { GetUser } from 'src/auth/decorator';
-import { PaginationDto } from 'src/common/dto';
 import { AttendanceService } from './attendance.service';
 import { AttendanceUpsertDto } from './dto';
 

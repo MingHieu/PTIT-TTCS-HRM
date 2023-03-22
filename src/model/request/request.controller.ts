@@ -25,6 +25,11 @@ export class RequestController {
     );
   }
 
+  @Get('all/:username')
+  getAllByUsername(@Param('username') username) {
+    return this.requestService.getAllByUsername(username);
+  }
+
   @Get(':id')
   getOne(@Param('id') id: number) {
     return this.requestService.getOne(id);

@@ -25,6 +25,11 @@ export class EventController {
     );
   }
 
+  @Get('all/:username')
+  getAllByUsername(@Param('username') username) {
+    return this.eventService.getAllByUsername(username);
+  }
+
   @Get(':id')
   getOne(@Param('id', ParseIntPipe) id: number) {
     return this.eventService.getOne(id);

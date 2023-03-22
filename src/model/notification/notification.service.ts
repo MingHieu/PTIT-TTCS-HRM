@@ -29,7 +29,12 @@ export class NotificationService {
     if (!keySearch) keySearch = '';
     page--;
     const notifications = await this.prisma.notification.findMany({
-      where: { name: { contains: keySearch } },
+      where: {
+        OR: [
+          { name: { contains: keySearch } },
+          { content: { contains: keySearch } },
+        ],
+      },
       skip: page * perPage,
       take: perPage,
       orderBy: { createAt: 'desc' },

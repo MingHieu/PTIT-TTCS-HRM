@@ -20,12 +20,13 @@ export const initApp = async () => {
   app.useGlobalFilters(new NotFoundExceptionFilter());
   app.useGlobalFilters(new UnauthorizedExceptionFilter());
   app.useGlobalGuards(new JwtCookieGuard(reflector));
-  app.use(cookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
     }),
   );
+
+  app.use(cookieParser());
 
   app.useStaticAssets(join(__dirname, '..', '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', '..', 'views'));

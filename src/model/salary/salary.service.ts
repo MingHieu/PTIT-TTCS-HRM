@@ -14,9 +14,10 @@ export class SalaryService {
     return SUCCESS_RESPONSE;
   }
 
-  async getAll(username: string) {
+  async getAllByUsername(username: string) {
     const salaryHistory = await this.prisma.salary.findMany({
       where: { username },
+      orderBy: { createAt: 'desc' },
     });
     return salaryHistory;
   }

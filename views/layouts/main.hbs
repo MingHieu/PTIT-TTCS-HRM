@@ -9,8 +9,6 @@
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
         type="text/css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/loader.css">
 
     {{#if cssLibrary}}
     {{#each cssLibrary}}
@@ -18,9 +16,9 @@
     {{/each}}
     {{/if}}
 
-    {{#if header}}
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/loader.css">
     <link rel="stylesheet" href="/css/header.css">
-    {{/if}}
 
     {{#if css}}
     <link rel="stylesheet" href="/css/{{css}}">
@@ -29,14 +27,10 @@
 
 <body>
 
-    {{#if header}}
     {{> header}}
-    {{/if}}
 
     <div class="body">
-        {{#if header}}
         {{> navbar}}
-        {{/if}}
 
         <div class="main-container">
             <main>
@@ -80,10 +74,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/js/main.js"></script>
-
-    {{#if header}}
     <script src="/js/header.js"></script>
-    {{/if}}
 
     {{#if pagination}}
     <script src="/js/pagination.js"></script>

@@ -24,6 +24,10 @@ import { NotificationService } from 'src/model/notification/notification.service
 import { SettingService } from 'src/model/setting/setting.service';
 import { SETTING } from 'src/model/setting/constants';
 import { NotificationCreateDto } from 'src/model/notification/dto';
+import { SalaryService } from 'src/model/salary/salary.service';
+import { SalaryCreateDto } from 'src/model/salary/dto';
+import { AttendanceService } from 'src/model/attendance/attendance.service';
+import { AttendanceExportDto } from 'src/model/attendance/dto';
 @Injectable()
 export class AppService {
   #api: INestApplication;
@@ -38,6 +42,8 @@ export class AppService {
   #skill: SkillService;
   #notification: NotificationService;
   #setting: SettingService;
+  #salary: SalaryService;
+  #attendance: AttendanceService;
 
   constructor() {
     this.init();
@@ -56,6 +62,8 @@ export class AppService {
     this.#skill = this.#api.get(SkillService);
     this.#notification = this.#api.get(NotificationService);
     this.#setting = this.#api.get(SettingService);
+    this.#salary = this.#api.get(SalaryService);
+    this.#attendance = this.#api.get(AttendanceService);
   }
 
   checkLogin(jwtPayload: IJwtPayload, res: Response, view, renderOptions) {
@@ -110,7 +118,6 @@ export class AppService {
       jsLibrary: [
         '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>',
       ],
-      header: true,
       data: {
         userCount,
         projectCount,
@@ -127,7 +134,6 @@ export class AppService {
     return {
       title: 'Dự án',
       css: 'project.css',
-      header: true,
       pagination: true,
       data,
     };
@@ -151,7 +157,6 @@ export class AppService {
       jsLibrary: [
         '<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>',
       ],
-      header: true,
       data: {
         status: PROJECT_STATUS,
         skills: JSON.stringify(skills),
@@ -170,7 +175,6 @@ export class AppService {
       jsLibrary: [
         '<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>',
       ],
-      header: true,
       data: {
         status: PROJECT_STATUS,
         skills: JSON.stringify(skills),
@@ -193,7 +197,6 @@ export class AppService {
     return {
       title: 'Bản tin',
       css: 'news.css',
-      header: true,
       pagination: true,
       data,
     };
@@ -212,7 +215,7 @@ export class AppService {
       title: 'Chỉnh sửa bản tin',
       css: 'news-create.css',
       js: 'news-create.js',
-      header: true,
+
       jsLibrary: [
         '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
         '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
@@ -235,7 +238,6 @@ export class AppService {
     return {
       title: 'Danh sách sự kiện',
       css: 'event.css',
-      header: true,
       pagination: true,
       data,
     };
@@ -254,7 +256,7 @@ export class AppService {
       title: 'Chỉnh sửa sự kiện',
       css: 'event-create.css',
       js: 'event-create.js',
-      header: true,
+
       edit: true,
     };
     const news = await this.#event.getOne(id);
@@ -271,7 +273,6 @@ export class AppService {
     return {
       title: 'Danh sách nhân viên',
       css: 'employee.css',
-      header: true,
       pagination: true,
       data,
     };
@@ -317,67 +318,79 @@ export class AppService {
   }
 
   async employeeSalaryDetail(username: string) {
-    const user = await this.#user.getSalary(username);
+    const salaries = await this.#salary.getAllByUsername(username);
 
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-salary.css',
-      js: 'employee-detail-salary.js',
       salary: true,
       layout: 'employee-detail',
-      data: user.salaries,
+      data: {
+        data: salaries,
+        username,
+      },
     };
   }
 
-  async updateEmployeeSalary(username: string) {
-    return true;
+  async updateEmployeeSalary(
+    username: string,
+    body: SalaryCreateDto,
+    res: Response,
+  ) {
+    await this.#salary.create(body, username);
+
+    return res.redirect(`/employee/${username}/salary`);
   }
 
-  async employeeAttendanceDetail(username: string) {
-    const user = await this.#user.getAttendance(username);
+  async employeeAttendanceDetail(username: string, page) {
+    const attendances = await this.#attendance.getManyByUsername(
+      username,
+      page,
+    );
 
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-attendance.css',
       attendance: true,
       layout: 'employee-detail',
-      data: user.attendances,
+      data: attendances,
+      pagination: true,
     };
   }
 
   async employeeProjectDetail(username: string) {
-    const user = await this.#user.getProject(username);
+    const projects = await this.#project.getAllByUsername(username);
 
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-project.css',
       project: true,
       layout: 'employee-detail',
-      data: [...user.projectsAsMember, ...user.projectsAsLeader],
+      data: projects,
     };
   }
 
   async employeeRequestDetail(username: string) {
-    const user = await this.#user.getRequest(username);
+    const requests = await this.#request.getAllByUsername(username);
 
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-request.css',
       request: true,
       layout: 'employee-detail',
-      data: user.requests,
+      data: requests,
     };
   }
 
   async employeeEventDetail(username: string) {
-    const user = await this.#user.getEvent(username);
+    const events = await this.#event.getAllByUsername(username);
 
     return {
       title: 'Thông tin nhân viên',
       css: 'employee-detail-event.css',
       event: true,
       layout: 'employee-detail',
-      data: user.events,
+      data: events,
     };
   }
 
@@ -398,7 +411,6 @@ export class AppService {
     return {
       title: 'Danh sách yêu cầu',
       css: 'request.css',
-      header: true,
       pagination: true,
       data,
     };
@@ -408,7 +420,6 @@ export class AppService {
     const renderOptions = {
       title: 'Chi tiết yêu cầu',
       css: 'request-detail.css',
-      header: true,
     };
     const request = await this.#request.getOne(id);
     if (action && request.status === REQUEST_STATUS.pending) {
@@ -434,7 +445,6 @@ export class AppService {
       title: 'Thông tin cá nhân',
       css: 'profile.css',
       js: 'profile.js',
-      header: true,
       data: { user },
     };
   }
@@ -448,7 +458,6 @@ export class AppService {
       title: 'Thông tin cá nhân',
       css: 'profile.css',
       js: 'profile.js',
-      header: true,
     };
     if (action === 'changePassword') {
       await this.#auth.changePassword(jwtPayload, body);
@@ -481,7 +490,6 @@ export class AppService {
     return {
       title: 'Thông báo',
       css: 'notification.css',
-      header: true,
       pagination: true,
       data,
     };
@@ -497,7 +505,6 @@ export class AppService {
     return {
       title: 'Chi tiết thông báo',
       css: 'notification-create.css',
-      header: true,
       data: notification,
     };
   }
@@ -513,7 +520,6 @@ export class AppService {
     return {
       title: 'Cài đặt chung',
       css: 'setting.css',
-      header: true,
       data: settingList,
     };
   }
@@ -531,5 +537,18 @@ export class AppService {
       );
     }
     return res.redirect('/setting');
+  }
+
+  async exportAttendance(body: AttendanceExportDto) {
+    const attendances = await this.#attendance.getAllByUserAndFromTo(body);
+    return {
+      title: 'Xuất báo cáo chấm công',
+      css: 'export-attendance.css',
+      js: 'export-attendance.js',
+      jsLibrary: [
+        '<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>',
+      ],
+      data: JSON.stringify(attendances),
+    };
   }
 }

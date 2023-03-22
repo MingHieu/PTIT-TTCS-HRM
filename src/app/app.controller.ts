@@ -26,6 +26,8 @@ import { UserCreateDto } from 'src/model/user/dto';
 import { GENDERS } from 'src/common/constants';
 import { ProjectCreateDto } from 'src/model/project/dto';
 import { NotificationCreateDto } from 'src/model/notification/dto';
+import { SalaryCreateDto } from 'src/model/salary/dto';
+import { AttendanceExportDto } from 'src/model/attendance/dto';
 
 @Controller()
 export class AppController {
@@ -125,7 +127,7 @@ export class AppController {
       title: 'Tạo nhân viên mới',
       css: 'employee-create.css',
       js: 'employee-create.js',
-      header: true,
+
       data: {
         sex: GENDERS,
         roles: ROLES,
@@ -169,15 +171,34 @@ export class AppController {
     return this.appService.employeeSalaryDetail(username);
   }
 
-  @Post('employee/:username/salary')
-  employeeSalaryDetailPost(@Param('username') username) {
-    return this.appService.updateEmployeeSalary(username);
+  @Get('employee/:username/salaryUpdate')
+  @Render('employee-detail-salary-update')
+  employeeSalaryDetailUpdateGet(@Param('username') username) {
+    return {
+      title: 'Cập nhật lương',
+      css: 'employee-detail-salary-update.css',
+      data: {
+        username,
+      },
+    };
+  }
+
+  @Post('employee/:username/salaryUpdate')
+  employeeSalaryDetailUpdatePost(
+    @Param('username') username,
+    @Body() body: SalaryCreateDto,
+    @Res() res: Response,
+  ) {
+    return this.appService.updateEmployeeSalary(username, body, res);
   }
 
   @Get('employee/:username/attendance')
   @Render('employee-detail-attendance')
-  employeeAttendanceDetail(@Param('username') username) {
-    return this.appService.employeeAttendanceDetail(username);
+  employeeAttendanceDetail(
+    @Param('username') username,
+    @Query() query: PaginationDto,
+  ) {
+    return this.appService.employeeAttendanceDetail(username, query.page);
   }
 
   @Get('employee/:username/project')
@@ -225,7 +246,6 @@ export class AppController {
       title: 'Tạo sự kiện mới',
       css: 'event-create.css',
       js: 'event-create.js',
-      header: true,
     };
   }
 
@@ -285,7 +305,6 @@ export class AppController {
       title: 'Tạo bản tin mới',
       css: 'news-create.css',
       js: 'news-create.js',
-      header: true,
       jsLibrary: [
         '<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>',
         '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>',
@@ -368,7 +387,6 @@ export class AppController {
     return {
       title: 'Tạo thông báo mới',
       css: 'notification-create.css',
-      header: true,
       create: true,
     };
   }
@@ -404,5 +422,29 @@ export class AppController {
   @Post('setting')
   settingPost(@Body() body, @Res() res) {
     return this.appService.updateSetting(body, res);
+  }
+
+  @Get('other')
+  @Render('other-tool')
+  otherTool() {
+    return {
+      title: 'Công cụ',
+      css: 'other-tool.css',
+    };
+  }
+
+  @Get('exportAttendance')
+  @Render('export-attendance')
+  exportAttendanceGet() {
+    return {
+      title: 'Xuất báo cáo chấm công',
+      css: 'export-attendance.css',
+    };
+  }
+
+  @Post('exportAttendance')
+  @Render('export-attendance')
+  exportAttendancePost(@Body() body: AttendanceExportDto) {
+    return this.appService.exportAttendance(body);
   }
 }

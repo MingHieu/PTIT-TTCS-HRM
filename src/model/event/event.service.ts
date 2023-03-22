@@ -33,7 +33,7 @@ export class EventService {
     return event;
   }
 
-  async getMany(page: number, perPage: number, keySearch: string) {
+  async getMany(page?: number, perPage?: number, keySearch?: string) {
     if (!page) page = 1;
     if (!perPage) perPage = 10;
     if (!keySearch) keySearch = '';
@@ -55,6 +55,14 @@ export class EventService {
       page_size: events.length,
       total: totalEvent,
     };
+  }
+
+  async getAllByUsername(username: string) {
+    const events = await this.prisma.event.findMany({
+      where: { participants: { some: { username } } },
+      orderBy: { createAt: 'desc' },
+    });
+    return events;
   }
 
   async delete(id: number) {
