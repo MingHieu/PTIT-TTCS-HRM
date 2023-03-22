@@ -102,10 +102,15 @@ export class AttendanceService {
 
   async getAllByUserAndFromTo(body: AttendanceExportDto) {
     const users = await this.prisma.user.findMany({
-      where: {
-        attendances: { some: { date: { gte: body.from, lte: body.to } } },
+      select: {
+        name: true,
+        username: true,
+        attendances: {
+          where: {
+            date: { gte: body.from, lte: body.to },
+          },
+        },
       },
-      select: { name: true, username: true, attendances: true },
     });
 
     const normalizeAttendance = users.map((value, index) => {
