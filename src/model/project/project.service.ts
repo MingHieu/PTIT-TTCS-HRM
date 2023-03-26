@@ -91,7 +91,11 @@ export class ProjectService {
       where: {
         OR: [{ leaderUsername: username }, { members: { some: { username } } }],
       },
-      include: { skills: true },
+      include: {
+        skills: true,
+        leader: { select: { avatar: true, name: true, username: true } },
+        members: { select: { avatar: true, name: true, username: true } },
+      },
       orderBy: { startAt: 'desc' },
     });
     return projects;
