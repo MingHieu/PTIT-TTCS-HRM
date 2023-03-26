@@ -2,14 +2,13 @@ import { Transform } from 'class-transformer';
 import {
   IsArray,
   IsDate,
-  IsInt,
-  IsJSON,
   IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
 import { toDate } from 'src/helpers';
 import { PROJECT_STATUS } from '../constants';
+import { IsProjectStatus } from '../decorator';
 
 export class ProjectCreateDto {
   @Transform(({ value }) => toDate(value))
@@ -25,7 +24,7 @@ export class ProjectCreateDto {
   @IsNotEmpty()
   name: string;
 
-  @IsInt()
+  @IsProjectStatus()
   status: typeof PROJECT_STATUS[keyof typeof PROJECT_STATUS];
 
   @IsArray()
