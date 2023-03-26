@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { GetUser } from 'src/auth/decorator';
-import { UserCreateDto } from './dto';
+import { UserUpdateDto } from './dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -8,7 +8,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('update')
-  update(@GetUser('username') username, @Body() body: UserCreateDto) {
+  update(@GetUser('username') username, @Body() body: UserUpdateDto) {
     return this.userService.update(username, body);
   }
 

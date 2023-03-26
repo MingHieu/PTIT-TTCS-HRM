@@ -6,12 +6,11 @@ import {
   IsEmail,
   IsDate,
 } from 'class-validator';
-import { IsRole } from 'src/auth/decorator';
-import { GENDERS } from 'src/model/user/constants';
-import { IsGender } from 'src/model/user/decorator';
+import { GENDERS } from '../constants';
+import { IsGender } from '../decorator';
 import { toDate } from 'src/helpers';
 
-export class UserCreateDto {
+export class UserUpdateDto {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -32,11 +31,4 @@ export class UserCreateDto {
   @IsString()
   @IsNotEmpty()
   address: string;
-
-  @Transform(({ value }) => toDate(value))
-  @IsDate()
-  joinAt: Date;
-
-  @IsRole()
-  role: string;
 }

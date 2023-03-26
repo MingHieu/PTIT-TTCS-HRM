@@ -2,7 +2,7 @@ import { SettingService } from 'src/model/setting/setting.service';
 import { FileService } from 'src/model/file/file.service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
-import { UserCreateDto } from './dto';
+import { UserCreateDto, UserUpdateDto } from './dto';
 import * as argon from 'argon2';
 import { SUCCESS_RESPONSE } from 'src/common/constants';
 import * as moment from 'moment';
@@ -43,7 +43,11 @@ export class UserService {
     return user;
   }
 
-  async update(username: string, body: UserCreateDto, avatar?: File) {
+  async update(
+    username: string,
+    body: UserCreateDto | UserUpdateDto,
+    avatar?: File,
+  ) {
     if (avatar) {
       const uploadedFile = await this.fileService.create(avatar);
       Object.assign(body, { avatar: uploadedFile.url });

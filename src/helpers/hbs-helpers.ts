@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { ROLES } from 'src/auth/constants';
-import { GENDERS } from 'src/common/constants';
+import { GENDERS } from 'src/model/user/constants';
 import { IPagination } from 'src/common/types';
 import { ATTENDANCE_STATUS } from 'src/model/attendance/constants';
 import { PROJECT_STATUS } from 'src/model/project/constants';

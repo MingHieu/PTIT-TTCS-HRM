@@ -14,7 +14,7 @@ import { FileService } from 'src/model/file/file.service';
 import { NewsCreateDto } from 'src/model/news/dto';
 import { EventCreateDto } from 'src/model/event/dto';
 import { UserCreateDto } from 'src/model/user/dto';
-import { GENDERS } from 'src/common/constants';
+import { GENDERS } from 'src/model/user/constants';
 import { ProjectCreateDto } from 'src/model/project/dto';
 import { ProjectService } from 'src/model/project/project.service';
 import { RequestService } from 'src/model/request/request.service';

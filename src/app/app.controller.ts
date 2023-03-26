@@ -23,7 +23,7 @@ import { EventCreateDto } from 'src/model/event/dto';
 import { PaginationDto } from 'src/common/dto';
 import { ParseIntPipe } from 'src/common/pipe';
 import { UserCreateDto } from 'src/model/user/dto';
-import { GENDERS } from 'src/common/constants';
+import { GENDERS } from 'src/model/user/constants';
 import { ProjectCreateDto } from 'src/model/project/dto';
 import { NotificationCreateDto } from 'src/model/notification/dto';
 import { SalaryCreateDto } from 'src/model/salary/dto';

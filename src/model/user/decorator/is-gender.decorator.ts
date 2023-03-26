@@ -8,7 +8,8 @@ export function IsGender(options?: ValidationOptions) {
       propertyName,
       options,
       validator: {
-        validate(sex) {
+        validate(value) {
+          const sex = Number(value);
           if (isNaN(sex)) {
             return false;
           }
