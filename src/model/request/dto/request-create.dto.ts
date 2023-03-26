@@ -1,16 +1,15 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 import { GetElementType } from 'src/helpers';
 import { REQUEST_TYPE } from '../constants';
+import { IsRequestName, IsRequestType } from '../decorator';
 
 export class RequestCreateDto {
-  @IsString()
-  @IsNotEmpty()
+  @IsRequestName()
   name: GetElementType<typeof REQUEST_TYPE>['name'];
 
   @IsString()
-  @IsNotEmpty()
-  content: string;
+  content?: string;
 
-  @IsInt()
+  @IsRequestType()
   type: GetElementType<typeof REQUEST_TYPE>['type'];
 }
