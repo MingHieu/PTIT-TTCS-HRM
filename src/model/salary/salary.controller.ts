@@ -1,12 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { GetUser } from 'src/auth/decorator';
 import { SalaryService } from './salary.service';
 
 @Controller('salary')
 export class SalaryController {
   constructor(private salaryService: SalaryService) {}
 
-  @Get('all/:username')
-  getAllByUsername(@Param('username') username) {
+  @Get('all')
+  getAllByUsername(@GetUser('username') username) {
     return this.salaryService.getAllByUsername(username);
   }
 }
