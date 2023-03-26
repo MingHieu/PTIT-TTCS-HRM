@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { PaginationDto } from 'src/common/dto';
 import { NewsService } from './news.service';
 
@@ -6,17 +6,12 @@ import { NewsService } from './news.service';
 export class NewsController {
   constructor(private newsService: NewsService) {}
 
-  @Get('all')
+  @Get()
   getMany(@Query() query: PaginationDto) {
     return this.newsService.getMany(
       query.page,
       query.per_page,
       query.key_search,
     );
-  }
-
-  @Get(':id')
-  getOne(@Param('id') id: number) {
-    return this.newsService.getOne(id);
   }
 }
