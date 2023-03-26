@@ -540,7 +540,7 @@ export class AppService {
   }
 
   async exportAttendance(body: AttendanceExportDto) {
-    const attendances = await this.#attendance.getAllByUserAndFromTo(body);
+    const attendances = await this.#attendance.getAllByFromTo(body);
     return {
       title: 'Xuất báo cáo chấm công',
       css: 'export-attendance.css',

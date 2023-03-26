@@ -1,19 +1,19 @@
 import { SettingService } from 'src/model/setting/setting.service';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
-import { AttendanceExportDto, AttendanceUpsertDto } from './dto';
+import { AttendanceExportDto, AttendanceOnLeaveDto } from './dto';
 import { SETTING } from 'src/model/setting/constants';
 import { ATTENDANCE_STATUS } from './constants';
-import moment from 'moment';
+import { SUCCESS_RESPONSE } from 'src/common/constants';
 
 @Injectable()
 export class AttendanceService {
   constructor(private prisma: PrismaService, private setting: SettingService) {}
 
-  getCheckInStatus(
-    time,
-    companyCheckInTime,
-  ): typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS] {
+  async getCheckInStatus(
+    time: Date,
+  ): Promise<typeof ATTENDANCE_STATUS[keyof typeof ATTENDANCE_STATUS]> {
+    const companyCheckInTime = await this.setting.getOne(SETTING.CHECK_IN.name);
     const [companyCheckInHours, companyCheckInMinutes] =
       companyCheckInTime.value.split(':').map((val) => +val);
     const checkInHours = time.getHours();
@@ -29,43 +29,31 @@ export class AttendanceService {
     return ATTENDANCE_STATUS.ontime;
   }
 
-  async checkIn() {
+  async checkIn(username: string) {
     const time = new Date();
-    const companyCheckInTime = await this.setting.getOne(SETTING.CHECK_IN.name);
-    return {
-      status: this.getCheckInStatus(time, companyCheckInTime),
-      checkIn: time,
-    };
+    await this.prisma.attendance.upsert({
+      where: {
+        username_date: {
+          username,
+          date: time,
+        },
+      },
+      update: { checkOut: time },
+      create: {
+        username,
+        date: time,
+        status: await this.getCheckInStatus(time),
+        checkIn: time,
+      },
+    });
+    return SUCCESS_RESPONSE;
   }
 
-  async upsert(body: AttendanceUpsertDto, username: string) {
-    const { checkIn, status } = body;
-
-    if (checkIn) {
-      await this.prisma.attendance.upsert({
-        where: {
-          username_date: {
-            username,
-            date: new Date(),
-          },
-        },
-        update: { checkOut: new Date() },
-        create: { username, ...(await this.checkIn()) },
-      });
-    }
-
-    if (status) {
-      await this.prisma.attendance.upsert({
-        where: {
-          username_date: {
-            username,
-            date: moment().format('YYYY-MM-DD'),
-          },
-        },
-        update: { status },
-        create: { username, status },
-      });
-    }
+  async onLeave(username: string, body: AttendanceOnLeaveDto) {
+    await this.prisma.attendance.create({
+      data: { ...body, username },
+    });
+    return SUCCESS_RESPONSE;
   }
 
   async getOne(username: string, date: Date) {
@@ -100,7 +88,7 @@ export class AttendanceService {
     };
   }
 
-  async getAllByUserAndFromTo(body: AttendanceExportDto) {
+  async getAllByFromTo(body: AttendanceExportDto) {
     const users = await this.prisma.user.findMany({
       select: {
         name: true,
