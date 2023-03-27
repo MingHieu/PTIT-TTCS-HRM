@@ -12,7 +12,7 @@ export class RequestController {
     return this.requestService.create(body, username);
   }
 
-  @Get('all')
+  @Get()
   getAll(@GetUser('username') username) {
     return this.requestService.getAllByUsername(username);
   }
