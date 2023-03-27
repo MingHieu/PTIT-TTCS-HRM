@@ -6,7 +6,7 @@ import { SalaryService } from './salary.service';
 export class SalaryController {
   constructor(private salaryService: SalaryService) {}
 
-  @Get('all')
+  @Get()
   getAllByUsername(@GetUser('username') username) {
     return this.salaryService.getAllByUsername(username);
   }
