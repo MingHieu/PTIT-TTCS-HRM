@@ -6,7 +6,7 @@ import { ProjectService } from './project.service';
 export class ProjectController {
   constructor(private projectService: ProjectService) {}
 
-  @Get('all')
+  @Get()
   getAll(@GetUser('username') username) {
     return this.projectService.getAllByUsername(username);
   }
