@@ -104,12 +104,16 @@ export class AppService {
   }
 
   async home() {
-    const userCount = await this.#prisma.user.count();
-    const projectCount = await this.#prisma.project.count();
-    const eventCount = await this.#prisma.event.count();
-    const requestCount = await this.#prisma.request.count();
     const userStatistic = await this.#user.statistic();
     const projectStatistic = await this.#project.statistic();
+    const userCount = await this.#prisma.user.count();
+    const projectCount = projectStatistic[new Date().getMonth()];
+    const eventCount = await this.#prisma.event.count({
+      where: { to: { gt: new Date() } },
+    });
+    const requestCount = await this.#prisma.request.count({
+      where: { status: REQUEST_STATUS.pending },
+    });
 
     return {
       title: 'Trang chủ',

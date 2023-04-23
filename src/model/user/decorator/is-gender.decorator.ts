@@ -9,12 +9,8 @@ export function IsGender(options?: ValidationOptions) {
       options,
       validator: {
         validate(value) {
-          const sex = Number(value);
-          if (isNaN(sex)) {
-            return false;
-          }
           for (const key in GENDERS) {
-            if (GENDERS[key] === sex) {
+            if (GENDERS[key] === value) {
               return true;
             }
           }

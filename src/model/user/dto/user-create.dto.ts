@@ -9,13 +9,14 @@ import {
 import { IsRole } from 'src/auth/decorator';
 import { GENDERS } from 'src/model/user/constants';
 import { IsGender } from 'src/model/user/decorator';
-import { toDate } from 'src/helpers';
+import { toDate, toInt } from 'src/helpers';
 
 export class UserCreateDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @Transform(({ value }) => toInt(value))
   @IsGender()
   sex: typeof GENDERS[keyof typeof GENDERS];
 

@@ -140,4 +140,7 @@ export const hbsHelpers = {
         return 'Nghỉ không lương';
     }
   },
+  formatNumber: function (number: number) {
+    return number ?? 0;
+  },
 };

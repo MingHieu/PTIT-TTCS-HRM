@@ -43,7 +43,14 @@ export class RequestService {
     if (!keySearch) keySearch = '';
     page--;
     const requests = await this.prisma.request.findMany({
-      where: { name: { contains: keySearch } },
+      where: {
+        user: {
+          OR: [
+            { name: { contains: keySearch } },
+            { username: { contains: keySearch } },
+          ],
+        },
+      },
       skip: page * perPage,
       take: perPage,
       include: {

@@ -9,12 +9,8 @@ export function IsRequestStatus(options?: ValidationOptions) {
       options,
       validator: {
         validate(value) {
-          const status = Number(value);
-          if (isNaN(status)) {
-            return false;
-          }
           for (const key in REQUEST_STATUS) {
-            if (REQUEST_STATUS[key] === status) {
+            if (REQUEST_STATUS[key] === value) {
               return true;
             }
           }

@@ -9,12 +9,8 @@ export function IsRequestType(options?: ValidationOptions) {
       options,
       validator: {
         validate(value) {
-          const type = Number(value);
-          if (isNaN(type)) {
-            return false;
-          }
           for (const key in REQUEST_TYPE) {
-            if (REQUEST_TYPE[key].type === type) {
+            if (REQUEST_TYPE[key].type === value) {
               return true;
             }
           }

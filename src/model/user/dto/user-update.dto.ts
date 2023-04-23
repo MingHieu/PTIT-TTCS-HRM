@@ -8,13 +8,14 @@ import {
 } from 'class-validator';
 import { GENDERS } from '../constants';
 import { IsGender } from '../decorator';
-import { toDate } from 'src/helpers';
+import { toDate, toInt } from 'src/helpers';
 
 export class UserUpdateDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @Transform(({ value }) => toInt(value))
   @IsGender()
   sex: typeof GENDERS[keyof typeof GENDERS];
 

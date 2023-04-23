@@ -9,12 +9,8 @@ export function IsAttendanceStatus(options?: ValidationOptions) {
       options,
       validator: {
         validate(value) {
-          const status = Number(value);
-          if (isNaN(status)) {
-            return false;
-          }
           for (const key in ATTENDANCE_STATUS) {
-            if (ATTENDANCE_STATUS[key] === status) {
+            if (ATTENDANCE_STATUS[key] === value) {
               return true;
             }
           }

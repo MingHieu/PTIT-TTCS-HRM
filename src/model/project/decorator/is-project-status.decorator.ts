@@ -9,12 +9,8 @@ export function IsProjectStatus(options?: ValidationOptions) {
       options,
       validator: {
         validate(value) {
-          const status = Number(value);
-          if (isNaN(status)) {
-            return false;
-          }
           for (const key in PROJECT_STATUS) {
-            if (PROJECT_STATUS[key] === status) {
+            if (PROJECT_STATUS[key] === value) {
               return true;
             }
           }

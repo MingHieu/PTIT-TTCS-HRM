@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { toDate } from 'src/helpers';
+import { toDate, toInt } from 'src/helpers';
 import { PROJECT_STATUS } from '../constants';
 import { IsProjectStatus } from '../decorator';
 
@@ -16,7 +16,7 @@ export class ProjectCreateDto {
   startAt: Date;
 
   @IsOptional()
-  @Transform(({ value }) => toDate(value))
+  @Transform(({ value }) => (value === '' ? undefined : toDate(value)))
   @IsDate()
   finishAt?: Date;
 
@@ -24,6 +24,7 @@ export class ProjectCreateDto {
   @IsNotEmpty()
   name: string;
 
+  @Transform(({ value }) => toInt(value))
   @IsProjectStatus()
   status: typeof PROJECT_STATUS[keyof typeof PROJECT_STATUS];
 

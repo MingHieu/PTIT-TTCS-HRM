@@ -22,7 +22,7 @@
         <label for="status">Trạng thái</label>
         <select name="status" id="status">
             {{#each data.status}}
-            <option value="{{this}}">{{formatProjectStatus this}}</option>
+            <option value="{{this}}" {{checkSelected this ../data.data.status}}>{{formatProjectStatus this}}</option>
             {{/each}}
         </select>
 

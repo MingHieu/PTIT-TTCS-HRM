@@ -112,14 +112,33 @@ export class ProjectService {
     for (let i = 1; i <= date.getMonth() + 1; ++i) {
       const startDate = moment([date.getFullYear(), i - 1]);
       const lastDate = moment(startDate).endOf('month');
-      const userCount = await this.prisma.project.count({
+      const projectCount = await this.prisma.project.count({
         where: {
-          finishAt: {
-            lte: lastDate.toDate(),
-          },
+          OR: [
+            {
+              finishAt: {
+                gte: startDate.toDate(),
+                lte: lastDate.toDate(),
+              },
+            },
+            {
+              startAt: {
+                lte: lastDate.toDate(),
+              },
+              finishAt: null,
+            },
+            {
+              startAt: {
+                lte: lastDate.toDate(),
+              },
+              finishAt: {
+                gte: startDate.toDate(),
+              },
+            },
+          ],
         },
       });
-      data.push(userCount);
+      data.push(projectCount);
     }
     return data;
   }

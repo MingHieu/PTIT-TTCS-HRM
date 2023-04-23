@@ -10,7 +10,7 @@
         <div class="event-item__details">
             <p class="event-item__createAt">Thời gian tạo: {{formatDateTime this.createAt}}</p>
             <p class="event-item__holdtime">Thời gian diễn ra sự kiện: {{formatDateDistance this.from this.to}}</p>
-            <p class="event-item__participants">Số người tham gia: {{this.participants.length}} người</p>
+            <p class="event-item__participants">Số người tham gia: {{formatNumber this.participants.length}} người</p>
             <p class="event-item__address">Địa điểm: {{this.address}}</p>
         </div>
     </a>
