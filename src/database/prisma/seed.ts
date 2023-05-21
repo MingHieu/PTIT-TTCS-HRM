@@ -99,8 +99,8 @@ async function seedNews() {
     update: {},
     create: {
       id: 0,
-      name: 'Bản tin Công Nghệ và Chuyển Đổi Số - Số 3 (2/2022)',
-      content: `{"time":1677139341912,"blocks":[{"id":"i9Bz3t9ziV","type":"header","data":{"text":"Bản tin Công Nghệ và Chuyển Đổi Số - Số 3 (2/2022)","level":1}}],"version":"2.26.5"}`,
+      name: 'Thông báo lịch nghỉ Tết Nguyên đán 2023',
+      content: `{"time":1677139341912,"blocks":[{"id":"i9Bz3t9ziV","type":"header","data":{"text":"Thông báo lịch nghỉ Tết Nguyên đán 2023","level":1}}],"version":"2.26.5"}`,
     },
   });
 }
@@ -115,7 +115,7 @@ async function seedEvent() {
       from: new Date(Date.now() + 8 * 24 * 3600 * 1000),
       to: new Date(Date.now() + 11 * 24 * 3600 * 1000),
       expiredAt: new Date(Date.now() + 5 * 24 * 3600 * 1000),
-      address: '123 Main St, Anytown, USA',
+      address: 'Hạ Long, Quảng Ninh',
       participants: {
         connect: [{ username: 'hrwebapp01' }, { username: 'nvwebapp01' }],
       },
