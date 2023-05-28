@@ -1,24 +1,34 @@
 <div class="container">
     <h1>{{title}}</h1>
-    <form>
-        <label for="name">Họ và tên:</label>
-        <input type="text" id="name" name="name" value="Nguyễn Văn A" disabled>
+    <form method="post">
+        {{#if data.request.user.avatar}}
+        <img src="{{data.request.user.avatar}}">
+        {{/if}}
+        <label for="senderName">Họ và tên:</label>
+        <input type="text" id="senderName" name="senderName" value="{{data.request.user.name}}" disabled>
 
         <label for="username">Tên đăng nhập:</label>
-        <input type="text" id="username" name="username" value="nvwebapp01" disabled>
+        <input type="text" id="username" name="username" value="{{data.request.user.username}}" disabled>
 
         <label for="createAt">Thời gian tạo yêu cầu:</label>
-        <input type="date" id="createAt" name="createAt" value="2022-22-02" disabled>
+        <input type="date" id="createAt" name="createAt" {{#if
+            data.request.createAt}}value="{{formatDateInput data.request.createAt}}" {{/if}}disabled>
+
+        <label for="name">Yêu cầu:</label>
+        <input type="text" id="name" name="name" value="{{data.request.name}}" disabled>
 
         <label for="content">Nội dung:</label>
-        <input type="text" id="content" name="content" value="Xin nghỉ việc" disabled>
+        <textarea id="content" name="content" disabled>{{data.request.content}}</textarea>
 
         <label for="status">Trạng thái:</label>
-        <input type="text" id="status" name="status" value="Đang chờ duyệt" data-status="1" disabled>
+        <input type="text" id="status" name="status" value="{{formatRequestStatus data.request.status}}"
+            data-status="{{data.request.status}}" disabled>
 
+        {{#checkRequestStatus data.request.status}}
         <div class="button-container">
-            <a href="#" class="btn reject-btn">Từ chối</a>
-            <a href="#" class="btn accept-btn">Chấp thuận</a>
+            <a href="?action=reject" class="btn reject-btn" style="margin-right:10px">Từ chối</a>
+            <a href="?action=accept" class="btn accept-btn">Chấp thuận</a>
         </div>
+        {{/checkRequestStatus}}
     </form>
 </div>

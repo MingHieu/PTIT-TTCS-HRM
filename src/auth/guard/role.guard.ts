@@ -16,12 +16,16 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest();
-    const user: IJwtPayload = request.user;
     const permission = this.reflector.get<string>(
       PERMISSION_KEY,
       context.getHandler(),
     );
+    if (!permission) {
+      return true;
+    }
+
+    const request = context.switchToHttp().getRequest();
+    const user: IJwtPayload = request.user;
     return user.permissions.includes(permission);
   }
 }

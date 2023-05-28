@@ -1,30 +1,47 @@
 <div id="information-tab" class="tab-content">
     <h1>Thông tin cá nhân</h1>
-    <img src="https://via.placeholder.com/200" alt="Avatar">
-    <form>
+    <div class="avatar-wrapper">
+        <img src="{{#if data.user.avatar}}{{data.user.avatar}}{{else}}https://via.placeholder.com/200{{/if}}" alt="Avatar">
+        <label for="avatar">
+            <p>Chọn ảnh đại diện</p>
+        </label>
+    </div>
+    <form enctype="multipart/form-data" method="post">
+        <input type="file" id="avatar" name="avatar" hidden>
         <label for="name">Họ và tên:</label>
-        <input type="text" id="name" name="name" value="John Doe">
+        <input type="text" id="name" name="name" value="{{data.user.name}}">
 
-        <label for="joinDate">Ngày vào công ty:</label>
-        <input type="date" id="joinDate" name="joinDate" value="2023-02-20">
+        <label for="joinAt">Ngày vào công ty:</label>
+        <input type="date" id="joinAt" name="joinAt" value="{{formatDateInput data.user.joinAt}}">
 
-        <label for="position">Chức vụ:</label>
-        <input type="text" id="position" name="position" value="Nhân viên">
+        <label for="role">Chức vụ:</label>
+        <select name="role" id="role">
+            {{#each data.roles}}
+            <option value="{{this}}" {{checkSelected this ../data.user.role}}>{{formatPosition this}}</option>
+            {{/each}}
+        </select>
 
         <label for="username">Tên đăng nhập:</label>
-        <input type="text" id="username" name="username" value="NVWEBAPP01">
+        <input type="text" id="username" name="username" value="{{data.user.username}}" disabled>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="johndoe@example.com">
+        <input type="email" id="email" name="email" value="{{data.user.email}}">
 
         <label for="dob">Ngày sinh:</label>
-        <input type="date" id="dob" name="dob" value="1990-01-01">
+        <input type="date" id="dob" name="dob" value="{{formatDateInput data.user.dob}}">
 
-        <label for="phone">Số điện thoại:</label>
-        <input type="tel" id="phone" name="phone" value="555-555-5555">
+        <label for="sex">Giới tính:</label>
+        <select name="sex" id="sex">
+            {{#each data.sex}}
+            <option value="{{this}}" {{checkSelected this ../data.user.sex}}>{{formatGender this}}</option>
+            {{/each}}
+        </select>
+
+        <label for="phoneNumber">Số điện thoại:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" value="{{data.user.phoneNumber}}">
 
         <label for="address">Địa chỉ:</label>
-        <input type="text" id="address" name="address" value="123 Main St.">
+        <input type="text" id="address" name="address" value="{{data.user.address}}">
 
         <button type="submit">Lưu thay đổi</button>
     </form>

@@ -1,17 +1,20 @@
+#attendance-tab .table-wrapper {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: auto;
+}
+
 #attendance-tab table {
   width: 100%;
   border-collapse: collapse;
-}
-
-#attendance-tab tr:nth-child(even) {
-  background-color: #f2f2f2;
+  border-style: hidden;
 }
 
 #attendance-tab th,
 #attendance-tab td {
-  padding: 10px;
+  padding: 15px 10px;
+  border-bottom: 1px solid #ddd;
   text-align: center;
-  border: 1px solid #ddd;
 }
 
 #attendance-tab th {
@@ -19,18 +22,34 @@
   font-weight: bold;
 }
 
-#attendance-tab td:last-child {
-  font-weight: bold;
+#attendance-tab td span {
+  padding: 5px 10px;
+  border-radius: 8px;
+  display: inline-block;
 }
 
 #attendance-tab td:last-child[data-status='0'] {
-  color: green;
+  color: #008a05;
+}
+
+#attendance-tab td:last-child[data-status='0'] span {
+  background-color: #bfedc1;
 }
 
 #attendance-tab td:last-child[data-status='1'] {
-  color: orange;
+  color: #ffae00;
 }
 
-#attendance-tab td:last-child[data-status='2'] {
-  color: red;
+#attendance-tab td:last-child[data-status='1'] span {
+  background-color: #ffecbc;
+}
+
+#attendance-tab td:last-child[data-status='2'],
+#attendance-tab td:last-child[data-status='3'] {
+  color: #ff6161;
+}
+
+#attendance-tab td:last-child[data-status='2'] span,
+#attendance-tab td:last-child[data-status='3'] span {
+  background-color: #ffc7c7;
 }

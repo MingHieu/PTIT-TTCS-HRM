@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/employee-detail.css">
@@ -15,26 +17,50 @@
 <body>
     {{> header}}
 
-    <main>
-        <div class="container">
-            <div class="tabs">
-                <ul class="tab-links">
-                    <li><a class="{{#if information}}active{{/if}}" href="information">Thông tin cá nhân</a></li>
-                    <li><a class="{{#if salary}}active{{/if}}" href="salary">Lịch sử lương</a></li>
-                    <li><a class="{{#if attendance}}active{{/if}}" href="attendance">Lịch sử chấm công</a></li>
-                    <li><a class="{{#if request}}active{{/if}}" href="request">Lịch sử yêu cầu</a></li>
-                    <li><a class="{{#if event}}active{{/if}}" href="event">Sự kiện đã tham gia</a></li>
-                </ul>
-            </div>
+    <div class="body">
+        {{> navbar}}
+        <div class="main-container">
+            <main>
+                <div class="tabs">
+                    <ul class="tab-links">
+                        <li><a class="{{#if information}}active{{/if}}" href="information">Thông tin cá nhân</a>
+                        </li>
+                        <li><a class="{{#if salary}}active{{/if}}" href="salary">Lịch sử lương</a></li>
+                        <li><a class="{{#if attendance}}active{{/if}}" href="attendance">Lịch sử chấm công</a></li>
+                        <li><a class="{{#if project}}active{{/if}}" href="project">Dự án đã tham gia</a></li>
+                        <li><a class="{{#if request}}active{{/if}}" href="request">Lịch sử yêu cầu</a></li>
+                        <li><a class="{{#if event}}active{{/if}}" href="event">Sự kiện đã tham gia</a></li>
+                        <li><a href="delete">Xoá tài khoản</a></li>
+                    </ul>
+                </div>
 
-            <div class="tab-contents">
-                {{{body}}}
-            </div>
+                <div class="tab-contents">
+                    {{{body}}}
+                </div>
+                {{#if successMsg}}
+                <input type="text" id="successMsg" value="{{successMsg}}" hidden>
+                {{/if}}
+
+                {{#if errorMsg}}
+                <input type="text" id="errorMsg" value="{{errorMsg}}" hidden>
+                {{/if}}
+            </main>
         </div>
+    </div>
 
-    </main>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="/js/main.js"></script>
     <script src="/js/header.js"></script>
+    <script src="/js/employee-detail.js"></script>
+    {{#if pagination}}
+    <script src="/js/pagination.js"></script>
+    {{/if}}
+    {{#if js}}
+    <script src="/js/{{js}}"></script>
+    {{/if}}
 
 </body>
 

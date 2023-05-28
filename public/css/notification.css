@@ -1,0 +1,56 @@
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.notification-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.notification-list {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: auto;
+}
+
+.notification-list table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+.notification-list tr:not(thead tr):hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.notification-list th,
+.notification-list td {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.notification-list th {
+  padding: 15px 10px;
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.notification-list td a {
+  display: block;
+  padding: 15px 10px;
+}
+
+.notification-list td:nth-child(1) {
+  width: 5%;
+}
+
+@media (max-width: 768px) {
+  .notification-list-header {
+    flex-direction: column;
+  }
+}

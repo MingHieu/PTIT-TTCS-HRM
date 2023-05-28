@@ -2,7 +2,6 @@
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
-  text-transform: uppercase;
 }
 
 .container label {
@@ -15,26 +14,91 @@
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   margin-bottom: 10px;
 }
 
-.container button[type='submit'] {
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.container button,
+.button-wrapper a {
   display: block;
-  background-color: #333;
+  background-color: var(--button-background);
   color: #fff;
   padding: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+}
+
+#show-modal {
+  margin-bottom: 10px;
   margin-inline: auto;
 }
 
-.container button[type='submit']:hover {
+.button-wrapper a {
+  background-color: red;
+  margin-right: 20px;
+}
+
+.button-wrapper button:hover {
   background-color: #555;
 }
 
-.container button[type='submit']:active {
+.button-wrapper button:active {
   background-color: #222;
+}
+
+.participant-modal {
+  width: 100%;
+  max-width: 800px;
+}
+
+.participant-list {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: auto;
+}
+
+.participant-list table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+.participant-list tr:not(thead tr):hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.participant-list th,
+.participant-list td {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.participant-list th {
+  padding: 15px 10px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.participant-list td a {
+  display: block;
+  padding: 15px 10px;
+}
+
+.participant-list td:nth-child(1) {
+  width: 5%;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #show-modal {
+    width: 100%;
+  }
 }

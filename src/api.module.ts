@@ -9,11 +9,17 @@ import { SalaryModule } from './model/salary/salary.module';
 import { RequestModule } from './model/request/request.module';
 import { EventModule } from './model/event/event.module';
 import { NotificationModule } from './model/notification/notification.module';
+import { FileModule } from './model/file/file.module';
+import { ProjectModule } from './model/project/project.module';
+import { SkillModule } from './model/skill/skill.module';
+import { SettingModule } from './model/setting/setting.module';
 
+const ENV = process.env.NODE_ENV || 'development';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `.env.${ENV}`,
     }),
     PrismaModule,
     AuthModule,
@@ -24,6 +30,10 @@ import { NotificationModule } from './model/notification/notification.module';
     RequestModule,
     EventModule,
     NotificationModule,
+    FileModule,
+    ProjectModule,
+    SkillModule,
+    SettingModule,
   ],
   controllers: [],
   providers: [],

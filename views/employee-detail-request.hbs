@@ -1,29 +1,25 @@
 <div id="request-tab" class="tab-content">
     <h1>Lịch sử yêu cầu</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Yêu cầu</th>
-                <th>Ngày</th>
-                <th>Trạng thái</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Xin nghỉ phép</td>
-                <td>01/02/2023</td>
-                <td data-status="0">Đã duyệt</td>
-            </tr>
-            <tr>
-                <td>Xin làm thêm giờ</td>
-                <td>28/01/2023</td>
-                <td data-status="1">Đang chờ duyệt</td>
-            </tr>
-            <tr>
-                <td>Xin đi công tác</td>
-                <td>15/01/2023</td>
-                <td data-status="2">Từ chối</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Yêu cầu</th>
+                    <th>Ngày</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td><a href="/request/{{this.id}}">{{this.name}}</a></td>
+                    <td><a href="/request/{{this.id}}">{{formatDate this.createAt}}</a></td>
+                    <td data-status="{{this.status}}"><a href="/request/{{this.id}}">
+                            <span>{{formatRequestStatus this.status}}</span>
+                        </a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -1,7 +1,10 @@
 // Upload thumbnail
-const thumbnailUpload = document.getElementById('thumbnail');
-const thumbnailPreview = document.getElementById('thumbnail-preview');
+const thumbnailUpload = useQuery('#thumbnail');
+const thumbnailPreview = useQuery('#thumbnail-preview');
 
+if (thumbnailPreview.src) {
+  thumbnailPreview.style.display = 'block';
+}
 thumbnailUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
@@ -20,7 +23,7 @@ thumbnailUpload.addEventListener('change', (e) => {
 });
 
 // Content
-const editorJS = new EditorJS({
+let editorJS = new EditorJS({
   /**
    * Id of Element that should contain the Editor
    */
@@ -36,10 +39,79 @@ const editorJS = new EditorJS({
       class: ImageTool,
       config: {
         endpoints: {
-          byFile: '/api/upload',
+          byFile: '/file', // Your backend file uploader endpoint
         },
       },
     },
     list: NestedList,
   },
+  data:
+    useQuery('input[class="content"]').value &&
+    JSON.parse(useQuery('input[class="content"]').value),
 });
+
+const form = useQuery('form');
+form.onreset = () => {
+  thumbnailPreview.src = '';
+  thumbnailPreview.style.display = 'none';
+};
+
+form.onsubmit = (e) => {
+  e.preventDefault();
+  showLoading();
+  editorJS
+    .save()
+    .then((outputData) => {
+      const formData = new FormData(form);
+      formData.append('content', JSON.stringify(outputData));
+      return fetch(location.pathname, {
+        method: 'POST',
+        body: formData,
+      });
+    })
+    .then((res) => {
+      if (!res.ok) throw new Error();
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      showToast(
+        location.pathname.includes('edit')
+          ? 'Chỉnh sửa thành công'
+          : 'Tạo mới thành công',
+      );
+      if (!location.pathname.includes('edit')) {
+        form.reset();
+        editorJS.blocks.clear();
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      setTimeout(() => {
+        hideLoading();
+      }, 1000);
+      showToast(
+        location.pathname.includes('edit')
+          ? 'Chỉnh sửa thất bại'
+          : 'Tạo mới thất bại',
+        false,
+      );
+    });
+};
+
+useQuery('a[href="delete"').onclick = (e) => {
+  e.preventDefault();
+  Swal.fire({
+    title: 'Bạn có chắc muốn xoá bản tin này?',
+    icon: 'warning',
+    showCancelButton: true,
+    cancelButtonText: 'Huỷ',
+    confirmButtonText: 'Đồng ý',
+    confirmButtonColor: 'red',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      location.replace(
+        `${location.origin}/news/${location.pathname.split('/')[2]}/delete`,
+      );
+    }
+  });
+};

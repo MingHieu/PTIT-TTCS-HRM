@@ -2,7 +2,6 @@
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
-  text-transform: uppercase;
 }
 
 .request-list-header {
@@ -12,42 +11,16 @@
   margin-bottom: 20px;
 }
 
-.search-container {
-  display: flex;
-  align-items: center;
-}
-
-.search-input {
-  padding: 10px;
-  border: 1px solid #555;
-  border-radius: 20px 0 0 20px;
-  width: 300px;
-  font-size: 18px;
-  outline: none;
-}
-
-.search-btn {
-  background-color: #555;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
-  font-size: 18px;
-  border: 1px solid #555;
-}
-
-.search-btn i {
-  margin-right: 10px;
+.request-list {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: auto;
 }
 
 .request-list table {
   width: 100%;
   border-collapse: collapse;
-}
-
-.request-list tr:nth-child(even) {
-  background-color: #f2f2f2;
+  border-style: hidden;
 }
 
 .request-list tr:not(thead tr):hover {
@@ -57,61 +30,61 @@
 
 .request-list th,
 .request-list td {
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 .request-list th {
-  padding: 10px;
+  padding: 15px 10px;
   background-color: #f9f9f9;
   font-weight: bold;
 }
 
 .request-list td a {
   display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: #333;
-}
-
-.request-list td {
-  text-align: center;
+  padding: 15px 10px;
 }
 
 .request-list td:nth-child(1) {
   width: 5%;
 }
 
-.request-list td:nth-child(4) {
-  width: 40%;
-  text-align: left;
-}
-
-.request-list td:last-child {
+.request-list td:nth-child(2) {
   font-weight: bold;
 }
 
+.request-list td:last-child a span {
+  padding: 5px 10px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
 .request-list td:last-child[data-status='0'] a {
-  color: green;
+  color: var(--success-color);
+}
+
+.request-list td:last-child[data-status='0'] a span {
+  background-color: var(--success-background);
 }
 
 .request-list td:last-child[data-status='1'] a {
-  color: orange;
+  color: var(--warning-color);
+}
+
+.request-list td:last-child[data-status='1'] a span {
+  background-color: var(--warning-background);
 }
 
 .request-list td:last-child[data-status='2'] a {
-  color: red;
+  color: var(--error-color);
+}
+
+.request-list td:last-child[data-status='2'] a span {
+  background-color: var(--error-background);
 }
 
 @media (max-width: 768px) {
   .request-list-header {
     flex-direction: column;
-  }
-
-  .search-container {
-    width: 100%;
-  }
-
-  .search-input {
-    width: 100%;
   }
 }

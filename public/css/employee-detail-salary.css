@@ -1,16 +1,47 @@
+#salary-tab .table-wrapper {
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: auto;
+}
+
 #salary-tab table {
   width: 100%;
   border-collapse: collapse;
+  border-style: hidden;
 }
 
 #salary-tab th,
 #salary-tab td {
-  padding: 10px;
+  padding: 15px 10px;
+  border-bottom: 1px solid #ddd;
   text-align: center;
-  border: 1px solid #ddd;
 }
 
 #salary-tab th {
   background-color: #f9f9f9;
   font-weight: bold;
+}
+
+#salary-tab .button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#salary-tab a {
+  background-color: var(--button-background);
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-top: -10px;
+}
+
+#salary-tab a:hover {
+  background-color: #555;
+}
+
+#salary-tab a:active {
+  background-color: #222;
 }

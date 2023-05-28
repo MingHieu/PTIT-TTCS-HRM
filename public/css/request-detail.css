@@ -2,7 +2,15 @@
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
-  text-transform: uppercase;
+}
+
+.container img {
+  display: block;
+  max-width: 200px;
+  max-height: 200px;
+  margin-inline: auto;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 .container label {
@@ -11,46 +19,28 @@
   font-weight: bold;
 }
 
-.container input {
+.container input,
+.container textarea {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   margin-bottom: 10px;
   background: #fff;
-  color: #333;
+  resize: none;
 }
 
 .container input[data-status='0'] {
-  color: green;
+  color: var(--success-color);
   font-weight: bold;
 }
 
 .container input[data-status='1'] {
-  color: orange;
+  color: var(--warning-color);
   font-weight: bold;
 }
 
 .container input[data-status='2'] {
-  color: red;
+  color: var(--error-color);
   font-weight: bold;
-}
-
-.container .btn {
-  display: inline-block;
-  border-radius: 5px;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.container .reject-btn {
-  background-color: red;
-  color: #fff;
-}
-
-.container .accept-btn {
-  background-color: green;
-  color: #fff;
-  margin-left: 10px;
 }

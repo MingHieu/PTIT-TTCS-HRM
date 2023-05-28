@@ -1,39 +1,40 @@
 <div id="attendance-tab" class="tab-content">
     <h1>Lịch sử chấm công</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Ngày</th>
-                <th>Giờ vào</th>
-                <th>Giờ ra</th>
-                <th>Trạng thái</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>2023-02-18</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td data-status="0">Đúng giờ</td>
-            </tr>
-            <tr>
-                <td>2023-02-17</td>
-                <td>08:45</td>
-                <td>17:45</td>
-                <td data-status="0">Đúng giờ</td>
-            </tr>
-            <tr>
-                <td>2023-02-16</td>
-                <td>09:15</td>
-                <td>18:15</td>
-                <td data-status="1">Đi muộn</td>
-            </tr>
-            <tr>
-                <td>2023-02-15</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td data-status="2">Nghỉ không lương</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Giờ vào</th>
+                    <th>Giờ ra</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data.data}}
+                <tr>
+                    <td>{{formatDate this.date}}</td>
+                    <td>{{formatTime this.checkIn}}</td>
+                    <td>{{formatTime this.checkOut}}</td>
+                    <td data-status="{{this.status}}"><span>{{formatAttendanceStatus this.status}}</span></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        <p>{{formatPagination data}}</p>
+        <input type="text" name="pagination" hidden>
+        <input type="checkbox" name="lastPage" checked="{{isLastPage data}}" hidden>
+        <div>
+            <button id="pg-button-prev" type="button" class="pagination__button">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+
+            <button id="pg-button-next" type="button" class="pagination__button">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
 </div>

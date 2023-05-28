@@ -1,0 +1,187 @@
+.container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.container input,
+.container select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 10px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.container button,
+.button-wrapper a {
+  display: block;
+  background-color: var(--button-background);
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-inline: 10px;
+}
+
+.button-wrapper a {
+  background-color: red;
+}
+
+.container button:hover {
+  background-color: #555;
+}
+
+.container button:active {
+  background-color: #222;
+}
+
+#add-member,
+#add-skill {
+  display: inline-block;
+  padding: 5px 8px;
+  margin-top: 0;
+}
+
+.skill-list-modal,
+.member-list-modal {
+  width: 100%;
+  max-width: 500px;
+}
+
+.skill-list {
+  margin-top: 10px;
+}
+
+.skill-chosen-list,
+.skill-chosen-list-modal {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 20px;
+}
+
+.skill-chosen-list {
+  margin-bottom: 10px;
+}
+
+.skill-tag {
+  background-color: var(--infor-background);
+  border-radius: 15px;
+  color: var(--infor-color);
+  font-size: 12px;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.delete-skill-tag,
+.delete-skill-tag-modal {
+  background-color: var(--error-background);
+  color: var(--error-color);
+  border-radius: 50%;
+  padding: 2px 6px;
+  margin-left: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
+
+.skill {
+  border-bottom: 1px solid var(--border-color);
+  padding-block: 15px;
+  cursor: pointer;
+}
+
+.skill:last-child {
+  border-bottom: none;
+}
+
+.skill:hover {
+  background-color: #ddd;
+}
+
+.member-chosen-list,
+.member-chosen-list-modal {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.member-el {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+}
+
+.member-el__information {
+  display: flex;
+  align-items: center;
+}
+
+.member-el__avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.member-el__name {
+  font-weight: bold;
+}
+
+.member-el__delete,
+.member-el__delete-modal {
+  color: red;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.leader-button {
+  color: var(--warning-color);
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.member-el__button-container {
+  display: flex;
+  align-items: center;
+}
+
+.member-list {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.member-list-empty {
+  font-size: 24px;
+  color: grey;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

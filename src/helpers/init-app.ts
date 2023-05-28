@@ -1,6 +1,6 @@
 import { JwtCookieGuard } from 'src/auth/guard';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { AppModule } from 'src/app.module';
+import { AppModule } from 'src/app/app.module';
 import { LoggingInterceptor } from 'src/common/interceptors';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
@@ -10,6 +10,8 @@ import {
   UnauthorizedExceptionFilter,
 } from 'src/common/filters';
 import * as cookieParser from 'cookie-parser';
+import { hbsHelpers } from './hbs-helpers';
+import { ValidationPipe } from '@nestjs/common';
 
 export const initApp = async () => {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -17,7 +19,13 @@ export const initApp = async () => {
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalFilters(new NotFoundExceptionFilter());
   app.useGlobalFilters(new UnauthorizedExceptionFilter());
-  // app.useGlobalGuards(new JwtCookieGuard(reflector));
+  app.useGlobalGuards(new JwtCookieGuard(reflector));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
+
   app.use(cookieParser());
 
   app.useStaticAssets(join(__dirname, '..', '..', 'public'));
@@ -30,6 +38,7 @@ export const initApp = async () => {
       defaultLayout: 'main',
       layoutsDir: join(__dirname, '..', '..', 'views', 'layouts'),
       partialsDir: join(__dirname, '..', '..', 'views', 'partials'),
+      helpers: hbsHelpers,
     }),
   );
   app.setViewEngine('hbs');

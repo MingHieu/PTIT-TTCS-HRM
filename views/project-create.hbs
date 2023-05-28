@@ -1,0 +1,45 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    <form>
+        <label for="name">Tên dự án:</label>
+        <input type="text" id="name" name="name" value="{{data.data.name}}" required>
+
+        <label for="startAt">Thời gian bắt đầu:</label>
+        <input type="date" id="startAt" name="startAt" {{#if
+            data.data.startAt}}value="{{formatDateInput data.data.startAt}}" {{/if}} required>
+
+        <label for="finishAt">Thời gian kết thúc:</label>
+        <input type="date" id="finishAt" name="finishAt" {{#if
+            data.data.finishAt}}value="{{formatDateInput data.data.finishAt}}" {{/if}}>
+
+        <label for="skills">Công nghệ sử dụng <button type="button" id="add-skill">+</button></label>
+        <input type="text" id="skill-list" value="{{data.skills}}" hidden>
+        {{#if edit}}
+        <input type="text" id="skill-chosen-list" value="{{data.skillsChosen}}" hidden>
+        {{/if}}
+        <div class="skill-chosen-list"></div>
+
+        <label for="status">Trạng thái</label>
+        <select name="status" id="status">
+            {{#each data.status}}
+            <option value="{{this}}" {{checkSelected this ../data.data.status}}>{{formatProjectStatus this}}</option>
+            {{/each}}
+        </select>
+
+        <label for="members">Nhân viên tham gia <button type="button" id="add-member">+</button></label>
+        {{#if edit}}
+        <input type="text" id="leader" value="{{data.leader}}" hidden>
+        <input type="text" id="member-chosen-list" value="{{data.membersChosen}}" hidden>
+        {{/if}}
+        <div class="member-chosen-list"></div>
+
+        <div class="button-wrapper">
+            {{#if edit}}<a href="delete">Xoá dự án</a>{{/if}}
+            <button type="submit">{{#if edit}}Chỉnh sửa{{else}}Tạo mới{{/if}}</button>
+        </div>
+    </form>
+
+    <div class="modal-container">
+        <div class="modal"></div>
+    </div>
+</div>

@@ -2,15 +2,20 @@
     <h1>{{title}}</h1>
     <form>
         <label for="thumbnail">Ảnh bìa:</label>
-        <input type="file" id="thumbnail">
-        <img id="thumbnail-preview" src="" alt="Image Preview" style="display:none;">
+        <input type="file" id="thumbnail" name="thumbnail">
+        <img id="thumbnail-preview" {{#if data.news.thumbnail}}src="{{data.news.thumbnail}}" {{/if}} alt="Image Preview"
+            style="display:none;">
 
         <label for="name">Tên bản tin:</label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" value="{{data.news.name}}" required>
 
         <label for="content">Nội dung:</label>
+        <input type="text" class="content" value="{{data.news.content}}" hidden>
         <div id="content" name="content"></div>
 
-        <button type="submit">{{#if edit}}Chỉnh sửa{{else}}Tạo mới{{/if}}</button>
+        <div class="button-wrapper">
+            {{#if edit}}<a href="delete">Xoá bản tin</a>{{/if}}
+            <button type="submit">{{#if edit}}Chỉnh sửa{{else}}Tạo mới{{/if}}</button>
+        </div>
     </form>
 </div>

@@ -1,0 +1,38 @@
+.container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.container input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 10px;
+}
+
+.container button[type='submit'] {
+  background-color: var(--button-background);
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.container button[type='submit']:hover {
+  background-color: #555;
+}
+
+.container button[type='submit']:active {
+  background-color: #222;
+}
